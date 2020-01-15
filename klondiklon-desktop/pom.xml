@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>klondiklon-desktop</artifactId>
+    <packaging>jar</packaging>
+	
+	<parent>
+        <groupId>com.github.wmarkow.klondiklon</groupId>
+        <artifactId>klondiklon-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.wmarkow.klondiklon</groupId>
+			<artifactId>klondiklon-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-backend-lwjgl</artifactId>
+			<version>${gdxVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-platform</artifactId>
+			<version>${gdxVersion}</version>
+			<classifier>natives-desktop</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-box2d-platform</artifactId>
+			<version>${gdxVersion}</version>
+			<classifier>natives-desktop</classifier>
+		</dependency>
+	</dependencies>
+</project>
