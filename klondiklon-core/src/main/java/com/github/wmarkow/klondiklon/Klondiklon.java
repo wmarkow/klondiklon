@@ -150,7 +150,27 @@ public class Klondiklon extends ApplicationAdapter implements InputProcessor
     @Override
     public boolean scrolled(int amount)
     {
-        // TODO Auto-generated method stub
+        if(amount > 0)
+        {
+            // zoom out
+            cam.zoom += 0.1;
+            
+            return false;
+        }
+        
+        if(amount < 0)
+        {
+            // zoom in
+            cam.zoom += -0.1;
+            if(cam.zoom < 0.1)
+            {
+                cam.zoom = 0.1f;
+            }
+            
+            return false;
+        }
+        
+        
         return false;
     }
 
