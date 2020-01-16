@@ -1,5 +1,8 @@
 package com.github.wmarkow.klondiklon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,9 +18,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 public class HomeLand extends ApplicationAdapter
 {
+    private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
+
     private static final String MAP_PROPERTY_NAME = "mapCustomProperty";
     private static final String BOOL_PROPERTY_NAME = "boolCustomProperty";
     private static final String INT_PROPERTY_NAME = "intCustomProperty";
@@ -129,5 +135,17 @@ public class HomeLand extends ApplicationAdapter
         batch.begin();
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
         batch.end();
+
+        if (Gdx.input.isTouched())
+        {
+            int screenX = Gdx.input.getX();
+            int screenY = Gdx.input.getY();
+
+            Vector3 screen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            Vector3 world = camera.unproject(screen);
+
+            LOGGER.info(String.format("Screen (x,y) = (%s, %s) to world (x, y, z) = (%s, %s, %s)", screenX, screenY,
+                    world.x, world.y, world.z));
+        }
     }
 }
