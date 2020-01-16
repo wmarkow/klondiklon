@@ -2,13 +2,13 @@ package com.github.wmarkow.klondiklon.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.HomeLand;
 
 public class DesktopLauncher
 {
     public static void main(String[] arg)
     {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(new Klondiklon(), config);
+        new LwjglApplication(new HomeLand(), config);
     }
 }
