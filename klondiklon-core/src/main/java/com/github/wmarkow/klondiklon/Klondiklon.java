@@ -52,6 +52,8 @@ public class Klondiklon extends ApplicationAdapter implements InputProcessor
                 sprites[x][z] = new Sprite(texture);
                 sprites[x][z].setPosition(x, z);
                 sprites[x][z].setSize(1, 1);
+                
+                sprites[x][z].flip(false, true);
             }
         }
 
