@@ -23,6 +23,8 @@ import com.badlogic.gdx.math.collision.Ray;
 public class Klondiklon extends ApplicationAdapter implements InputProcessor
 {
     Texture texture;
+    Texture grass;
+    Texture tree;
     OrthographicCamera cam;
     SpriteBatch batch;
     final Sprite[][] sprites = new Sprite[10][10];
@@ -38,6 +40,8 @@ public class Klondiklon extends ApplicationAdapter implements InputProcessor
     public void create()
     {
         texture = new Texture("badlogic.jpg");
+        grass = new Texture("seasons_grass.png");
+        tree = new Texture("seasons_tree.png");
         cam = new OrthographicCamera(10, 10 * (Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
         cam.position.set(5, 5, 10);
         cam.direction.set(-1, -1, -1);
@@ -49,14 +53,18 @@ public class Klondiklon extends ApplicationAdapter implements InputProcessor
         {
             for (int x = 0; x < 10; x++)
             {
-                sprites[x][z] = new Sprite(texture);
+                sprites[x][z] = new Sprite(grass);
                 sprites[x][z].setPosition(x, z);
                 sprites[x][z].setSize(1, 1);
-                
                 sprites[x][z].flip(false, true);
             }
         }
 
+        sprites[5][5] = new Sprite(tree);
+        sprites[5][5].setPosition(5, 5);
+        sprites[5][5].setSize(1, 1);
+        sprites[5][5].flip(false, true);
+        
         batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(this);
