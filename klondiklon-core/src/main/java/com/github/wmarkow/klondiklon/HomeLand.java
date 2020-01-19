@@ -69,59 +69,10 @@ public class HomeLand extends ApplicationAdapter
 
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        assetManager.load("data/maps/tiled/isometric_grass_and_water.tmx", TiledMap.class);
+        assetManager.load("home.tmx", TiledMap.class);
         assetManager.finishLoading();
-        map = assetManager.get("data/maps/tiled/isometric_grass_and_water.tmx");
+        map = assetManager.get("home.tmx");
         renderer = new IsometricTiledMapRenderer(map, 1f / 64f);
-
-        String mapCustomValue = map.getProperties().get(MAP_PROPERTY_NAME, String.class);
-        Gdx.app.log("TiledMapAssetManagerTest", "Property : " + MAP_PROPERTY_NAME + ", Value : " + mapCustomValue);
-        if (!MAP_PROPERTY_VALUE.equals(mapCustomValue))
-        {
-            throw new RuntimeException("Failed to get map properties");
-        }
-
-        boolean boolCustomValue = map.getProperties().get(BOOL_PROPERTY_NAME, Boolean.class);
-        Gdx.app.log("TiledMapAssetManagerTest", "Property : " + BOOL_PROPERTY_NAME + ", Value : " + boolCustomValue);
-        if (boolCustomValue != BOOL_PROPERTY_VALUE)
-        {
-            throw new RuntimeException("Failed to get boolean map properties");
-        }
-
-        int intCustomValue = map.getProperties().get(INT_PROPERTY_NAME, Integer.class);
-        Gdx.app.log("TiledMapAssetManagerTest", "Property : " + INT_PROPERTY_NAME + ", Value : " + intCustomValue);
-        if (intCustomValue != INT_PROPERTY_VALUE)
-        {
-            throw new RuntimeException("Failed to get int map properties");
-        }
-
-        float floatCustomValue = map.getProperties().get(FLOAT_PROPERTY_NAME, Float.class);
-        Gdx.app.log("TiledMapAssetManagerTest", "Property : " + FLOAT_PROPERTY_NAME + ", Value : " + floatCustomValue);
-        if (floatCustomValue != FLOAT_PROPERTY_VALUE)
-        {
-            throw new RuntimeException("Failed to get float map properties");
-        }
-
-        TiledMapTileSet tileset = map.getTileSets().getTileSet(0);
-        String tilesetCustomValue = tileset.getProperties().get(TILESET_PROPERTY_NAME, String.class);
-        if (!TILESET_PROPERTY_VALUE.equals(tilesetCustomValue))
-        {
-            throw new RuntimeException("Failed to get tileset properties");
-        }
-
-        TiledMapTile tile = tileset.getTile(1);
-        String tileCustomValue = tile.getProperties().get(TILE_PROPERTY_NAME, String.class);
-        if (!TILE_PROPERTY_VALUE.equals(tileCustomValue))
-        {
-            throw new RuntimeException("Failed to get tile properties");
-        }
-
-        MapLayer layer = map.getLayers().get(0);
-        String layerCustomValue = layer.getProperties().get(LAYER_PROPERTY_NAME, String.class);
-        if (!LAYER_PROPERTY_VALUE.equals(layerCustomValue))
-        {
-            throw new RuntimeException("Failed to get layer properties");
-        }
     }
 
     @Override
