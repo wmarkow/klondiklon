@@ -12,19 +12,25 @@
 	</parent>
 
 	<dependencies>
-	
-	<dependency>
+
+		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx</artifactId>
 			<version>${gdxVersion}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-box2d</artifactId>
 			<version>${gdxVersion}</version>
 		</dependency>
-	
+
+		<dependency>
+			<groupId>org.mapeditor</groupId>
+			<artifactId>libtiled</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
