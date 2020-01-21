@@ -68,7 +68,7 @@ public class HomeLand extends ApplicationAdapter
         batch = new SpriteBatch();
 
         assetManager = new AssetManager();
-        assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        assetManager.setLoader(TiledMap.class, new KKTmxMapLoader(new InternalFileHandleResolver()));
         assetManager.load("home.tmx", TiledMap.class);
         assetManager.finishLoading();
         map = assetManager.get("home.tmx");
