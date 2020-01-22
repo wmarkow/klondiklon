@@ -58,7 +58,7 @@ public class OrthoCamController extends InputAdapter
         if (amount > 0)
         {
             // zoom out
-            camera.zoom += 0.1;
+            camera.zoom += 20;
 
             return false;
         }
@@ -66,10 +66,10 @@ public class OrthoCamController extends InputAdapter
         if (amount < 0)
         {
             // zoom in
-            camera.zoom += -0.1;
-            if (camera.zoom < 0.1)
+            camera.zoom += -20;
+            if (camera.zoom < 20)
             {
-                camera.zoom = 0.1f;
+                camera.zoom = 20f;
             }
 
             return false;
