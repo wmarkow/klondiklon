@@ -1,11 +1,16 @@
 package com.github.wmarkow.klondiklon;
 
+import java.io.File;
+
+import org.mapeditor.core.Map;
+import org.mapeditor.io.TMXMapReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,29 +29,9 @@ public class HomeLand extends ApplicationAdapter
 {
     private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
 
-    private static final String MAP_PROPERTY_NAME = "mapCustomProperty";
-    private static final String BOOL_PROPERTY_NAME = "boolCustomProperty";
-    private static final String INT_PROPERTY_NAME = "intCustomProperty";
-    private static final String FLOAT_PROPERTY_NAME = "floatCustomProperty";
-
-    private static final String TILESET_PROPERTY_NAME = "tilesetCustomProperty";
-    private static final String TILE_PROPERTY_NAME = "tileCustomProperty";
-    private static final String LAYER_PROPERTY_NAME = "layerCustomProperty";
-
-    private static final String MAP_PROPERTY_VALUE = "mapCustomValue";
-    private static final boolean BOOL_PROPERTY_VALUE = true;
-    private static final int INT_PROPERTY_VALUE = 5;
-    private static final float FLOAT_PROPERTY_VALUE = 1.56f;
-
-    private static final String TILESET_PROPERTY_VALUE = "tilesetCustomValue";
-    private static final String TILE_PROPERTY_VALUE = "tileCustomValue";
-    private static final String LAYER_PROPERTY_VALUE = "layerCustomValue";
-
-    private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
     private OrthoCamController cameraController;
-    private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
 
@@ -67,12 +52,21 @@ public class HomeLand extends ApplicationAdapter
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        assetManager = new AssetManager();
-        assetManager.setLoader(TiledMap.class, new KKTmxMapLoader(new InternalFileHandleResolver()));
-        assetManager.load("home.tmx", TiledMap.class);
-        assetManager.finishLoading();
-        map = assetManager.get("home.tmx");
-        renderer = new IsometricTiledMapRenderer(map, 1f / 64f);
+        File file = new File(
+                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-core\\src\\main\\resources\\home.tmx");
+        TMXMapReader tmxMapReader = new TMXMapReader();
+        Map tmxMap = null;
+        try
+        {
+            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        Tiled2LibGdxMapAdapter libGdxMap = new Tiled2LibGdxMapAdapter(tmxMap);
+
+        renderer = new IsometricTiledMapRenderer(libGdxMap, 1f / 64f);
     }
 
     @Override
