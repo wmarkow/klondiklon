@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import org.mapeditor.core.Property;
 import org.mapeditor.core.Tile;
@@ -18,10 +19,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 public class Tiled2LibGdxMapAdapter extends TiledMap
@@ -104,9 +107,14 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
             libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
 
             handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TileLayer) tiledMapLayer);
+        } else if (tiledMapLayer instanceof ObjectGroup)
+        {
+            libGdxMapLayer = new MapLayer();
+
+            handleObjectGroupLayer(libGdxMapLayer, (ObjectGroup) tiledMapLayer);
         } else
         {
-            // not supported map
+            // not supported map layer
             LOGGER.warn(String.format("Not supported %s map layer. It will be not imported to libGdx.",
                     tiledMapLayer.getClass().getName()));
             return null;
@@ -125,7 +133,6 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
         {
             libGdxMapLayer.setOpacity(tiledMapLayer.getOpacity());
         }
-        // libGdxMapLayer.setParent();
         if (tiledMapLayer.isVisible() == null)
         {
             libGdxMapLayer.setVisible(true);
@@ -164,7 +171,6 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
                 final int tileId = tile.getId();
 
                 TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-
                 if (!texturesCache.containsKey(textureKey))
                 {
                     Pixmap pixmap = toPixmap(tile.getImage());
@@ -180,6 +186,43 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
 
                 libGdxMapLayer.setCell(x, newY, libGdxCell);
             }
+        }
+    }
+
+    private void handleObjectGroupLayer(MapLayer libGdxMapLayer, ObjectGroup tiledMapLayer)
+    {
+        for (org.mapeditor.core.MapObject tiledMapObject : tiledMapLayer.getObjects())
+        {
+            final Tile tile = tiledMapObject.getTile();
+            final String sourceFilePath = tile.getTileSet().getTilebmpFile();
+            final int tileId = tile.getId();
+
+            TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+            if (!texturesCache.containsKey(textureKey))
+            {
+                Pixmap pixmap = toPixmap(tile.getImage());
+                texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+            }
+            TextureRegion textureRegion = texturesCache.get(textureKey);
+            StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
+
+            TiledMapTileMapObject libGdxMaoObject = new TiledMapTileMapObject(libGdxTile, false, false);
+            libGdxMaoObject.setX((float) tiledMapObject.getX());
+            
+            final float mapHeightInPixels = tiledMapLayer.getMap().getHeight() * tiledMapLayer.getMap().getTileHeight(); 
+            float y = flipY ? (mapHeightInPixels - (float)tiledMapObject.getY()) : (float)tiledMapObject.getY();
+            
+            libGdxMaoObject.setY(y);
+            libGdxMaoObject.setName(tiledMapObject.getName());
+            if (tiledMapObject.isVisible() == null)
+            {
+                libGdxMaoObject.setVisible(true);
+            } else
+            {
+                libGdxMaoObject.setVisible(tiledMapObject.isVisible());
+            }
+
+            libGdxMapLayer.getObjects().add(libGdxMaoObject);
         }
     }
 
