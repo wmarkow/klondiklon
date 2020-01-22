@@ -58,6 +58,16 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
     {
     }
 
+    public int getHeightInTiles()
+    {
+        return (int)getProperties().get("height");
+    }
+    
+    public int getTileHeightInPixels()
+    {
+        return (int)getProperties().get("tileheight");
+    }
+    
     private void wrap()
     {
         MapProperties mapProperties = getProperties();

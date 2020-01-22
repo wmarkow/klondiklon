@@ -34,6 +34,7 @@ public class HomeLand extends ApplicationAdapter
     private OrthoCamController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
+    private Tiled2LibGdxMapAdapter libGdxMap;
 
     @Override
     public void create()
@@ -64,7 +65,7 @@ public class HomeLand extends ApplicationAdapter
             throw new RuntimeException(e);
         }
 
-        Tiled2LibGdxMapAdapter libGdxMap = new Tiled2LibGdxMapAdapter(tmxMap);
+        libGdxMap = new Tiled2LibGdxMapAdapter(tmxMap);
 
         renderer = new KKIsometricTiledMapRenderer(libGdxMap, 1f);
     }
@@ -79,18 +80,15 @@ public class HomeLand extends ApplicationAdapter
         renderer.render();
         batch.begin();
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+        
+        Vector3 screen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Vector3 world = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0) );
+        font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.x, screen.y), 0, Gdx.graphics.getHeight() - 0);
+        font.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0, Gdx.graphics.getHeight() - 20);
+        final int mapHeight = libGdxMap.getHeightInTiles() * libGdxMap.getTileHeightInPixels();
+        font.draw(batch, String.format("TMX ortho (x,y): %s, %s", world.x, mapHeight / 2.0 - world.y), 0, Gdx.graphics.getHeight() - 40);
+        font.draw(batch, String.format("    TMX iso (x,y): ?, ?", world.x, mapHeight / 2.0 - world.y), 0, Gdx.graphics.getHeight() - 60);
+        
         batch.end();
-
-        if (Gdx.input.isTouched())
-        {
-            int screenX = Gdx.input.getX();
-            int screenY = Gdx.input.getY();
-
-            Vector3 screen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            Vector3 world = camera.unproject(screen);
-
-            LOGGER.info(String.format("Screen (x,y) = (%s, %s) to world (x, y, z) = (%s, %s, %s)", screenX, screenY,
-                    world.x, world.y, world.z));
-        }
     }
 }
