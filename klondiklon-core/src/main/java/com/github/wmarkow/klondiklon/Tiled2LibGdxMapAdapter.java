@@ -8,6 +8,8 @@ import org.mapeditor.core.Properties;
 import org.mapeditor.core.Property;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -24,10 +26,12 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 public class Tiled2LibGdxMapAdapter extends TiledMap
 {
+    private static Logger LOGGER = LoggerFactory.getLogger(Tiled2LibGdxMapAdapter.class);
+
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
-    
+
     public Tiled2LibGdxMapAdapter(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
 
@@ -79,18 +83,34 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
         for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
         {
             MapLayer libGdxMapLayer = toLibGdxMapLayer(tiledLayer);
-            getLayers().add(libGdxMapLayer);
+            if (libGdxMapLayer != null)
+            {
+                getLayers().add(libGdxMapLayer);
+            }
         }
     }
 
-    private TiledMapTileLayer toLibGdxMapLayer(org.mapeditor.core.MapLayer tiledMapLayer)
+    private MapLayer toLibGdxMapLayer(org.mapeditor.core.MapLayer tiledMapLayer)
     {
         final int mapWidth = tiledMapLayer.getMap().getWidth();
         final int mapHeight = tiledMapLayer.getMap().getHeight();
         final int tileWidth = tiledMapLayer.getMap().getTileWidth();
         final int tileHeight = tiledMapLayer.getMap().getTileHeight();
 
-        TiledMapTileLayer libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
+        MapLayer libGdxMapLayer = null;
+
+        if (tiledMapLayer instanceof TileLayer)
+        {
+            libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
+
+            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TileLayer) tiledMapLayer);
+        } else
+        {
+            // not supported map
+            LOGGER.warn(String.format("Not supported %s map layer. It will be not imported to libGdx.",
+                    tiledMapLayer.getClass().getName()));
+            return null;
+        }
 
         libGdxMapLayer.setName(tiledMapLayer.getName());
         if (tiledMapLayer.getOffsetX() != null)
@@ -123,43 +143,44 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
             libGdxMapLayer.getProperties().put(name, value);
         }
 
-        if (tiledMapLayer instanceof TileLayer)
+        return libGdxMapLayer;
+    }
+
+    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, TileLayer tiledMapLayer)
+    {
+        final int mapWidth = tiledMapLayer.getMap().getWidth();
+        final int mapHeight = tiledMapLayer.getMap().getHeight();
+
+        for (int y = 0; y < mapHeight; y++)
         {
-            TileLayer tileLayer = (TileLayer) tiledMapLayer;
-
-            for (int y = 0; y < mapHeight; y++)
+            for (int x = 0; x < mapWidth; x++)
             {
-                for (int x = 0; x < mapWidth; x++)
+                Tile tile = tiledMapLayer.getTileAt(x, y);
+                if (tile == null)
                 {
-                    Tile tile = tileLayer.getTileAt(x, y);
-                    if (tile == null)
-                    {
-                        continue;
-                    }
-                    final String sourceFilePath = tile.getTileSet().getTilebmpFile();
-                    final int tileId = tile.getId();
-
-                    TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-
-                    if (!texturesCache.containsKey(textureKey))
-                    {
-                        Pixmap pixmap = toPixmap(tile.getImage());
-                        texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
-                    }
-
-                    TextureRegion textureRegion = texturesCache.get(textureKey);
-                    StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
-                    Cell libGdxCell = new Cell();
-                    libGdxCell.setTile(libGdxTile);
-
-                    final int newY = flipY ? mapHeight - 1 - y : y;
-                            
-                    libGdxMapLayer.setCell(x, newY, libGdxCell);
+                    continue;
                 }
+                final String sourceFilePath = tile.getTileSet().getTilebmpFile();
+                final int tileId = tile.getId();
+
+                TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+
+                if (!texturesCache.containsKey(textureKey))
+                {
+                    Pixmap pixmap = toPixmap(tile.getImage());
+                    texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+                }
+
+                TextureRegion textureRegion = texturesCache.get(textureKey);
+                StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
+                Cell libGdxCell = new Cell();
+                libGdxCell.setTile(libGdxTile);
+
+                final int newY = flipY ? mapHeight - 1 - y : y;
+
+                libGdxMapLayer.setCell(x, newY, libGdxCell);
             }
         }
-
-        return libGdxMapLayer;
     }
 
     private Pixmap toPixmap(BufferedImage bi)
