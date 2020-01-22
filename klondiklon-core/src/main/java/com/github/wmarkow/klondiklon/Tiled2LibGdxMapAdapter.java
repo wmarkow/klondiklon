@@ -26,7 +26,8 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
 {
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
-
+    private boolean flipY = true;
+    
     public Tiled2LibGdxMapAdapter(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
 
@@ -151,7 +152,9 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
                     Cell libGdxCell = new Cell();
                     libGdxCell.setTile(libGdxTile);
 
-                    libGdxMapLayer.setCell(x, y, libGdxCell);
+                    final int newY = flipY ? mapHeight - 1 - y : y;
+                            
+                    libGdxMapLayer.setCell(x, newY, libGdxCell);
                 }
             }
         }
