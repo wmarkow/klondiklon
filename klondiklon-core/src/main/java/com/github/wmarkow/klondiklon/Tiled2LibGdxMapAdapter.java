@@ -26,6 +26,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Vector3;
 
 public class Tiled2LibGdxMapAdapter extends TiledMap
 {
@@ -60,14 +61,14 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
 
     public int getHeightInTiles()
     {
-        return (int)getProperties().get("height");
+        return (int) getProperties().get("height");
     }
-    
+
     public int getTileHeightInPixels()
     {
-        return (int)getProperties().get("tileheight");
+        return (int) getProperties().get("tileheight");
     }
-    
+
     private void wrap()
     {
         MapProperties mapProperties = getProperties();
@@ -217,12 +218,21 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
             StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
 
             TiledMapTileMapObject libGdxMaoObject = new TiledMapTileMapObject(libGdxTile, false, false);
-            libGdxMaoObject.setX((float) tiledMapObject.getX());
-            
-            final float mapHeightInPixels = tiledMapLayer.getMap().getHeight() * tiledMapLayer.getMap().getTileHeight(); 
-            float y = flipY ? (mapHeightInPixels - (float)tiledMapObject.getY()) : (float)tiledMapObject.getY();
-            
-            libGdxMaoObject.setY(y);
+
+            CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+            final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();
+            final int tileHeightInPixels = tiledMapLayer.getMap().getTileHeight();
+
+            // in TMX objects coordinates are in TMX Isometric
+            Vector3 tmxOrthogonal = coordinateCalculator.tmxIso2tmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels,
+                    new Vector3((float) tiledMapObject.getX(), (float) tiledMapObject.getY(), 0.0f));
+            Vector3 world = coordinateCalculator.tmxOrthogonal2world(tileMapHeightInTiles, tileHeightInPixels,
+                    tmxOrthogonal);
+
+            // FIXME: I'm not sure but it would be good to handle an object anchor here
+            libGdxMaoObject.setX(world.x);
+            libGdxMaoObject.setY(world.y);
+
             libGdxMaoObject.setName(tiledMapObject.getName());
             if (tiledMapObject.isVisible() == null)
             {
