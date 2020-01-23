@@ -35,10 +35,13 @@ public class HomeLand extends ApplicationAdapter
     private BitmapFont font;
     private SpriteBatch batch;
     private Tiled2LibGdxMapAdapter libGdxMap;
+    private CoordinateCalculator coordinateCalculator;
 
     @Override
     public void create()
     {
+        coordinateCalculator = new CoordinateCalculator();
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
@@ -80,15 +83,26 @@ public class HomeLand extends ApplicationAdapter
         renderer.render();
         batch.begin();
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
-        
+
         Vector3 screen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Vector3 world = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0) );
-        font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.x, screen.y), 0, Gdx.graphics.getHeight() - 0);
-        font.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0, Gdx.graphics.getHeight() - 20);
-        final int mapHeight = libGdxMap.getHeightInTiles() * libGdxMap.getTileHeightInPixels();
-        font.draw(batch, String.format("TMX ortho (x,y): %s, %s", world.x, mapHeight / 2.0 - world.y), 0, Gdx.graphics.getHeight() - 40);
-        font.draw(batch, String.format("    TMX iso (x,y): ?, ?", world.x, mapHeight / 2.0 - world.y), 0, Gdx.graphics.getHeight() - 60);
-        
+        Vector3 world = coordinateCalculator.screen2World(camera, Gdx.input.getX(), Gdx.input.getY());
+        Vector3 tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
+                libGdxMap.getTileHeightInPixels(), world);
+        Vector3 worldIso = coordinateCalculator.world2iso(world);
+        Vector3 tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(libGdxMap.getHeightInTiles(),
+                libGdxMap.getTileHeightInPixels(), tmxOrthogonal);
+
+        font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.x, screen.y), 0,
+                Gdx.graphics.getHeight() - 0);
+        font.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
+                Gdx.graphics.getHeight() - 20);
+        font.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
+                Gdx.graphics.getHeight() - 40);
+        font.draw(batch, String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
+                Gdx.graphics.getHeight() - 60);
+        font.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
+                Gdx.graphics.getHeight() - 80);
+
         batch.end();
     }
 }
