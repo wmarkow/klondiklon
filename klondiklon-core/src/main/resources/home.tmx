@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="160" tileheight="80" infinite="0" nextlayerid="8" nextobjectid="19">
+<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="160" tileheight="80" infinite="0" nextlayerid="8" nextobjectid="49">
  <tileset firstgid="1" source="garden_cell.tsx"/>
  <tileset firstgid="2" source="barn.tsx"/>
  <tileset firstgid="3" source="home.tsx"/>
+ <tileset firstgid="9" source="object_typha.tsx"/>
+ <tileset firstgid="10" source="object_typha_small.tsx"/>
  <layer id="1" name="terrain" width="40" height="40">
   <data encoding="csv">
 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,7,5,5,5,5,5,5,5,5,
@@ -59,5 +61,35 @@
   <object id="16" gid="1" x="2380" y="60" width="152" height="99"/>
   <object id="17" gid="1" x="0" y="0" width="152" height="99"/>
   <object id="18" gid="2" x="1560" y="1820" width="425" height="452"/>
+  <object id="19" gid="9" x="2620" y="2460" width="75" height="104"/>
+  <object id="20" gid="9" x="2620" y="2300" width="75" height="104"/>
+  <object id="21" gid="9" x="2460" y="2700" width="75" height="104"/>
+  <object id="22" gid="9" x="2300" y="2700" width="75" height="104"/>
+  <object id="23" gid="9" x="2140" y="2700" width="75" height="104"/>
+  <object id="24" gid="9" x="2780" y="2700" width="75" height="104"/>
+  <object id="25" gid="9" x="1900" y="2700" width="75" height="104"/>
+  <object id="26" gid="9" x="1740" y="2860" width="75" height="104"/>
+  <object id="27" gid="9" x="1820" y="2860" width="75" height="104"/>
+  <object id="28" gid="9" x="1820" y="2800" width="75" height="104"/>
+  <object id="29" gid="9" x="1740" y="2780" width="75" height="104"/>
+  <object id="30" gid="9" x="1780" y="2880" width="75" height="104"/>
+  <object id="31" gid="9" x="1860" y="2840" width="75" height="104"/>
+  <object id="32" gid="9" x="1860" y="2900" width="75" height="104"/>
+  <object id="33" gid="9" x="1720" y="2800" width="75" height="104"/>
+  <object id="34" gid="9" x="1760" y="2740" width="75" height="104"/>
+  <object id="35" gid="9" x="1900" y="2780" width="75" height="104"/>
+  <object id="36" gid="9" x="1960" y="2860" width="75" height="104"/>
+  <object id="37" gid="9" x="1900" y="2860" width="75" height="104"/>
+  <object id="38" gid="9" x="1840" y="2940" width="75" height="104"/>
+  <object id="39" gid="9" x="1760" y="2920" width="75" height="104"/>
+  <object id="40" gid="9" x="2800" y="2300" width="75" height="104"/>
+  <object id="41" gid="10" x="2620" y="2500" width="53" height="84"/>
+  <object id="42" gid="10" x="2580" y="2500" width="53" height="84"/>
+  <object id="43" gid="10" x="2660" y="2460" width="53" height="84"/>
+  <object id="44" gid="10" x="2500" y="2700" width="53" height="84"/>
+  <object id="45" gid="10" x="2620" y="2700" width="53" height="84"/>
+  <object id="46" gid="10" x="2460" y="2600" width="53" height="84"/>
+  <object id="47" gid="10" x="2380" y="2700" width="53" height="84"/>
+  <object id="48" gid="10" x="2460" y="2780" width="53" height="84"/>
  </objectgroup>
 </map>
