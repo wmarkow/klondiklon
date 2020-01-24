@@ -24,6 +24,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.KKIsometricTiledMapRenderer;
+import com.github.wmarkow.klondiklon.map.OrthoCamController;
+import com.github.wmarkow.klondiklon.map.Tiled2LibGdxMapAdapter;
 
 public class HomeLand extends ApplicationAdapter
 {

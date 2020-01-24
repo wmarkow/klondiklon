@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon;
+package com.github.wmarkow.klondiklon.map;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;

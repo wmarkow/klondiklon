@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon;
+package com.github.wmarkow.klondiklon.map;
 
 import static com.badlogic.gdx.graphics.g2d.Batch.C1;
 import static com.badlogic.gdx.graphics.g2d.Batch.C2;
