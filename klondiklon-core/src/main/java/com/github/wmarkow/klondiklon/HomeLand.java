@@ -70,7 +70,7 @@ public class HomeLand extends ApplicationAdapter
 
         libGdxMap = new Tiled2LibGdxMapAdapter(tmxMap);
 
-        renderer = new KKIsometricTiledMapRenderer(libGdxMap, 1f);
+        renderer = new KKIsometricTiledMapRenderer(libGdxMap);
     }
 
     @Override
