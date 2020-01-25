@@ -33,12 +33,12 @@ public class CoordinateCalculator
 
         return new Vector3(worldCoordinates.x, (float) (mapHeight / 2.0 - worldCoordinates.y), 0);
     }
-    
+
     public Vector3 tmxOrthogonal2world(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxOrthogonal)
     {
         final int mapHeight = tileMapHeightInTiles * tileHeightInPixels;
-        
-        return new Vector3(tmxOrthogonal.x, (float)(mapHeight / 2.0 - tmxOrthogonal.y), 0);
+
+        return new Vector3(tmxOrthogonal.x, (float) (mapHeight / 2.0 - tmxOrthogonal.y), 0);
     }
 
     public Vector3 world2iso(Vector3 world)
@@ -67,5 +67,11 @@ public class CoordinateCalculator
         final double y = (tmxIso.x + tmxIso.y) / 2.0;
 
         return new Vector3((float) x, (float) y, 0.0f);
+    }
+
+    public Vector3 world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 worldCoordinates)
+    {
+        Vector3 tmxOrthogonal = world2TmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels, worldCoordinates);
+        return tmxOrthogonal2TmxIso(tileMapHeightInTiles, tileHeightInPixels, tmxOrthogonal);
     }
 }

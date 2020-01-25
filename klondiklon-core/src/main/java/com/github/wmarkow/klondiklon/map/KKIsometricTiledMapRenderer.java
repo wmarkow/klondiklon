@@ -21,13 +21,21 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y2;
 import static com.badlogic.gdx.graphics.g2d.Batch.Y3;
 import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
 {
@@ -42,20 +50,16 @@ public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
         final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b,
                 batchColor.a * layer.getOpacity());
 
-        for (MapObject object : layer.getObjects())
+        int mapHeight = (int) getMap().getProperties().get("height");
+        int mapTileHeight = (int) getMap().getProperties().get("tileheight");
+
+        List<TiledMapTileMapObject> objects = getTiledMapTileMapObjectList(layer.getObjects());
+        ByDistanceToTmxIsoOriginComparator comparator = new ByDistanceToTmxIsoOriginComparator(mapHeight,
+                mapTileHeight);
+        Collections.sort(objects, comparator);
+
+        for (TiledMapTileMapObject tiledMapTileMapObject : objects)
         {
-            if (object == null)
-            {
-                continue;
-            }
-
-            if (!(object instanceof TiledMapTileMapObject))
-            {
-                continue;
-            }
-
-            TiledMapTileMapObject tiledMapTileMapObject = (TiledMapTileMapObject) object;
-
             TextureRegion region = tiledMapTileMapObject.getTextureRegion();
 
             float x1 = tiledMapTileMapObject.getX() * unitScale;
@@ -93,6 +97,69 @@ public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
             vertices[V4] = v1;
 
             batch.draw(region.getTexture(), vertices, 0, NUM_VERTICES);
+        }
+    }
+
+    private List<TiledMapTileMapObject> getTiledMapTileMapObjectList(MapObjects mapObjects)
+    {
+        List<TiledMapTileMapObject> result = new ArrayList<TiledMapTileMapObject>();
+
+        for (MapObject mapObject : mapObjects)
+        {
+            if (mapObject == null)
+            {
+                continue;
+            }
+
+            if (!(mapObject instanceof TiledMapTileMapObject))
+            {
+                continue;
+            }
+
+            result.add((TiledMapTileMapObject) mapObject);
+        }
+
+        return result;
+    }
+
+    private class ByDistanceToTmxIsoOriginComparator implements Comparator<TiledMapTileMapObject>
+    {
+        private int tileMapHeightInTiles;
+        private int tileHeightInPixels;
+        private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+
+        public ByDistanceToTmxIsoOriginComparator(int tileMapHeightInTiles, int tileHeightInPixels) {
+            this.tileMapHeightInTiles = tileMapHeightInTiles;
+            this.tileHeightInPixels = tileHeightInPixels;
+        }
+
+        @Override
+        public int compare(TiledMapTileMapObject o1, TiledMapTileMapObject o2)
+        {
+            float o1Distance = calculateDistanceToTmxoIsoOrigin(tileMapHeightInTiles, tileHeightInPixels,
+                    new Vector3(o1.getX(), o1.getY(), 0));
+            float o2Distance = calculateDistanceToTmxoIsoOrigin(tileMapHeightInTiles, tileHeightInPixels,
+                    new Vector3(o2.getX(), o2.getY(), 0));
+
+            if (o1Distance < o2Distance)
+            {
+                return -1;
+            }
+            if (o1Distance > o2Distance)
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+
+        private float calculateDistanceToTmxoIsoOrigin(int tileMapHeightInTiles, int tileHeightInPixels,
+                Vector3 worldCoordinates)
+        {
+            Vector3 tmxIso = coordinateCalculator.world2TmxIso(tileMapHeightInTiles, tileHeightInPixels,
+                    worldCoordinates);
+
+            return (float) Math.sqrt(tmxIso.x * tmxIso.x + tmxIso.y * tmxIso.y);
         }
     }
 }
