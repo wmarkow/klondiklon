@@ -31,7 +31,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -121,7 +120,7 @@ public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
             for (int col = col1; col <= col2; col++)
             {
                 float x = (col * halfTileWidth) + (row * halfTileWidth);
-                float y = (row * halfTileHeight) - (col * halfTileHeight);
+                float y = (row * halfTileHeight) - (col * halfTileHeight) - halfTileHeight;
 
                 final TiledMapTileLayer.Cell cell = layer.getCell(col, row);
                 if (cell == null)
