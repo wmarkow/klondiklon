@@ -254,6 +254,7 @@ public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
 
         int mapHeight = (int) getMap().getProperties().get("height");
         int mapTileHeight = (int) getMap().getProperties().get("tileheight");
+        int mapTileWidth = (int) getMap().getProperties().get("tilewidth");
 
         List<TiledMapTileMapObject> objects = getTiledMapTileMapObjectList(layer.getObjects());
         ByDistanceToTmxIsoOriginComparator comparator = new ByDistanceToTmxIsoOriginComparator(mapHeight,
@@ -264,7 +265,7 @@ public class KKIsometricTiledMapRenderer extends IsometricTiledMapRenderer
         {
             TextureRegion region = tiledMapTileMapObject.getTextureRegion();
 
-            float x1 = tiledMapTileMapObject.getX() * unitScale;
+            float x1 = (float) (tiledMapTileMapObject.getX() - (region.getRegionWidth() / 2.0) * unitScale);
             float y1 = tiledMapTileMapObject.getY() * unitScale;
             float x2 = x1 + region.getRegionWidth() * unitScale;
             float y2 = y1 + region.getRegionHeight() * unitScale;
