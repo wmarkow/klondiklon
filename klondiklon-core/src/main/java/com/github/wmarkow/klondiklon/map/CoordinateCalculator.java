@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 
 public class CoordinateCalculator
 {
@@ -23,16 +25,17 @@ public class CoordinateCalculator
         invIsotransform.inv();
     }
 
-    public Vector3 screen2World(Camera camera, GdxScreenCoordinates screenCoordinates)
+    public GdxWorldOrthoCoordinates screen2World(Camera camera, GdxScreenCoordinates screenCoordinates)
     {
-        return camera.unproject(screenCoordinates.toVector3());
+        return new GdxWorldOrthoCoordinates(camera.unproject(screenCoordinates.toVector3()));
     }
 
-    public Vector3 world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 worldCoordinates)
+    public TmxOrthoCoordinates world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,
+            GdxWorldOrthoCoordinates world)
     {
         final int mapHeight = tileMapHeightInTiles * tileHeightInPixels;
 
-        return new Vector3(worldCoordinates.x, (float) (mapHeight / 2.0 - worldCoordinates.y), 0);
+        return new TmxOrthoCoordinates(world.x, (float) (mapHeight / 2.0 - world.y), 0);
     }
 
     public Vector3 tmxOrthogonal2world(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxOrthogonal)
@@ -70,9 +73,9 @@ public class CoordinateCalculator
         return new Vector3((float) x, (float) y, 0.0f);
     }
 
-    public Vector3 world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 worldCoordinates)
+    public Vector3 world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, GdxWorldOrthoCoordinates world)
     {
-        Vector3 tmxOrthogonal = world2TmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels, worldCoordinates);
+        Vector3 tmxOrthogonal = world2TmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels, world);
         return tmxOrthogonal2TmxIso(tileMapHeightInTiles, tileHeightInPixels, tmxOrthogonal);
     }
 }

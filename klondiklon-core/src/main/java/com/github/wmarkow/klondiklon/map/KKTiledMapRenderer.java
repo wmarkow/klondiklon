@@ -39,6 +39,7 @@ import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKTiledMapRenderer extends BatchTiledMapRenderer
 {
@@ -343,9 +344,9 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
         public int compare(TiledMapTileMapObject o1, TiledMapTileMapObject o2)
         {
             float o1Distance = calculateDistanceToTmxoIsoOrigin(tileMapHeightInTiles, tileHeightInPixels,
-                    new Vector3(o1.getX(), o1.getY(), 0));
+                    new GdxWorldOrthoCoordinates(o1.getX(), o1.getY(), 0));
             float o2Distance = calculateDistanceToTmxoIsoOrigin(tileMapHeightInTiles, tileHeightInPixels,
-                    new Vector3(o2.getX(), o2.getY(), 0));
+                    new GdxWorldOrthoCoordinates(o2.getX(), o2.getY(), 0));
 
             if (o1Distance < o2Distance)
             {
@@ -360,10 +361,9 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
         }
 
         private float calculateDistanceToTmxoIsoOrigin(int tileMapHeightInTiles, int tileHeightInPixels,
-                Vector3 worldCoordinates)
+                GdxWorldOrthoCoordinates world)
         {
-            Vector3 tmxIso = coordinateCalculator.world2TmxIso(tileMapHeightInTiles, tileHeightInPixels,
-                    worldCoordinates);
+            Vector3 tmxIso = coordinateCalculator.world2TmxIso(tileMapHeightInTiles, tileHeightInPixels, world);
 
             return (float) Math.sqrt(tmxIso.x * tmxIso.x + tmxIso.y * tmxIso.y);
         }

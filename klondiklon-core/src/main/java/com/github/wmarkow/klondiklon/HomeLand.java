@@ -19,6 +19,7 @@ import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -81,7 +82,7 @@ public class HomeLand extends ApplicationAdapter
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
-        Vector3 world = coordinateCalculator.screen2World(camera, screen);
+        GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
         Vector3 tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
                 libGdxMap.getTileHeightInPixels(), world);
         Vector3 worldIso = coordinateCalculator.world2iso(world);
