@@ -9,36 +9,27 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
+import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 
 public class HomeLand extends ApplicationAdapter
 {
     private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
 
-    private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private KKCameraController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
+
     private KKTiledMap libGdxMap;
+    private KKTiledMapRenderer renderer;
+    private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
 
     @Override
