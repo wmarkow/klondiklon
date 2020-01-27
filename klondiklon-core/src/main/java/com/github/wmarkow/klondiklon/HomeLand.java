@@ -26,7 +26,7 @@ import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
-import com.github.wmarkow.klondiklon.map.OrthoCamController;
+import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 
 public class HomeLand extends ApplicationAdapter
@@ -35,7 +35,7 @@ public class HomeLand extends ApplicationAdapter
 
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
+    private KKCameraController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
     private KKTiledMap libGdxMap;
@@ -54,7 +54,7 @@ public class HomeLand extends ApplicationAdapter
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        cameraController = new KKCameraController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();
