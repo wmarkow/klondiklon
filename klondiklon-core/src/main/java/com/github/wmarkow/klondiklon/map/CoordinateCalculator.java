@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 
 public class CoordinateCalculator
@@ -38,11 +39,12 @@ public class CoordinateCalculator
         return new TmxOrthoCoordinates(world.x, (float) (mapHeight / 2.0 - world.y), 0);
     }
 
-    public Vector3 tmxOrthogonal2world(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxOrthogonal)
+    public GdxWorldOrthoCoordinates tmxOrthogonal2world(int tileMapHeightInTiles, int tileHeightInPixels,
+            TmxOrthoCoordinates tmxOrthogonal)
     {
         final int mapHeight = tileMapHeightInTiles * tileHeightInPixels;
 
-        return new Vector3(tmxOrthogonal.x, (float) (mapHeight / 2.0 - tmxOrthogonal.y), 0);
+        return new GdxWorldOrthoCoordinates(tmxOrthogonal.x, (float) (mapHeight / 2.0 - tmxOrthogonal.y), 0);
     }
 
     public Vector3 world2iso(Vector3 world)
@@ -63,14 +65,15 @@ public class CoordinateCalculator
         return new Vector3((float) x, (float) y, (float) 0.0);
     }
 
-    public Vector3 tmxIso2tmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxIso)
+    public TmxOrthoCoordinates tmxIso2tmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,
+            TmxIsoCoordinates tmxIso)
     {
         final int mapHeight = tileMapHeightInTiles * tileHeightInPixels;
 
         final double x = tmxIso.x - tmxIso.y + mapHeight;
         final double y = (tmxIso.x + tmxIso.y) / 2.0;
 
-        return new Vector3((float) x, (float) y, 0.0f);
+        return new TmxOrthoCoordinates((float) x, (float) y, 0.0f);
     }
 
     public Vector3 world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, GdxWorldOrthoCoordinates world)

@@ -26,6 +26,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 
 public class KKTiledMap extends TiledMap
 {
@@ -223,10 +226,12 @@ public class KKTiledMap extends TiledMap
             final int tileHeightInPixels = tiledMapLayer.getMap().getTileHeight();
 
             // in TMX objects coordinates are in TMX Isometric
-            Vector3 tmxOrthogonal = coordinateCalculator.tmxIso2tmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels,
-                    new Vector3((float) tiledMapObject.getX(), (float) tiledMapObject.getY(), 0.0f));
-            Vector3 world = coordinateCalculator.tmxOrthogonal2world(tileMapHeightInTiles, tileHeightInPixels,
-                    tmxOrthogonal);
+            TmxIsoCoordinates tmxIsoCoordinates = new TmxIsoCoordinates((float) tiledMapObject.getX(),
+                    (float) tiledMapObject.getY(), 0.0f);
+            TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.tmxIso2tmxOrthogonal(tileMapHeightInTiles,
+                    tileHeightInPixels, tmxIsoCoordinates);
+            GdxWorldOrthoCoordinates world = coordinateCalculator.tmxOrthogonal2world(tileMapHeightInTiles,
+                    tileHeightInPixels, tmxOrthogonal);
 
             // FIXME: I'm not sure but it would be good to handle an object anchor here
             libGdxMaoObject.setX(world.x);
