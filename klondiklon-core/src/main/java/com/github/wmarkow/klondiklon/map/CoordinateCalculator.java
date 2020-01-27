@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
@@ -47,12 +48,12 @@ public class CoordinateCalculator
         return new GdxWorldOrthoCoordinates(tmxOrthogonal.x, (float) (mapHeight / 2.0 - tmxOrthogonal.y), 0);
     }
 
-    public Vector3 world2iso(Vector3 world)
+    public GdxWorldIsoCoordinates world2iso(GdxWorldOrthoCoordinates world)
     {
         Vector3 vector = new Vector3(world);
         vector.mul(invIsotransform);
 
-        return vector;
+        return new GdxWorldIsoCoordinates(vector);
     }
 
     public Vector3 tmxOrthogonal2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxOrthogonal)
