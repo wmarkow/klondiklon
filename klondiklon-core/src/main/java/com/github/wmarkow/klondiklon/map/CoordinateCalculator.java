@@ -3,6 +3,7 @@ package com.github.wmarkow.klondiklon.map;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 
 public class CoordinateCalculator
 {
@@ -22,9 +23,9 @@ public class CoordinateCalculator
         invIsotransform.inv();
     }
 
-    public Vector3 screen2World(Camera camera, int screenX, int screenY)
+    public Vector3 screen2World(Camera camera, GdxScreenCoordinates screenCoordinates)
     {
-        return camera.unproject(new Vector3(screenX, screenY, 0));
+        return camera.unproject(screenCoordinates.toVector3());
     }
 
     public Vector3 world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 worldCoordinates)

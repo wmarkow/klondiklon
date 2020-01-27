@@ -18,6 +18,7 @@ import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -79,15 +80,15 @@ public class HomeLand extends ApplicationAdapter
         batch.begin();
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
-        Vector3 screen = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Vector3 world = coordinateCalculator.screen2World(camera, Gdx.input.getX(), Gdx.input.getY());
+        GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        Vector3 world = coordinateCalculator.screen2World(camera, screen);
         Vector3 tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
                 libGdxMap.getTileHeightInPixels(), world);
         Vector3 worldIso = coordinateCalculator.world2iso(world);
         Vector3 tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(libGdxMap.getHeightInTiles(),
                 libGdxMap.getTileHeightInPixels(), tmxOrthogonal);
 
-        font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.x, screen.y), 0,
+        font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
                 Gdx.graphics.getHeight() - 0);
         font.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
                 Gdx.graphics.getHeight() - 20);
