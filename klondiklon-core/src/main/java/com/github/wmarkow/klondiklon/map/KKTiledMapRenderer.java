@@ -41,7 +41,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class KKIsometricTiledMapRenderer extends BatchTiledMapRenderer
+public class KKTiledMapRenderer extends BatchTiledMapRenderer
 {
     private Matrix4 isoTransform;
     private Matrix4 invIsotransform;
@@ -52,7 +52,7 @@ public class KKIsometricTiledMapRenderer extends BatchTiledMapRenderer
     private Vector2 topLeft = new Vector2();
     private Vector2 bottomRight = new Vector2();
 
-    public KKIsometricTiledMapRenderer(TiledMap map) {
+    public KKTiledMapRenderer(TiledMap map) {
         super(map, 1.0f);
         init();
     }

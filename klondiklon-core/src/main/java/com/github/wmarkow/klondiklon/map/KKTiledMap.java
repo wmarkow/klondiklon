@@ -19,7 +19,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -28,15 +27,15 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector3;
 
-public class Tmx2LibGdxMapAdapter extends TiledMap
+public class KKTiledMap extends TiledMap
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(Tmx2LibGdxMapAdapter.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(KKTiledMap.class);
 
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
 
-    public Tmx2LibGdxMapAdapter(org.mapeditor.core.Map tiledMap) {
+    public KKTiledMap(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
 
         wrap();
@@ -315,9 +314,9 @@ public class Tmx2LibGdxMapAdapter extends TiledMap
             return true;
         }
 
-        private Tmx2LibGdxMapAdapter getOuterType()
+        private KKTiledMap getOuterType()
         {
-            return Tmx2LibGdxMapAdapter.this;
+            return KKTiledMap.this;
         }
     }
 }

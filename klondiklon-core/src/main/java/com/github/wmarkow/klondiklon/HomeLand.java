@@ -25,9 +25,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.KKIsometricTiledMapRenderer;
+import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 import com.github.wmarkow.klondiklon.map.OrthoCamController;
-import com.github.wmarkow.klondiklon.map.Tmx2LibGdxMapAdapter;
+import com.github.wmarkow.klondiklon.map.KKTiledMap;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -38,7 +38,7 @@ public class HomeLand extends ApplicationAdapter
     private OrthoCamController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
-    private Tmx2LibGdxMapAdapter libGdxMap;
+    private KKTiledMap libGdxMap;
     private CoordinateCalculator coordinateCalculator;
 
     @Override
@@ -72,9 +72,9 @@ public class HomeLand extends ApplicationAdapter
             throw new RuntimeException(e);
         }
 
-        libGdxMap = new Tmx2LibGdxMapAdapter(tmxMap);
+        libGdxMap = new KKTiledMap(tmxMap);
 
-        renderer = new KKIsometricTiledMapRenderer(libGdxMap);
+        renderer = new KKTiledMapRenderer(libGdxMap);
     }
 
     @Override
