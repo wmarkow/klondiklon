@@ -340,7 +340,7 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
             this.tileMapHeightInTiles = tileMapHeightInTiles;
             this.tileHeightInPixels = tileHeightInPixels;
         }
-
+        
         @Override
         public int compare(TiledMapTileMapObject o1, TiledMapTileMapObject o2)
         {
