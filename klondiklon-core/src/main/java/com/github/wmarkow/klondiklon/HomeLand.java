@@ -13,13 +13,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -83,10 +85,10 @@ public class HomeLand extends ApplicationAdapter
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
-        Vector3 tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
+        TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
                 libGdxMap.getTileHeightInPixels(), world);
-        Vector3 worldIso = coordinateCalculator.world2iso(world);
-        Vector3 tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(libGdxMap.getHeightInTiles(),
+        GdxWorldIsoCoordinates worldIso = coordinateCalculator.world2iso(world);
+        TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(libGdxMap.getHeightInTiles(),
                 libGdxMap.getTileHeightInPixels(), tmxOrthogonal);
 
         font.draw(batch, String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,

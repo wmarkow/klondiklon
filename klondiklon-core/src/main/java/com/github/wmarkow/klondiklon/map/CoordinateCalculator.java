@@ -56,14 +56,15 @@ public class CoordinateCalculator
         return new GdxWorldIsoCoordinates(vector);
     }
 
-    public Vector3 tmxOrthogonal2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, Vector3 tmxOrthogonal)
+    public TmxIsoCoordinates tmxOrthogonal2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels,
+            TmxOrthoCoordinates tmxOrthogonal)
     {
         final int mapHeight = tileMapHeightInTiles * tileHeightInPixels;
 
         double x = tmxOrthogonal.x / 2.0 + tmxOrthogonal.y - mapHeight / 2.0;
         double y = tmxOrthogonal.y - tmxOrthogonal.x / 2.0 + mapHeight / 2.0;
 
-        return new Vector3((float) x, (float) y, (float) 0.0);
+        return new TmxIsoCoordinates((float) x, (float) y, (float) 0.0);
     }
 
     public TmxOrthoCoordinates tmxIso2tmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,
@@ -77,9 +78,10 @@ public class CoordinateCalculator
         return new TmxOrthoCoordinates((float) x, (float) y, 0.0f);
     }
 
-    public Vector3 world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels, GdxWorldOrthoCoordinates world)
+    public TmxIsoCoordinates world2TmxIso(int tileMapHeightInTiles, int tileHeightInPixels,
+            GdxWorldOrthoCoordinates world)
     {
-        Vector3 tmxOrthogonal = world2TmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels, world);
+        TmxOrthoCoordinates tmxOrthogonal = world2TmxOrthogonal(tileMapHeightInTiles, tileHeightInPixels, world);
         return tmxOrthogonal2TmxIso(tileMapHeightInTiles, tileHeightInPixels, tmxOrthogonal);
     }
 }
