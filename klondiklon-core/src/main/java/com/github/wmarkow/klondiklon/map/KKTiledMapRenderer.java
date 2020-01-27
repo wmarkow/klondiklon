@@ -31,7 +31,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -52,7 +51,7 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
     private Vector2 topLeft = new Vector2();
     private Vector2 bottomRight = new Vector2();
 
-    public KKTiledMapRenderer(TiledMap map) {
+    public KKTiledMapRenderer(KKTiledMap map) {
         super(map, 1.0f);
         init();
     }
@@ -78,6 +77,11 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
         screenPos.mul(invIsotransform);
 
         return screenPos;
+    }
+
+    private KKTiledMap getKKTiledMap()
+    {
+        return (KKTiledMap) getMap();
     }
 
     @Override
@@ -252,9 +256,8 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
         final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b,
                 batchColor.a * layer.getOpacity());
 
-        int mapHeight = (int) getMap().getProperties().get("height");
-        int mapTileHeight = (int) getMap().getProperties().get("tileheight");
-        int mapTileWidth = (int) getMap().getProperties().get("tilewidth");
+        int mapHeight = (int) getKKTiledMap().getHeightInTiles();
+        int mapTileHeight = (int) getKKTiledMap().getTileHeightInPixels();
 
         List<TiledMapTileMapObject> objects = getTiledMapTileMapObjectList(layer.getObjects());
         ByDistanceToTmxIsoOriginComparator comparator = new ByDistanceToTmxIsoOriginComparator(mapHeight,
