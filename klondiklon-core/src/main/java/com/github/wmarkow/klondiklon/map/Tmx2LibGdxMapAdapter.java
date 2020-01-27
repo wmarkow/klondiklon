@@ -28,15 +28,15 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector3;
 
-public class Tiled2LibGdxMapAdapter extends TiledMap
+public class Tmx2LibGdxMapAdapter extends TiledMap
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(Tiled2LibGdxMapAdapter.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(Tmx2LibGdxMapAdapter.class);
 
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
 
-    public Tiled2LibGdxMapAdapter(org.mapeditor.core.Map tiledMap) {
+    public Tmx2LibGdxMapAdapter(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
 
         wrap();
@@ -315,9 +315,9 @@ public class Tiled2LibGdxMapAdapter extends TiledMap
             return true;
         }
 
-        private Tiled2LibGdxMapAdapter getOuterType()
+        private Tmx2LibGdxMapAdapter getOuterType()
         {
-            return Tiled2LibGdxMapAdapter.this;
+            return Tmx2LibGdxMapAdapter.this;
         }
     }
 }
