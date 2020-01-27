@@ -39,6 +39,7 @@ import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKTiledMapRenderer extends BatchTiledMapRenderer

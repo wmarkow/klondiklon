@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.map;
+package com.github.wmarkow.klondiklon.map.coordinates;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
