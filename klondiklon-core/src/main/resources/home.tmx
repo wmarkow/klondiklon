@@ -109,7 +109,7 @@
   <object id="12" gid="1" x="2240" y="2160" width="152" height="99"/>
   <object id="13" gid="1" x="2240" y="2240" width="152" height="99"/>
   <object id="14" gid="1" x="2240" y="2320" width="152" height="99"/>
-  <object id="18" gid="2" x="1560" y="1820" width="425" height="452"/>
+  <object id="18" gid="2" x="1360" y="1760" width="425" height="452"/>
   <object id="19" gid="9" x="2620" y="2460" width="75" height="104"/>
   <object id="20" gid="9" x="2620" y="2300" width="75" height="104"/>
   <object id="21" gid="9" x="2460" y="2700" width="75" height="104"/>
