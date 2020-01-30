@@ -26,7 +26,7 @@ public class HomeLandLogic implements EventSubscriber
         if (event instanceof TouchUpEvent)
         {
             TouchUpEvent touchUpEvent = (TouchUpEvent) event;
-            LOGGER.info(String.format("Event %s received x=%s, y=%s.", touchUpEvent.getName(),
+            LOGGER.info(String.format("Event %s received x=%s, y=%s.", touchUpEvent.getClass().getSimpleName(),
                     touchUpEvent.getScreenX(), touchUpEvent.getScreenY()));
         }
     }
