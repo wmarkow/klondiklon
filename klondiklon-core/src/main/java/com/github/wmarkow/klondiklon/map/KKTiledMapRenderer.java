@@ -36,49 +36,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKTiledMapRenderer extends BatchTiledMapRenderer
 {
-    private Matrix4 isoTransform;
-    private Matrix4 invIsotransform;
-    private Vector3 screenPos = new Vector3();
-
-    private Vector2 topRight = new Vector2();
-    private Vector2 bottomLeft = new Vector2();
-    private Vector2 topLeft = new Vector2();
-    private Vector2 bottomRight = new Vector2();
-
     public KKTiledMapRenderer(KKTiledMap map) {
         super(map, 1.0f);
-        init();
-    }
-
-    private void init()
-    {
-        // create the isometric transform
-        isoTransform = new Matrix4();
-        isoTransform.idt();
-
-        // isoTransform.translate(0, 32, 0);
-        isoTransform.scale((float) (Math.sqrt(2.0) / 2.0), (float) (Math.sqrt(2.0) / 4.0), 1.0f);
-        isoTransform.rotate(0.0f, 0.0f, 1.0f, -45);
-
-        // ... and the inverse matrix
-        invIsotransform = new Matrix4(isoTransform);
-        invIsotransform.inv();
-    }
-
-    private Vector3 translateScreenToIso(Vector2 vec)
-    {
-        screenPos.set(vec.x, vec.y, 0);
-        screenPos.mul(invIsotransform);
-
-        return screenPos;
     }
 
     private KKTiledMap getKKTiledMap()
@@ -104,22 +70,33 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
         float halfTileHeight = tileHeight * 0.5f;
 
         // setting up the screen points
+        GdxWorldOrthoCoordinates topRight = new GdxWorldOrthoCoordinates();
+        GdxWorldOrthoCoordinates bottomLeft = new GdxWorldOrthoCoordinates();
+        GdxWorldOrthoCoordinates topLeft = new GdxWorldOrthoCoordinates();
+        GdxWorldOrthoCoordinates bottomRight = new GdxWorldOrthoCoordinates();
         // COL1
-        topRight.set(viewBounds.x + viewBounds.width - layerOffsetX, viewBounds.y - layerOffsetY);
+        topRight.set(viewBounds.x + viewBounds.width - layerOffsetX, viewBounds.y - layerOffsetY, 0);
         // COL2
-        bottomLeft.set(viewBounds.x - layerOffsetX, viewBounds.y + viewBounds.height - layerOffsetY);
+        bottomLeft.set(viewBounds.x - layerOffsetX, viewBounds.y + viewBounds.height - layerOffsetY, 0);
         // ROW1
-        topLeft.set(viewBounds.x - layerOffsetX, viewBounds.y - layerOffsetY);
+        topLeft.set(viewBounds.x - layerOffsetX, viewBounds.y - layerOffsetY, 0);
         // ROW2
-        bottomRight.set(viewBounds.x + viewBounds.width - layerOffsetX,
-                viewBounds.y + viewBounds.height - layerOffsetY);
+        bottomRight.set(viewBounds.x + viewBounds.width - layerOffsetX, viewBounds.y + viewBounds.height - layerOffsetY,
+                0);
 
         // transforming screen coordinates to iso coordinates
-        int row1 = (int) (translateScreenToIso(topLeft).y / tileWidth) - 2;
-        int row2 = (int) (translateScreenToIso(bottomRight).y / tileWidth) + 2;
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
-        int col1 = (int) (translateScreenToIso(bottomLeft).x / tileWidth) - 2;
-        int col2 = (int) (translateScreenToIso(topRight).x / tileWidth) + 2;
+        GdxWorldIsoCoordinates topLeftGdxWorldIso = coordinateCalculator.world2iso(topLeft);
+        GdxWorldIsoCoordinates bottomRightGdxWorldIso = coordinateCalculator.world2iso(bottomRight);
+        GdxWorldIsoCoordinates bottomLeftGdxWorldIso = coordinateCalculator.world2iso(bottomLeft);
+        GdxWorldIsoCoordinates topRightGdxWorldIso = coordinateCalculator.world2iso(topRight);
+
+        int row1 = (int) (topLeftGdxWorldIso.y / tileWidth) - 2;
+        int row2 = (int) (bottomRightGdxWorldIso.y / tileWidth) + 2;
+
+        int col1 = (int) (bottomLeftGdxWorldIso.x / tileWidth) - 2;
+        int col2 = (int) (topRightGdxWorldIso.x / tileWidth) + 2;
 
         for (int row = row2; row >= row1; row--)
         {
@@ -340,7 +317,7 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
             this.tileMapHeightInTiles = tileMapHeightInTiles;
             this.tileHeightInPixels = tileHeightInPixels;
         }
-        
+
         @Override
         public int compare(TiledMapTileMapObject o1, TiledMapTileMapObject o2)
         {
