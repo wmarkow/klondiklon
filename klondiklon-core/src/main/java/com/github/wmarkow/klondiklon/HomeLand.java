@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
@@ -27,6 +28,8 @@ public class HomeLand extends ApplicationAdapter
 {
     private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
 
+    private EventBus eventBus = new EventBus();
+
     private OrthographicCamera camera;
     private BitmapFont font;
     private SpriteBatch batch;
@@ -35,6 +38,8 @@ public class HomeLand extends ApplicationAdapter
     private KKTiledMapRenderer renderer;
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
+
+    private HomeLandLogic homeLandLogic = new HomeLandLogic(eventBus);
 
     @Override
     public void create()
@@ -49,7 +54,7 @@ public class HomeLand extends ApplicationAdapter
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new KKCameraController(camera);
+        cameraController = new KKCameraController(camera, eventBus);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();

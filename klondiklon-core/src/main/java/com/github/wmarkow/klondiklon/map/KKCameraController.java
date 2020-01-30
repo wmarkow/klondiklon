@@ -19,6 +19,8 @@ package com.github.wmarkow.klondiklon.map;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 
 public class KKCameraController extends InputAdapter
 {
@@ -27,8 +29,11 @@ public class KKCameraController extends InputAdapter
     final Vector3 last = new Vector3(-1, -1, -1);
     final Vector3 delta = new Vector3();
 
-    public KKCameraController(OrthographicCamera camera) {
+    private EventBus eventBus;
+
+    public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -49,6 +54,8 @@ public class KKCameraController extends InputAdapter
     public boolean touchUp(int x, int y, int pointer, int button)
     {
         last.set(-1, -1, -1);
+        eventBus.publish(new TouchUpEvent(x, y));
+
         return false;
     }
 
