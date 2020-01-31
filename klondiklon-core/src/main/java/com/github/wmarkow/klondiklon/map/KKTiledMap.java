@@ -86,17 +86,6 @@ public class KKTiledMap extends TiledMap
         return null;
     }
 
-    public MapObjects getObjects()
-    {
-        KKObjectsLayer result = getObjectsLayer();
-        if (result != null)
-        {
-            return result.getObjects();
-        }
-
-        return null;
-    }
-
     private void wrap()
     {
         MapProperties mapProperties = getProperties();
@@ -245,7 +234,7 @@ public class KKTiledMap extends TiledMap
             TextureRegion textureRegion = texturesCache.get(textureKey);
             StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
 
-            TiledMapTileMapObject libGdxMaoObject = new TiledMapTileMapObject(libGdxTile, false, false);
+            KKMapObject libGdxMapObject = new KKMapObject(libGdxTile, false, false);
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
             final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();
@@ -260,19 +249,19 @@ public class KKTiledMap extends TiledMap
                     tileHeightInPixels, tmxOrthogonal);
 
             // FIXME: I'm not sure but it would be good to handle an object anchor here
-            libGdxMaoObject.setX(world.x);
-            libGdxMaoObject.setY(world.y);
+            libGdxMapObject.setX(world.x);
+            libGdxMapObject.setY(world.y);
 
-            libGdxMaoObject.setName(tiledMapObject.getName());
+            libGdxMapObject.setName(tiledMapObject.getName());
             if (tiledMapObject.isVisible() == null)
             {
-                libGdxMaoObject.setVisible(true);
+                libGdxMapObject.setVisible(true);
             } else
             {
-                libGdxMaoObject.setVisible(tiledMapObject.isVisible());
+                libGdxMapObject.setVisible(tiledMapObject.isVisible());
             }
 
-            objectsMapLayer.getObjects().add(libGdxMaoObject);
+            objectsMapLayer.getObjects().add(libGdxMapObject);
         }
     }
 

@@ -10,6 +10,7 @@ import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
+import com.github.wmarkow.klondiklon.map.KKMapObject;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
@@ -51,23 +52,17 @@ public class HomeLandLogic implements EventSubscriber
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
         int count = 0;
-        for (MapObject mapObject : map.getObjects())
+        for (KKMapObject mapObject : map.getObjectsLayer().getMapObjects())
         {
-            if (!(mapObject instanceof TextureMapObject))
-            {
-                continue;
-            }
-            TextureMapObject textureObject = (TextureMapObject) mapObject;
-
-            float boundsX = textureObject.getX();
-            float boundsY = textureObject.getY();
-            float boundsWidth = textureObject.getTextureRegion().getRegionWidth();
-            float boundsHeight = textureObject.getTextureRegion().getRegionHeight();
+            float boundsX = mapObject.getX();
+            float boundsY = mapObject.getY();
+            float boundsWidth = mapObject.getTextureRegion().getRegionWidth();
+            float boundsHeight = mapObject.getTextureRegion().getRegionHeight();
 
             if (isPointInBounds(gdxWorldCoordinates, boundsX, boundsY, boundsWidth, boundsHeight))
             {
-                LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)", textureObject.getX(), textureObject.getY(), boundsWidth,
-                        boundsHeight));
+                LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
+                        mapObject.getX(), mapObject.getY(), boundsWidth, boundsHeight));
                 count++;
             }
         }
@@ -80,6 +75,7 @@ public class HomeLandLogic implements EventSubscriber
 
     /***
      * Remember that the anchor of the object is a BOTTOM_MIDLE
+     * 
      * @param point
      * @param boundsX
      * @param boundsY
