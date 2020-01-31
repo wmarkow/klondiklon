@@ -77,19 +77,12 @@ public class KKTiledMap extends TiledMap
     {
         for (MapLayer mapLayer : getLayers())
         {
-            if (mapLayer instanceof TiledMapTileLayer)
-            {
-                continue;
-            }
-            if (mapLayer instanceof TiledMapImageLayer)
+            if (!(mapLayer instanceof KKObjectsLayer))
             {
                 continue;
             }
 
-            if ("objects".equals(mapLayer.getName()))
-            {
-                return mapLayer.getObjects();
-            }
+            return mapLayer.getObjects();
         }
 
         return null;
@@ -146,9 +139,9 @@ public class KKTiledMap extends TiledMap
             handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TileLayer) tiledMapLayer);
         } else if (tiledMapLayer instanceof ObjectGroup)
         {
-            libGdxMapLayer = new MapLayer();
+            libGdxMapLayer = new KKObjectsLayer();
 
-            handleObjectGroupLayer(libGdxMapLayer, (ObjectGroup) tiledMapLayer);
+            handleObjectGroupLayer((KKObjectsLayer) libGdxMapLayer, (ObjectGroup) tiledMapLayer);
         } else
         {
             // not supported map layer
@@ -226,7 +219,7 @@ public class KKTiledMap extends TiledMap
         }
     }
 
-    private void handleObjectGroupLayer(MapLayer libGdxMapLayer, ObjectGroup tiledMapLayer)
+    private void handleObjectGroupLayer(KKObjectsLayer objectsMapLayer, ObjectGroup tiledMapLayer)
     {
         for (org.mapeditor.core.MapObject tiledMapObject : tiledMapLayer.getObjects())
         {
@@ -270,7 +263,7 @@ public class KKTiledMap extends TiledMap
                 libGdxMaoObject.setVisible(tiledMapObject.isVisible());
             }
 
-            libGdxMapLayer.getObjects().add(libGdxMaoObject);
+            objectsMapLayer.getObjects().add(libGdxMaoObject);
         }
     }
 
