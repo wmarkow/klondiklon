@@ -39,7 +39,7 @@ public class HomeLand extends ApplicationAdapter
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
 
-    private HomeLandLogic homeLandLogic = new HomeLandLogic(eventBus);
+    private HomeLandLogic homeLandLogic;
 
     @Override
     public void create()
@@ -75,6 +75,8 @@ public class HomeLand extends ApplicationAdapter
         libGdxMap = new KKTiledMap(tmxMap);
 
         renderer = new KKTiledMapRenderer(libGdxMap);
+        
+        homeLandLogic = new HomeLandLogic(eventBus, libGdxMap, camera);
     }
 
     @Override

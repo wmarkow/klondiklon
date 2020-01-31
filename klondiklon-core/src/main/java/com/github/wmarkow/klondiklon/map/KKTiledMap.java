@@ -19,8 +19,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
@@ -69,6 +71,28 @@ public class KKTiledMap extends TiledMap
     public int getTileHeightInPixels()
     {
         return (int) getProperties().get("tileheight");
+    }
+
+    public MapObjects getObjects()
+    {
+        for (MapLayer mapLayer : getLayers())
+        {
+            if (mapLayer instanceof TiledMapTileLayer)
+            {
+                continue;
+            }
+            if (mapLayer instanceof TiledMapImageLayer)
+            {
+                continue;
+            }
+
+            if ("objects".equals(mapLayer.getName()))
+            {
+                return mapLayer.getObjects();
+            }
+        }
+
+        return null;
     }
 
     private void wrap()
