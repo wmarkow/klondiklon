@@ -73,16 +73,25 @@ public class KKTiledMap extends TiledMap
         return (int) getProperties().get("tileheight");
     }
 
-    public MapObjects getObjects()
+    public KKObjectsLayer getObjectsLayer()
     {
         for (MapLayer mapLayer : getLayers())
         {
-            if (!(mapLayer instanceof KKObjectsLayer))
+            if (mapLayer instanceof KKObjectsLayer)
             {
-                continue;
+                return (KKObjectsLayer) mapLayer;
             }
+        }
 
-            return mapLayer.getObjects();
+        return null;
+    }
+
+    public MapObjects getObjects()
+    {
+        KKObjectsLayer result = getObjectsLayer();
+        if (result != null)
+        {
+            return result.getObjects();
         }
 
         return null;
