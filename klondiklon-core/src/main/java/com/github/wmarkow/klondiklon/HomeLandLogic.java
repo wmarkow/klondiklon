@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
@@ -54,12 +52,10 @@ public class HomeLandLogic implements EventSubscriber
         int count = 0;
         for (KKMapObject mapObject : map.getObjectsLayer().getMapObjects())
         {
-            float boundsX = mapObject.getX();
-            float boundsY = mapObject.getY();
             float boundsWidth = mapObject.getTextureRegion().getRegionWidth();
             float boundsHeight = mapObject.getTextureRegion().getRegionHeight();
 
-            if (isPointInBounds(gdxWorldCoordinates, boundsX, boundsY, boundsWidth, boundsHeight))
+            if (mapObject.containsPoint(gdxWorldCoordinates))
             {
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
                         mapObject.getX(), mapObject.getY(), boundsWidth, boundsHeight));
@@ -71,42 +67,5 @@ public class HomeLandLogic implements EventSubscriber
             LOGGER.info(String.format("No object selected", event.getClass().getSimpleName(), event.getScreenX(),
                     event.getScreenY()));
         }
-    }
-
-    /***
-     * Remember that the anchor of the object is a BOTTOM_MIDLE
-     * 
-     * @param point
-     * @param boundsX
-     * @param boundsY
-     * @param boundsWidth
-     * @param boundsHeight
-     * @return
-     */
-    private boolean isPointInBounds(GdxWorldOrthoCoordinates point, float boundsX, float boundsY, float boundsWidth,
-            float boundsHeight)
-    {
-        float pointX = point.x;
-        float pointY = point.y;
-
-        if (pointX < boundsX - boundsWidth / 2.0)
-        {
-            return false;
-        }
-        if (pointX > boundsX + boundsWidth / 2.0)
-        {
-            return false;
-        }
-
-        if (pointY < boundsY)
-        {
-            return false;
-        }
-        if (pointY > boundsY + boundsHeight)
-        {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -2,10 +2,50 @@ package com.github.wmarkow.klondiklon.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKMapObject extends TiledMapTileMapObject
 {
     public KKMapObject(TiledMapTile tile, boolean flipHorizontally, boolean flipVertically) {
         super(tile, flipHorizontally, flipVertically);
+    }
+
+    /***
+     * Checks if the specific point is in the bounds of this object. Takes into
+     * account that the anchor of the object is a BOTTOM_MIDLE.
+     * 
+     * @param point
+     *            - but only X and Y are take into account
+     * @return
+     */
+    public boolean containsPoint(GdxWorldOrthoCoordinates point)
+    {
+        float pointX = point.x;
+        float pointY = point.y;
+
+        float x = getX();
+        float y = getY();
+        float width = getTextureRegion().getRegionWidth();
+        float height = getTextureRegion().getRegionHeight();
+
+        if (pointX < x - width / 2.0)
+        {
+            return false;
+        }
+        if (pointX > x + width / 2.0)
+        {
+            return false;
+        }
+
+        if (pointY < y)
+        {
+            return false;
+        }
+        if (pointY > y + height)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
