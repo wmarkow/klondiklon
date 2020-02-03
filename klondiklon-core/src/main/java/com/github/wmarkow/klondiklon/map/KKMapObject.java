@@ -4,10 +4,22 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
-public class KKMapObject extends TiledMapTileMapObject
+class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {
     public KKMapObject(TiledMapTile tile, boolean flipHorizontally, boolean flipVertically) {
         super(tile, flipHorizontally, flipVertically);
+    }
+
+    @Override
+    public float getWidth()
+    {
+        return getTextureRegion().getRegionWidth();
+    }
+
+    @Override
+    public float getHeight()
+    {
+        return getTextureRegion().getRegionHeight();
     }
 
     /***

@@ -8,7 +8,7 @@ import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
-import com.github.wmarkow.klondiklon.map.KKMapObject;
+import com.github.wmarkow.klondiklon.map.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
@@ -50,15 +50,12 @@ public class HomeLandLogic implements EventSubscriber
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
         int count = 0;
-        for (KKMapObject mapObject : map.getObjectsLayer().getMapObjects())
+        for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
         {
-            float boundsWidth = mapObject.getTextureRegion().getRegionWidth();
-            float boundsHeight = mapObject.getTextureRegion().getRegionHeight();
-
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
-                        mapObject.getX(), mapObject.getY(), boundsWidth, boundsHeight));
+                        mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
                 count++;
             }
         }

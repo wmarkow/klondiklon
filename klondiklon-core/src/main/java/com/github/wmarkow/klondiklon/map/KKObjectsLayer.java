@@ -8,19 +8,19 @@ import com.badlogic.gdx.maps.MapObject;
 
 public class KKObjectsLayer extends MapLayer
 {
-    public KKMapObject[] getMapObjects()
+    public KKMapObjectIf[] getMapObjects()
     {
-        List<KKMapObject> result = new ArrayList<KKMapObject>();
+        List<KKMapObjectIf> result = new ArrayList<KKMapObjectIf>();
 
         for (MapObject mapObject : getObjects())
         {
-            if (mapObject instanceof KKMapObject)
+            if (mapObject instanceof KKMapObjectIf)
             {
-                result.add((KKMapObject) mapObject);
+                result.add((KKMapObjectIf) mapObject);
             }
         }
 
-        return result.toArray(new KKMapObject[]
+        return result.toArray(new KKMapObjectIf[]
         {});
     }
 }
