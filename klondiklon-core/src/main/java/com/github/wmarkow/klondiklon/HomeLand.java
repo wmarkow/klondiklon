@@ -13,6 +13,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
@@ -41,9 +45,13 @@ public class HomeLand extends ApplicationAdapter
 
     private HomeLandLogic homeLandLogic;
 
+    public static ShaderProgram SHADER_OUTLINE;
+
     @Override
     public void create()
     {
+        loadShaders();
+
         coordinateCalculator = new CoordinateCalculator();
 
         float w = Gdx.graphics.getWidth();
@@ -75,7 +83,7 @@ public class HomeLand extends ApplicationAdapter
         libGdxMap = new KKTiledMap(tmxMap);
 
         renderer = new KKTiledMapRenderer(libGdxMap);
-        
+
         homeLandLogic = new HomeLandLogic(eventBus, libGdxMap, camera);
     }
 
@@ -110,5 +118,27 @@ public class HomeLand extends ApplicationAdapter
                 Gdx.graphics.getHeight() - 80);
 
         batch.end();
+    }
+
+    private void loadShaders()
+    {
+        String vertexShader;
+        String fragmentShader;
+        vertexShader = Gdx.files.classpath("shaders/outline_vertex.glsl").readString();
+        fragmentShader = Gdx.files.classpath("shaders/outline_fragment.glsl").readString();
+        SHADER_OUTLINE = new ShaderProgram(vertexShader, fragmentShader);
+        if (!SHADER_OUTLINE.isCompiled())
+        {
+            throw new GdxRuntimeException("Couldn't compile shader: " + SHADER_OUTLINE.getLog());
+        }
+        
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        HomeLand.SHADER_OUTLINE.begin();
+        HomeLand.SHADER_OUTLINE.setUniformf("u_viewportInverse", new Vector2(1f / width, 1f / height));
+        HomeLand.SHADER_OUTLINE.setUniformf("u_offset", 10);
+        HomeLand.SHADER_OUTLINE.setUniformf("u_step", Math.min(1f, width / 70f));
+        HomeLand.SHADER_OUTLINE.setUniformf("u_color", new Vector3(0.0f, 1.0f, 1.0f));
+        HomeLand.SHADER_OUTLINE.end();
     }
 }
