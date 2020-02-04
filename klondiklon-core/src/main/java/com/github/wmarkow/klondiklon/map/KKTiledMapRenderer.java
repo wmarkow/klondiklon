@@ -281,7 +281,14 @@ public class KKTiledMapRenderer extends BatchTiledMapRenderer
             vertices[U4] = u2;
             vertices[V4] = v1;
 
-            batch.draw(region.getTexture(), vertices, 0, NUM_VERTICES);
+            if (tiledMapTileMapObject instanceof KKMapObjectIf)
+            {
+                ((KKMapObjectIf) tiledMapTileMapObject).draw(batch, vertices, 0, NUM_VERTICES);
+            } else
+            {
+                batch.draw(region.getTexture(), vertices, 0, NUM_VERTICES);
+            }
+
         }
     }
 
