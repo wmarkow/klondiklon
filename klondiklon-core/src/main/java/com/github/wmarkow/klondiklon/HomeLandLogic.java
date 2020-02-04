@@ -52,8 +52,12 @@ public class HomeLandLogic implements EventSubscriber
         int count = 0;
         for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
         {
+            mapObject.setSelected(false);
+            
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
+                mapObject.setSelected(true);
+
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
                         mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
                 count++;

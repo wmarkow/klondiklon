@@ -15,5 +15,9 @@ public interface KKMapObjectIf
 
     float getHeight();
 
+    boolean isSelected();
+
+    void setSelected(boolean selected);
+
     void draw(Batch batch, float[] spriteVertices, int offset, int count);
 }

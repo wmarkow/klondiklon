@@ -1,17 +1,16 @@
 package com.github.wmarkow.klondiklon.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.HomeLand;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {
+    private boolean selected = false;
+
     public KKMapObject(TiledMapTile tile, boolean flipHorizontally, boolean flipVertically) {
         super(tile, flipHorizontally, flipVertically);
     }
@@ -70,11 +69,24 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     @Override
     public void draw(Batch batch, float[] spriteVertices, int offset, int count)
     {
-        ShaderProgram currentShader = batch.getShader();
-        batch.setShader(HomeLand.SHADER_OUTLINE);
-        batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
-        batch.setShader(currentShader);
+        if (isSelected())
+        {
+            ShaderProgram currentShader = batch.getShader();
+            batch.setShader(HomeLand.SHADER_OUTLINE);
+            batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
+            batch.setShader(currentShader);
+        }
+        
         batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
     }
 
+    public boolean isSelected()
+    {
+        return selected;
+    }
+
+    public void setSelected(boolean selected)
+    {
+        this.selected = selected;
+    }
 }
