@@ -44,6 +44,7 @@ public class HomeLand extends ApplicationAdapter
     private CoordinateCalculator coordinateCalculator;
 
     private HomeLandLogic homeLandLogic;
+    private GrubbingInteractiveTool grubbingInteractiveTool;
 
     public static ShaderProgram SHADER_OUTLINE;
 
@@ -85,6 +86,7 @@ public class HomeLand extends ApplicationAdapter
         renderer = new KKTiledMapRenderer(libGdxMap);
 
         homeLandLogic = new HomeLandLogic(eventBus, libGdxMap, camera);
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera);
     }
 
     @Override
@@ -131,7 +133,7 @@ public class HomeLand extends ApplicationAdapter
         {
             throw new GdxRuntimeException("Couldn't compile shader: " + SHADER_OUTLINE.getLog());
         }
-        
+
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         HomeLand.SHADER_OUTLINE.begin();
