@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
-import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
+import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
@@ -27,19 +27,19 @@ public class GrubbingInteractiveTool implements EventSubscriber
         this.map = map;
         this.camera = camera;
 
-        this.eventBus.subscribe(TouchUpEvent.class, this);
+        this.eventBus.subscribe(TouchTapEvent.class, this);
     }
 
     @Override
     public void onEvent(Event event)
     {
-        if (event instanceof TouchUpEvent)
+        if (event instanceof TouchTapEvent)
         {
-            processTouchUpEvent((TouchUpEvent) event);
+            processTouchTapEvent((TouchTapEvent) event);
         }
     }
 
-    private void processTouchUpEvent(TouchUpEvent event)
+    private void processTouchTapEvent(TouchTapEvent event)
     {
         LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
                 event.getScreenY()));

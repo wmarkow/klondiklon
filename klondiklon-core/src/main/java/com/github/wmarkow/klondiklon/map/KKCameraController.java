@@ -20,6 +20,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 
 public class KKCameraController extends InputAdapter
@@ -31,6 +32,8 @@ public class KKCameraController extends InputAdapter
 
     private EventBus eventBus;
 
+    private boolean touchDraggedDetected = false;
+
     public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
         this.eventBus = eventBus;
@@ -39,6 +42,7 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean touchDragged(int x, int y, int pointer)
     {
+        touchDraggedDetected = true;
         camera.unproject(curr.set(x, y, 0));
         if (!(last.x == -1 && last.y == -1 && last.z == -1))
         {
@@ -47,6 +51,17 @@ public class KKCameraController extends InputAdapter
             camera.position.add(delta.x, delta.y, 0);
         }
         last.set(x, y, 0);
+
+        eventBus.publish(new TouchUpEvent(x, y));
+
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        touchDraggedDetected = false;
+
         return false;
     }
 
@@ -55,6 +70,11 @@ public class KKCameraController extends InputAdapter
     {
         last.set(-1, -1, -1);
         eventBus.publish(new TouchUpEvent(x, y));
+
+        if (touchDraggedDetected == false)
+        {
+            eventBus.publish(new TouchTapEvent(x, y));
+        }
 
         return false;
     }
