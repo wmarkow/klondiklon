@@ -1,5 +1,8 @@
 package com.github.wmarkow.klondiklon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +24,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private EventBus eventBus;
     private KKTiledMap map;
     private Camera camera;
+
+    private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
 
     public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera) {
         this.eventBus = eventBus;
@@ -44,12 +49,29 @@ public class GrubbingInteractiveTool implements EventSubscriber
         LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
                 event.getScreenY()));
 
+        if (firstTapSelectedObjects.size() == 0)
+        {
+            processFirstTap(event);
+        } else
+        {
+            processSecondTap(event);
+        }
+    }
+
+    /***
+     * The purpose of this method is to find a candidates for grubbing.
+     * 
+     * @param event
+     */
+    private void processFirstTap(TouchTapEvent event)
+    {
+        firstTapSelectedObjects.clear();
+
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
-        int count = 0;
         for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
         {
             mapObject.setSelected(false);
@@ -57,16 +79,66 @@ public class GrubbingInteractiveTool implements EventSubscriber
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
                 mapObject.setSelected(true);
+                firstTapSelectedObjects.add(mapObject);
 
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
                         mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
-                count++;
             }
         }
-        if (count == 0)
+    }
+
+    /***
+     * The purpose of this method is to perform a grubbing on the selected object.
+     * 
+     * @param event
+     */
+    private void processSecondTap(TouchTapEvent event)
+    {
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+
+        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+
+        List<KKMapObjectIf> secondTapObjects = new ArrayList<KKMapObjectIf>();
+        for (KKMapObjectIf mapObject : firstTapSelectedObjects)
         {
-            LOGGER.info(String.format("No object selected", event.getClass().getSimpleName(), event.getScreenX(),
-                    event.getScreenY()));
+            if (mapObject.containsPoint(gdxWorldCoordinates))
+            {
+                secondTapObjects.add(mapObject);
+
+                LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
+                        mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
+            } else
+            {
+                mapObject.setSelected(false);
+            }
         }
+
+        if (secondTapObjects.size() == 0)
+        {
+            firstTapSelectedObjects.clear();
+
+            return;
+        }
+
+        if (secondTapObjects.size() > 1)
+        {
+            return;
+        }
+
+        // do the grubbing
+        KKMapObjectIf objectToGrubb = secondTapObjects.get(0);
+        LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
+        objectToGrubb.setSelected(false);
+        firstTapSelectedObjects.clear();
+        
+        // now it depends on the grubbing type, it depends on the object type itself
+        // if we have a digging
+        // if we have a wood chopping
+        // if we have mining
+        
+        // play the specific sound
+        // remove the object from map
+        // add reward
     }
 }
