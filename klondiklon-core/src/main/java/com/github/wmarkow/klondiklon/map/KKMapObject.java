@@ -80,13 +80,21 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
     }
 
+    @Override
     public boolean isSelected()
     {
         return selected;
     }
 
+    @Override
     public void setSelected(boolean selected)
     {
         this.selected = selected;
+    }
+
+    @Override
+    public String getObjectType()
+    {
+        return "FIR";
     }
 }
