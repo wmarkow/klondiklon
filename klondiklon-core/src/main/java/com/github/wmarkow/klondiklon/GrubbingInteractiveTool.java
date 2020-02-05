@@ -61,7 +61,10 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
     {
         // remove the object from map
         // add reward
-        
+        if (objectToGrubb != null)
+        {
+            objectToGrubb.setSelected(false);
+        }
         objectToGrubb = null;
     }
 
@@ -157,7 +160,6 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         // do the grubbing
         objectToGrubb = secondTapObjects.get(0);
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
-        objectToGrubb.setSelected(false);
         firstTapSelectedObjects.clear();
 
         // now it depends on the grubbing type, it depends on the object type itself
