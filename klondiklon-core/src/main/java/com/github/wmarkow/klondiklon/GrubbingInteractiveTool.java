@@ -16,16 +16,22 @@ import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.sound.SoundPlayer;
+import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
-public class GrubbingInteractiveTool implements EventSubscriber
+public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerListener
 {
     private static Logger LOGGER = LoggerFactory.getLogger(GrubbingInteractiveTool.class);
+
+    private HomeLandLogic homeLandLogic = new HomeLandLogic();
 
     private EventBus eventBus;
     private KKTiledMap map;
     private Camera camera;
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
+    private KKMapObjectIf objectToGrubb = null;
 
     public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera) {
         this.eventBus = eventBus;
@@ -38,10 +44,25 @@ public class GrubbingInteractiveTool implements EventSubscriber
     @Override
     public void onEvent(Event event)
     {
+        if (objectToGrubb != null)
+        {
+            // actually in grubbing, can't process more events right now
+            return;
+        }
+
         if (event instanceof TouchTapEvent)
         {
             processTouchTapEvent((TouchTapEvent) event);
         }
+    }
+
+    @Override
+    public void playSoundFinished()
+    {
+        // remove the object from map
+        // add reward
+        
+        objectToGrubb = null;
     }
 
     private void processTouchTapEvent(TouchTapEvent event)
@@ -75,6 +96,13 @@ public class GrubbingInteractiveTool implements EventSubscriber
         for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
         {
             mapObject.setSelected(false);
+
+            GrubbingType grubbingType = homeLandLogic.getGrubbingType(mapObject);
+
+            if (GrubbingType.NONE.equals(grubbingType))
+            {
+                continue;
+            }
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
@@ -127,18 +155,31 @@ public class GrubbingInteractiveTool implements EventSubscriber
         }
 
         // do the grubbing
-        KKMapObjectIf objectToGrubb = secondTapObjects.get(0);
+        objectToGrubb = secondTapObjects.get(0);
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
         objectToGrubb.setSelected(false);
         firstTapSelectedObjects.clear();
-        
+
         // now it depends on the grubbing type, it depends on the object type itself
-        // if we have a digging
-        // if we have a wood chopping
-        // if we have mining
-        
-        // play the specific sound
+        GrubbingType grubbingType = homeLandLogic.getGrubbingType(objectToGrubb);
+        switch (grubbingType)
+        {
+            case DIGGING:
+                HomeLand.GRUBBING_DIGGING.play();
+                break;
+            case CHOPPING:
+                // must be played three times
+                soundPlayer.play(HomeLand.GRUBBING_CHOPPING, 1.0f, 3, this);
+                break;
+            case MINING:
+                HomeLand.GRUBBING_MINING.play();
+                break;
+            default:
+                break;
+        }
+
         // remove the object from map
         // add reward
+        // this will be done when sound finishes to play
     }
 }

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -47,11 +49,15 @@ public class HomeLand extends ApplicationAdapter
     private GrubbingInteractiveTool grubbingInteractiveTool;
 
     public static ShaderProgram SHADER_OUTLINE;
+    public static Sound GRUBBING_CHOPPING;
+    public static Sound GRUBBING_DIGGING;
+    public static Sound GRUBBING_MINING;
 
     @Override
     public void create()
     {
         loadShaders();
+        loadSounds();
 
         coordinateCalculator = new CoordinateCalculator();
 
@@ -85,7 +91,7 @@ public class HomeLand extends ApplicationAdapter
 
         renderer = new KKTiledMapRenderer(libGdxMap);
 
-        homeLandLogic = new HomeLandLogic(eventBus, libGdxMap, camera);
+        homeLandLogic = new HomeLandLogic();
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera);
     }
 
@@ -142,5 +148,12 @@ public class HomeLand extends ApplicationAdapter
         HomeLand.SHADER_OUTLINE.setUniformf("u_step", Math.min(1f, width / 70f));
         HomeLand.SHADER_OUTLINE.setUniformf("u_color", new Vector3(0.0f, 1.0f, 1.0f));
         HomeLand.SHADER_OUTLINE.end();
+    }
+
+    private void loadSounds()
+    {
+        GRUBBING_CHOPPING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_chopping.ogg"));
+        GRUBBING_DIGGING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_digging.ogg"));
+        GRUBBING_MINING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_mining.ogg"));
     }
 }
