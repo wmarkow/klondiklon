@@ -19,7 +19,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.sound.SoundPlayer;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
-public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerListener
+public class GrubbingInteractiveTool implements EventSubscriber
 {
     private static Logger LOGGER = LoggerFactory.getLogger(GrubbingInteractiveTool.class);
 
@@ -65,18 +65,6 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         {
             processTouchTapEvent((TouchTapEvent) event);
         }
-    }
-
-    @Override
-    public void playSoundFinished()
-    {
-        // remove the object from map
-        // add reward
-        if (objectToGrubb != null)
-        {
-            objectToGrubb.setSelected(false);
-        }
-        objectToGrubb = null;
     }
 
     private void processTouchTapEvent(TouchTapEvent event)
@@ -179,14 +167,14 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         switch (grubbingType)
         {
             case DIGGING:
-                HomeLand.GRUBBING_DIGGING.play();
+                soundPlayer.play(HomeLand.GRUBBING_DIGGING, 1.0f, 1, new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
-                soundPlayer.play(HomeLand.GRUBBING_CHOPPING, 1.0f, 3, this);
+                soundPlayer.play(HomeLand.GRUBBING_CHOPPING, 1.0f, 3, new GrubbingSoundPlayerListener());
                 break;
             case MINING:
-                HomeLand.GRUBBING_MINING.play();
+                soundPlayer.play(HomeLand.GRUBBING_MINING, 2.5f, 1, new GrubbingSoundPlayerListener());
                 break;
             default:
                 break;
@@ -195,6 +183,17 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         // remove the object from map
         // add reward
         // this will be done when sound finishes to play
+    }
+
+    private void finishGrubbing()
+    {
+        if (objectToGrubb != null)
+        {
+            // remove object from map
+            // add reward
+        }
+
+        resetGrubbing();
     }
 
     private void resetGrubbing()
@@ -206,5 +205,14 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         objectToGrubb = null;
         lastGrubbingTimestamp = null;
         firstTapSelectedObjects.clear();
+    }
+
+    private class GrubbingSoundPlayerListener implements SoundPlayerListener
+    {
+        @Override
+        public void playSoundFinished()
+        {
+            finishGrubbing();
+        }
     }
 }
