@@ -11,10 +11,21 @@ public class HomeLandLogic
 
     public GrubbingType getGrubbingType(KKMapObjectIf mapObject)
     {
-        ObjectType objectType = ObjectType.valueOf(mapObject.getObjectType());
-        if (ObjectType.FIR.equals(objectType))
+        if (ObjectTypes.FIR.equals(mapObject.getObjectType()))
         {
             return GrubbingType.CHOPPING;
+        }
+        if (ObjectTypes.COAL_LARGE.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
+        }
+        if (ObjectTypes.COAL_MEDIUM.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
+        }
+        if (ObjectTypes.COAL_SMALL.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
         }
 
         return GrubbingType.NONE;
