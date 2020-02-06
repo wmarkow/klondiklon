@@ -23,6 +23,8 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
 {
     private static Logger LOGGER = LoggerFactory.getLogger(GrubbingInteractiveTool.class);
 
+    private final static long GRUBBING_MAX_TIME_IN_MILLIS = 6000;
+
     private HomeLandLogic homeLandLogic = new HomeLandLogic();
 
     private EventBus eventBus;
@@ -32,6 +34,7 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
 
     private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
     private KKMapObjectIf objectToGrubb = null;
+    private Long lastGrubbingTimestamp = null;
 
     public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera) {
         this.eventBus = eventBus;
@@ -47,7 +50,15 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         if (objectToGrubb != null)
         {
             // actually in grubbing, can't process more events right now
-            return;
+            if (lastGrubbingTimestamp != null
+                    && System.currentTimeMillis() - lastGrubbingTimestamp < GRUBBING_MAX_TIME_IN_MILLIS)
+            {
+                return;
+            } else
+            {
+                // something wrong with grubbing
+                resetGrubbing();
+            }
         }
 
         if (event instanceof TouchTapEvent)
@@ -159,6 +170,7 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
 
         // do the grubbing
         objectToGrubb = secondTapObjects.get(0);
+        lastGrubbingTimestamp = System.currentTimeMillis();
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
         firstTapSelectedObjects.clear();
 
@@ -183,5 +195,16 @@ public class GrubbingInteractiveTool implements EventSubscriber, SoundPlayerList
         // remove the object from map
         // add reward
         // this will be done when sound finishes to play
+    }
+
+    private void resetGrubbing()
+    {
+        if (objectToGrubb != null)
+        {
+            objectToGrubb.setSelected(false);
+        }
+        objectToGrubb = null;
+        lastGrubbingTimestamp = null;
+        firstTapSelectedObjects.clear();
     }
 }
