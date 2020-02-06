@@ -5,14 +5,18 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.github.wmarkow.klondiklon.HomeLand;
+import com.github.wmarkow.klondiklon.ObjectTypes;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {
     private boolean selected = false;
+    private String objectType;
 
-    public KKMapObject(TiledMapTile tile, boolean flipHorizontally, boolean flipVertically) {
-        super(tile, flipHorizontally, flipVertically);
+    public KKMapObject(TiledMapTile tile, String objectType) {
+        super(tile, false, false);
+        
+        this.objectType = objectType;
     }
 
     @Override
@@ -95,6 +99,6 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     @Override
     public String getObjectType()
     {
-        return "FIR";
+        return objectType;
     }
 }

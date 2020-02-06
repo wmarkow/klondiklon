@@ -27,6 +27,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.github.wmarkow.klondiklon.ObjectTypes;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
@@ -222,6 +223,8 @@ public class KKTiledMap extends TiledMap
         for (org.mapeditor.core.MapObject tiledMapObject : tiledMapLayer.getObjects())
         {
             final Tile tile = tiledMapObject.getTile();
+            // derive object type from TMX tile
+            final String objectType = tile.getProperties().getProperty(KKMapObjectIf.PROPERTY_TYPE_KEY);
             final String sourceFilePath = tile.getTileSet().getTilebmpFile();
             final int tileId = tile.getId();
 
@@ -234,7 +237,7 @@ public class KKTiledMap extends TiledMap
             TextureRegion textureRegion = texturesCache.get(textureKey);
             StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
 
-            KKMapObject libGdxMapObject = new KKMapObject(libGdxTile, false, false);
+            KKMapObject libGdxMapObject = new KKMapObject(libGdxTile, objectType);
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
             final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();

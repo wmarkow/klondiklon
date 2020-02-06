@@ -1,11 +1,12 @@
 package com.github.wmarkow.klondiklon.map;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.github.wmarkow.klondiklon.ObjectType;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public interface KKMapObjectIf
 {
+    final static String PROPERTY_TYPE_KEY = "TYPE";
+    
     boolean containsPoint(GdxWorldOrthoCoordinates point);
 
     float getX();
