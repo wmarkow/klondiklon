@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,7 +19,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
@@ -53,6 +61,9 @@ public class HomeLand extends ApplicationAdapter
     public static Sound GRUBBING_DIGGING;
     public static Sound GRUBBING_MINING;
 
+    private Stage stage;
+    private Skin mySkin;
+
     @Override
     public void create()
     {
@@ -70,7 +81,7 @@ public class HomeLand extends ApplicationAdapter
         camera.update();
 
         cameraController = new KKCameraController(camera, eventBus);
-        Gdx.input.setInputProcessor(cameraController);
+        
 
         font = new BitmapFont();
         batch = new SpriteBatch();
@@ -93,6 +104,36 @@ public class HomeLand extends ApplicationAdapter
 
         homeLandLogic = new HomeLandLogic();
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera);
+
+        stage = new Stage(new ScreenViewport());
+        mySkin = new Skin(Gdx.files.internal("skins/glassy/skin/glassy-ui.json"));
+        Button button2 = new TextButton("Text Button", mySkin, "small");
+        int Help_Guides = 12;
+        int row_height = Gdx.graphics.getWidth() / 12;
+        int col_width = Gdx.graphics.getWidth() / 12;
+        button2.setSize(col_width * 4, row_height);
+        button2.setPosition(col_width * 7, Gdx.graphics.getHeight() - row_height * 3);
+        button2.addListener(new InputListener()
+        {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                LOGGER.info("Button touchUp");
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
+                LOGGER.info("Button touchDown");
+                return true;
+            }
+        });
+        stage.addActor(button2);
+        
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(cameraController);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
@@ -126,6 +167,9 @@ public class HomeLand extends ApplicationAdapter
                 Gdx.graphics.getHeight() - 80);
 
         batch.end();
+
+        stage.act();
+        stage.draw();
     }
 
     private void loadShaders()
