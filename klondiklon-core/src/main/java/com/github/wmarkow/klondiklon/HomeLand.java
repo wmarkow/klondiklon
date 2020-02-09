@@ -99,7 +99,7 @@ public class HomeLand extends ApplicationAdapter
         player = new Player(eventBus);
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player);
 
-        klondiklonUi = new KKUi(player);
+        klondiklonUi = new KKUi(player, eventBus);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(klondiklonUi.getStage());

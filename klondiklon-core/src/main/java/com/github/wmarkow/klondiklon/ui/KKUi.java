@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
 
 public class KKUi
@@ -17,8 +19,13 @@ public class KKUi
     private Stage stage;
     private Skin mySkin;
     private Table tableLayout;
+    private Player player;
+    private EventBus eventBus;
 
-    public KKUi() {
+    public KKUi(Player player, EventBus eventBus) {
+        this.player = player;
+        this.eventBus = eventBus;
+        
         create();
     }
 
@@ -37,7 +44,8 @@ public class KKUi
         tableLayout.setDebug(true);
         stage.addActor(tableLayout);
 
-        EnergyWidget energyWidget = new EnergyWidget(mySkin);
+        EnergyWidget energyWidget = new EnergyWidget(mySkin, eventBus);
+        energyWidget.setEnergy(player.getEnergy(), player.getMaxRestorableEnergy());
 
         tableLayout.row();
         tableLayout.add().expandX();

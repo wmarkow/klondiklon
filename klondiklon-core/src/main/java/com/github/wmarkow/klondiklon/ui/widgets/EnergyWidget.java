@@ -8,7 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Scaling;
+import com.github.wmarkow.klondiklon.event.Event;
+import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.EventSubscriber;
+import com.github.wmarkow.klondiklon.event.events.PlayerEnergyChangedEvent;
 
 public class EnergyWidget extends Stack
 {
@@ -17,10 +20,12 @@ public class EnergyWidget extends Stack
     private Image lightningImage;
     private ProgressBar progressBar;
     private Label text;
+    private EventBus eventBus;
 
-    public EnergyWidget(Skin skin) {
+    public EnergyWidget(Skin skin, EventBus eventBus) {
         this.skin = skin;
-
+        this.eventBus = eventBus;
+        
         Table t1 = new Table();
         t1.add(getProgressBar()).padLeft(0.3f * getLightningImage().getPrefWidth()).center();
         addActor(t1);
@@ -32,6 +37,27 @@ public class EnergyWidget extends Stack
         Table t3 = new Table();
         t3.add(getLightningImage()).expand().center().left();
         addActor(t3);
+
+        eventBus.subscribe(PlayerEnergyChangedEvent.class, new EventSubscriber()
+        {
+
+            @Override
+            public void onEvent(Event event)
+            {
+                if (event instanceof PlayerEnergyChangedEvent)
+                {
+                    onPlayerEnergyChanged((PlayerEnergyChangedEvent) event);
+                }
+            }
+        });
+    }
+
+    public void setEnergy(int energy, int maxRestorableEnergy)
+    {
+        getText().setText(String.format("%s/%s", energy, maxRestorableEnergy));
+
+        float valueInPercent = 100f * energy / maxRestorableEnergy;
+        getProgressBar().setValue(valueInPercent);
     }
 
     public Image getLightningImage()
@@ -51,6 +77,7 @@ public class EnergyWidget extends Stack
         {
             progressBar = new ProgressBar(0, 100, 1, false, skin);
             progressBar.setValue(78);
+            progressBar.setAnimateDuration(1.0f);
         }
         return progressBar;
     }
@@ -64,4 +91,8 @@ public class EnergyWidget extends Stack
         return text;
     }
 
+    private void onPlayerEnergyChanged(PlayerEnergyChangedEvent event)
+    {
+        setEnergy(event.getCurrentEnergy(), event.getMaxRestorableEnergy());
+    }
 }
