@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Scaling;
+import com.github.wmarkow.klondiklon.ui.ImageWidget;
 
 public class EnergyWidget extends Stack
 {
@@ -21,11 +23,11 @@ public class EnergyWidget extends Stack
         this.skin = skin;
 
         Table t1 = new Table();
-        t1.add(getProgressBar()).padLeft(0.5f * getLightningImage().getWidth()).center();
+        t1.add(getProgressBar()).padLeft(0.3f * getLightningImage().getWidth()).center();
         addActor(t1);
 
         Table t2 = new Table();
-        t2.add(getText()).expand().padLeft(0.5f * getLightningImage().getWidth()).center();
+        t2.add(getText()).expand().padLeft(0.3f * getLightningImage().getWidth()).center();
         addActor(t2);
 
         Table t3 = new Table();
@@ -38,7 +40,8 @@ public class EnergyWidget extends Stack
         if (lightningImage == null)
         {
             Texture texture = new Texture(Gdx.files.internal("images/lightning.png"));
-            lightningImage = new Image(texture);
+            lightningImage = new ImageWidget(texture);
+            lightningImage.setScale(0.65f);
         }
         return lightningImage;
     }
