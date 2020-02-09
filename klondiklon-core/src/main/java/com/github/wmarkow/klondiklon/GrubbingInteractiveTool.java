@@ -16,6 +16,7 @@ import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayer;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
@@ -35,11 +36,13 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
     private KKMapObjectIf objectToGrubb = null;
     private Long lastGrubbingTimestamp = null;
+    private Player player;
 
-    public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera) {
+    public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera, Player player) {
         this.eventBus = eventBus;
         this.map = map;
         this.camera = camera;
+        this.player = player;
 
         this.eventBus.subscribe(TouchTapEvent.class, this);
     }
@@ -159,6 +162,17 @@ public class GrubbingInteractiveTool implements EventSubscriber
         // do the grubbing
         objectToGrubb = secondTapObjects.get(0);
         lastGrubbingTimestamp = System.currentTimeMillis();
+        
+        int energyToGrub = homeLandLogic.energyToGrub(objectToGrubb.getObjectType());
+        if (player.getEnergy() < energyToGrub)
+        {
+            // to low energy, can not grub
+            resetGrubbing();
+            return;
+        }
+        
+        player.removeEnergy(energyToGrub);
+        
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
         firstTapSelectedObjects.clear();
 

@@ -30,4 +30,26 @@ public class HomeLandLogic
 
         return GrubbingType.NONE;
     }
+
+    public int energyToGrub(String objectType)
+    {
+        if (ObjectTypes.FIR.equals(objectType))
+        {
+            return 30;
+        }
+        if (ObjectTypes.COAL_LARGE.equals(objectType))
+        {
+            return 40;
+        }
+        if (ObjectTypes.COAL_MEDIUM.equals(objectType))
+        {
+            return 30;
+        }
+        if (ObjectTypes.COAL_SMALL.equals(objectType))
+        {
+            return 20;
+        }
+
+        return 5;
+    }
 }

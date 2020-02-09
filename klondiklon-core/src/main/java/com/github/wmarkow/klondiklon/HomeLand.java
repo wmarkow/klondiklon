@@ -29,6 +29,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
+import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 
 public class HomeLand extends ApplicationAdapter
@@ -55,6 +56,7 @@ public class HomeLand extends ApplicationAdapter
     public static Sound GRUBBING_MINING;
 
     private KKUi klondiklonUi;
+    private Player player;
 
     @Override
     public void create()
@@ -94,9 +96,10 @@ public class HomeLand extends ApplicationAdapter
         renderer = new KKTiledMapRenderer(libGdxMap);
 
         homeLandLogic = new HomeLandLogic();
-        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera);
+        player = new Player(eventBus);
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player);
 
-        klondiklonUi = new KKUi();
+        klondiklonUi = new KKUi(player);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(klondiklonUi.getStage());
