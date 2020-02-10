@@ -27,6 +27,34 @@ public class HomeLandLogic
         {
             return GrubbingType.MINING;
         }
+        if (ObjectTypes.ICE_COLUMN.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
+        }
+        if (ObjectTypes.ROCK_LARGE.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
+        }
+        if (ObjectTypes.ROCK_MEDIUM.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.MINING;
+        }
+        if (ObjectTypes.GRASS_SMALL.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.DIGGING;
+        }
+        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.DIGGING;
+        }
+        if (ObjectTypes.FRAGARIA.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.DIGGING;
+        }
+        if (ObjectTypes.RUBUS.equals(mapObject.getObjectType()))
+        {
+            return GrubbingType.DIGGING;
+        }
 
         return GrubbingType.NONE;
     }
@@ -48,6 +76,34 @@ public class HomeLandLogic
         if (ObjectTypes.COAL_SMALL.equals(objectType))
         {
             return 20;
+        }
+        if (ObjectTypes.ICE_COLUMN.equals(objectType))
+        {
+            return 55;
+        }
+        if (ObjectTypes.ROCK_LARGE.equals(objectType))
+        {
+            return 35;
+        }
+        if (ObjectTypes.ROCK_MEDIUM.equals(objectType))
+        {
+            return 20;
+        }
+        if (ObjectTypes.GRASS_SMALL.equals(objectType))
+        {
+            return 10;
+        }
+        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(objectType))
+        {
+            return 20;
+        }
+        if (ObjectTypes.FRAGARIA.equals(objectType))
+        {
+            return 15;
+        }
+        if (ObjectTypes.RUBUS.equals(objectType))
+        {
+            return 25;
         }
 
         return 5;
