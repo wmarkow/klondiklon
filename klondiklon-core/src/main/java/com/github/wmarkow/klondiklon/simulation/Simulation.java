@@ -23,18 +23,27 @@ public class Simulation
         simulables.add(simulable);
     }
 
-    public synchronized void simulateStep(long currentSimulationTimeInMillis)
+    /***
+     * Tries to perform a single simulation step. Simulation step is internally
+     * performed once per {@link SIMULATION_RESOLUTION_IN_MILLIS} milliseconds.
+     * Check the return value of the method to know if the simulation step has been
+     * performed.
+     * 
+     * @param currentSimulationTimeInMillis
+     * @return true if simulation step has been performed, false otherwise
+     */
+    public synchronized boolean simulateStep(long currentSimulationTimeInMillis)
     {
         if (currentSimulationTimeInMillis < lastSimulationTimeInMillis)
         {
             LOGGER.warn(String.format("Current simulation time is lower than previous simulation time: %s < %s",
                     currentSimulationTimeInMillis, lastSimulationTimeInMillis));
-            return;
+            return false;
         }
 
         if (currentSimulationTimeInMillis - lastSimulationTimeInMillis < SIMULATION_RESOLUTION_IN_MILLIS)
         {
-            return;
+            return false;
         }
 
         for (Simulable simulable : simulables)
@@ -42,6 +51,8 @@ public class Simulation
             simulable.stepEverySecond();
         }
 
-        lastSimulationTimeInMillis = currentSimulationTimeInMillis;
+        lastSimulationTimeInMillis += SIMULATION_RESOLUTION_IN_MILLIS;
+
+        return true;
     }
 }
