@@ -1,6 +1,10 @@
 package com.github.wmarkow.klondiklon;
 
 import java.io.File;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import org.mapeditor.core.Map;
 import org.mapeditor.io.TMXMapReader;
@@ -30,6 +34,8 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.player.Player;
+import com.github.wmarkow.klondiklon.simulation.Simulation;
+import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 
 public class HomeLand extends ApplicationAdapter
@@ -57,6 +63,7 @@ public class HomeLand extends ApplicationAdapter
 
     private KKUi klondiklonUi;
     private Player player;
+    private Simulation simulation;
 
     @Override
     public void create()
@@ -100,6 +107,7 @@ public class HomeLand extends ApplicationAdapter
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player);
 
         klondiklonUi = new KKUi(player, eventBus);
+        loadSimulation(player);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(klondiklonUi.getStage());
@@ -141,6 +149,7 @@ public class HomeLand extends ApplicationAdapter
 
         klondiklonUi.getStage().act();
         klondiklonUi.getStage().draw();
+        simulation.simulateStep(Instant.now().toEpochMilli());
     }
 
     private void loadShaders()
@@ -172,4 +181,11 @@ public class HomeLand extends ApplicationAdapter
         GRUBBING_MINING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_mining.ogg"));
     }
 
+    private void loadSimulation(Player player)
+    {
+        long epochMilli = Instant.now().toEpochMilli();
+
+        simulation = new Simulation(epochMilli);
+        simulation.addSimulable(new RestoreEnergySimulationProcess(player));
+    }
 }

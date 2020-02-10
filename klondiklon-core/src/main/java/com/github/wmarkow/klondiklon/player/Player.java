@@ -26,6 +26,8 @@ public class Player
     public void addEnergy(int delta)
     {
         energy += delta;
+        
+        eventBus.publish(new PlayerEnergyChangedEvent(energy, MAX_RESTORABLE_ENERGY));
     }
 
     public void removeEnergy(int delta)
