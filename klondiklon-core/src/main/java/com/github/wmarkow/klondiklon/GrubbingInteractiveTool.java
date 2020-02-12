@@ -111,8 +111,10 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
-                mapObject.setSelected(true);
+                int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
+                mapObject.setSelectedTrue(String.valueOf(energyToGrub));
                 firstTapSelectedObjects.add(mapObject);
+                
 
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
                         mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
