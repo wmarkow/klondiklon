@@ -41,7 +41,7 @@ public class KKUi
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
-        tableLayout.setDebug(true);
+//        tableLayout.setDebug(true);
         stage.addActor(tableLayout);
 
         EnergyWidget energyWidget = new EnergyWidget(mySkin, eventBus);
