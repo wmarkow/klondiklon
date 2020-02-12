@@ -1,21 +1,27 @@
 package com.github.wmarkow.klondiklon.map;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.github.wmarkow.klondiklon.HomeLand;
-import com.github.wmarkow.klondiklon.ObjectTypes;
+import com.github.wmarkow.klondiklon.TexturesManager;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {
     private boolean selected = false;
+    private String tooltipText = null;
     private String objectType;
+    private GlyphLayout layout = new GlyphLayout();
 
     public KKMapObject(TiledMapTile tile, String objectType) {
         super(tile, false, false);
-        
+
         this.objectType = objectType;
     }
 
@@ -80,8 +86,25 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
             batch.setShader(currentShader);
         }
-        
+
         batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
+
+        if (isSelected() && tooltipText != null)
+        {
+            Texture balloon = HomeLand.TEXTURES_MANAGER.get(TexturesManager.BALLOON);
+            float balloonX = getX() - balloon.getWidth() / 2;
+            float balloonY = getY() + getHeight();
+            batch.draw(balloon, balloonX, balloonY);
+
+            BitmapFont font = new BitmapFont();
+            font.setColor(Color.BLACK);
+            font.getData().setScale(2.5f);
+            layout.setText(font, tooltipText);
+            float textWidth = layout.width;// contains the width of the current set text
+            float textHeight = layout.height; // contains the height of the current set text
+
+            font.draw(batch, tooltipText, getX() - textWidth / 2, balloonY + balloon.getHeight() / 2 + textHeight * 0.75f);
+        }
     }
 
     @Override
@@ -94,6 +117,14 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     public void setSelected(boolean selected)
     {
         this.selected = selected;
+        this.tooltipText = null;
+    }
+
+    @Override
+    public void setSelectedTrue(String tooltipText)
+    {
+        this.selected = true;
+        this.tooltipText = tooltipText;
     }
 
     @Override

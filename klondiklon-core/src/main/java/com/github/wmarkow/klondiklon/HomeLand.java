@@ -33,6 +33,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
+import com.github.wmarkow.klondiklon.music.MusicManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
@@ -61,15 +62,21 @@ public class HomeLand extends ApplicationAdapter
     public static Sound GRUBBING_DIGGING;
     public static Sound GRUBBING_MINING;
 
+    public final static TexturesManager TEXTURES_MANAGER = new TexturesManager();
+    
     private KKUi klondiklonUi;
     private Player player;
     private Simulation simulation;
+    private MusicManager musicManager;
 
     @Override
     public void create()
     {
         loadShaders();
         loadSounds();
+        TEXTURES_MANAGER.load();
+        musicManager = new MusicManager();
+//        musicManager.playMainTheme();
 
         coordinateCalculator = new CoordinateCalculator();
 

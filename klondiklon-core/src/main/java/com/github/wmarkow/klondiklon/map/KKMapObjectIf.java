@@ -20,6 +20,8 @@ public interface KKMapObjectIf
     boolean isSelected();
 
     void setSelected(boolean selected);
+    
+    void setSelectedTrue(String tooltipText);
 
     void draw(Batch batch, float[] spriteVertices, int offset, int count);
     
