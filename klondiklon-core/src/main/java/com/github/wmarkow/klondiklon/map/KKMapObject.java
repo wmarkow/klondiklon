@@ -4,12 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.github.wmarkow.klondiklon.HomeLand;
-import com.github.wmarkow.klondiklon.TexturesManager;
+import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.graphics.Dimension;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
@@ -17,7 +16,13 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     private boolean selected = false;
     private String tooltipText = null;
     private String objectType;
-    private GlyphLayout layout = new GlyphLayout();
+
+    private static BitmapFont FONT = new BitmapFont();
+    static
+    {
+        FONT.setColor(Color.BLACK);
+        FONT.getData().setScale(2.5f);
+    }
 
     public KKMapObject(TiledMapTile tile, String objectType) {
         super(tile, false, false);
@@ -82,7 +87,7 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         if (isSelected())
         {
             ShaderProgram currentShader = batch.getShader();
-            batch.setShader(HomeLand.SHADER_OUTLINE);
+            batch.setShader(Klondiklon.shadersManager.SHADER_OUTLINE);
             batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
             batch.setShader(currentShader);
         }
@@ -91,19 +96,17 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
         if (isSelected() && tooltipText != null)
         {
-            Texture balloon = HomeLand.TEXTURES_MANAGER.get(TexturesManager.BALLOON);
+            Texture balloon = Klondiklon.texturesManager.BALLOON;
             float balloonX = getX() - balloon.getWidth() / 2;
             float balloonY = getY() + getHeight();
             batch.draw(balloon, balloonX, balloonY);
 
-            BitmapFont font = new BitmapFont();
-            font.setColor(Color.BLACK);
-            font.getData().setScale(2.5f);
-            layout.setText(font, tooltipText);
-            float textWidth = layout.width;// contains the width of the current set text
-            float textHeight = layout.height; // contains the height of the current set text
+            Dimension dim = Klondiklon.fontsManager.meassureText(FONT, tooltipText);
+            float textWidth = dim.getWidth();
+            float textHeight = dim.getHeight();
 
-            font.draw(batch, tooltipText, getX() - textWidth / 2, balloonY + balloon.getHeight() / 2 + textHeight * 0.75f);
+            FONT.draw(batch, tooltipText, getX() - textWidth / 2,
+                    balloonY + balloon.getHeight() / 2 + textHeight * 0.75f);
         }
     }
 

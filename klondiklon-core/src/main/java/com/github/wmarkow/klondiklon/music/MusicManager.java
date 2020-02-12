@@ -8,10 +8,9 @@ public class MusicManager
     private Music mainTheme;
 
     public MusicManager() {
-        loadMusic();
     }
 
-    private void loadMusic()
+    public void init()
     {
         mainTheme = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.ogg"));
     }

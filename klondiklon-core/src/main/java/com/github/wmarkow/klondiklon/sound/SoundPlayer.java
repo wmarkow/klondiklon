@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-public class SoundPlayer
+class SoundPlayer
 {
     public void play(Sound sound, float soundDurationInSeconds, int playCount)
     {

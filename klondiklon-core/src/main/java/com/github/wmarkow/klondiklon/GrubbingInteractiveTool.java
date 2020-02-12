@@ -17,7 +17,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.player.Player;
-import com.github.wmarkow.klondiklon.sound.SoundPlayer;
+import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
 public class GrubbingInteractiveTool implements EventSubscriber
@@ -31,7 +31,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private EventBus eventBus;
     private KKTiledMap map;
     private Camera camera;
-    private SoundPlayer soundPlayer = new SoundPlayer();
 
     private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
     private KKMapObjectIf objectToGrubb = null;
@@ -114,7 +113,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
                 int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
                 mapObject.setSelectedTrue(String.valueOf(energyToGrub));
                 firstTapSelectedObjects.add(mapObject);
-                
 
                 LOGGER.info(String.format("Object clicked anchor(x,y)=(%s,%s), (width,height)=(%s,%s)",
                         mapObject.getX(), mapObject.getY(), mapObject.getWidth(), mapObject.getHeight()));
@@ -164,7 +162,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         // do the grubbing
         objectToGrubb = secondTapObjects.get(0);
         lastGrubbingTimestamp = System.currentTimeMillis();
-        
+
         int energyToGrub = homeLandLogic.energyToGrub(objectToGrubb.getObjectType());
         if (player.getEnergy() < energyToGrub)
         {
@@ -172,9 +170,9 @@ public class GrubbingInteractiveTool implements EventSubscriber
             resetGrubbing();
             return;
         }
-        
+
         player.removeEnergy(energyToGrub);
-        
+
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
         firstTapSelectedObjects.clear();
 
@@ -183,14 +181,17 @@ public class GrubbingInteractiveTool implements EventSubscriber
         switch (grubbingType)
         {
             case DIGGING:
-                soundPlayer.play(HomeLand.GRUBBING_DIGGING, 1.0f, 1, new GrubbingSoundPlayerListener());
+                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_DIGGING, 1.0f, 1,
+                        new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
-                soundPlayer.play(HomeLand.GRUBBING_CHOPPING, 1.0f, 3, new GrubbingSoundPlayerListener());
+                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_CHOPPING, 1.0f, 3,
+                        new GrubbingSoundPlayerListener());
                 break;
             case MINING:
-                soundPlayer.play(HomeLand.GRUBBING_MINING, 2.5f, 1, new GrubbingSoundPlayerListener());
+                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_MINING, 2.5f, 1,
+                        new GrubbingSoundPlayerListener());
                 break;
             default:
                 break;

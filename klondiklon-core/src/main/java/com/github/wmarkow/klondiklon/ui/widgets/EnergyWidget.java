@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
@@ -25,7 +26,7 @@ public class EnergyWidget extends Stack
     public EnergyWidget(Skin skin, EventBus eventBus) {
         this.skin = skin;
         this.eventBus = eventBus;
-        
+
         Table t1 = new Table();
         t1.add(getProgressBar()).padLeft(0.3f * getLightningImage().getPrefWidth()).center();
         addActor(t1);
@@ -64,7 +65,7 @@ public class EnergyWidget extends Stack
     {
         if (lightningImage == null)
         {
-            Texture texture = new Texture(Gdx.files.internal("images/lightning.png"));
+            Texture texture = Klondiklon.texturesManager.LIGHTNING;
             lightningImage = new ImageWidget(texture);
             lightningImage.setScale(0.65f);
         }
