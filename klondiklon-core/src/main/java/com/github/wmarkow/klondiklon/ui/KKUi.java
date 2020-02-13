@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
@@ -25,7 +26,7 @@ public class KKUi
     public KKUi(Player player, EventBus eventBus) {
         this.player = player;
         this.eventBus = eventBus;
-        
+
         create();
     }
 
@@ -37,11 +38,11 @@ public class KKUi
     private void create()
     {
         stage = new Stage(new ScreenViewport());
-        mySkin = new Skin(Gdx.files.internal("skins/glassy/skin/glassy-ui.json"));
+        mySkin = Klondiklon.skinsManager.GLASSY;
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
-//        tableLayout.setDebug(true);
+        // tableLayout.setDebug(true);
         stage.addActor(tableLayout);
 
         EnergyWidget energyWidget = new EnergyWidget(mySkin, eventBus);
