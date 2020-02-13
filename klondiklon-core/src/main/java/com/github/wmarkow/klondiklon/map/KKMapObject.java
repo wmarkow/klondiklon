@@ -1,12 +1,16 @@
 package com.github.wmarkow.klondiklon.map;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.graphics.Dimension;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
@@ -96,18 +100,16 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
         if (isSelected() && tooltipText != null)
         {
-            Texture balloon = Klondiklon.texturesManager.BALLOON;
-            float balloonX = getX() - balloon.getWidth() / 2;
-            float balloonY = getY() + getHeight();
-            batch.draw(balloon, balloonX, balloonY);
-
             BitmapFont font = Klondiklon.fontsManager.GRUBBING_FONT;
-            Dimension dim = Klondiklon.fontsManager.meassureText(font, tooltipText);
-            float textWidth = dim.getWidth();
-            float textHeight = dim.getHeight();
 
-            font.draw(batch, tooltipText, getX() - textWidth / 2,
-                    balloonY + balloon.getHeight() / 2 + textHeight * 0.75f);
+            NinePatch balloonNinePatch = new NinePatch(Klondiklon.texturesManager.BALLOON, 12, 12, 12, 12);
+            NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
+            TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
+            TextButton button = new TextButton(tooltipText, style);
+
+            button.setX(getX() - button.getWidth() / 2);
+            button.setY(getY() + getHeight());
+            button.draw(batch, 1.0f);
         }
     }
 
