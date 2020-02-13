@@ -28,6 +28,7 @@ import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
+import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 
 public class HomeLand extends ApplicationAdapter
 {

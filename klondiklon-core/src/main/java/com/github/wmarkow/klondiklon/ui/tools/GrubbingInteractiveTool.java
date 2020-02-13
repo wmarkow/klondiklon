@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon;
+package com.github.wmarkow.klondiklon.ui.tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.github.wmarkow.klondiklon.HomeLandLogic;
+import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
