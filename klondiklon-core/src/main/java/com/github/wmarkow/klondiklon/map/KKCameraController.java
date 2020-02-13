@@ -38,13 +38,13 @@ public class KKCameraController extends InputAdapter
     private EventBus eventBus;
 
     private boolean touchDraggedDetected = false;
-    private boolean touchDownDetected = false;
+    private Long touchDownMillis = null;
     private Timer longTouchDownTimer;
 
     public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
         this.eventBus = eventBus;
-        
+
         longTouchDownTimer = new Timer();
         longTouchDownTimer.start();
     }
@@ -71,14 +71,14 @@ public class KKCameraController extends InputAdapter
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
         touchDraggedDetected = false;
-        touchDownDetected = true;
+        touchDownMillis = System.currentTimeMillis();
 
         longTouchDownTimer.scheduleTask(new Task()
         {
             @Override
             public void run()
             {
-                if (touchDownDetected)
+                if (touchDownMillis != null)
                 {
                     eventBus.publish(new TouchLongDownEvent(screenX, screenY));
                 }
@@ -92,13 +92,20 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean touchUp(int x, int y, int pointer, int button)
     {
-        touchDownDetected = false;
+        Long localTouchDownInMillis = touchDownMillis;
+        touchDownMillis = null;
         longTouchDownTimer.clear();
 
         last.set(-1, -1, -1);
         eventBus.publish(new TouchUpEvent(x, y));
 
-        if (touchDraggedDetected == false)
+        if (touchDraggedDetected)
+        {
+            return false;
+        }
+
+        if (localTouchDownInMillis != null
+                && System.currentTimeMillis() - localTouchDownInMillis < 1000 * LONG_TOUCH_DOWN_SECONDS)
         {
             eventBus.publish(new TouchTapEvent(x, y));
         }
