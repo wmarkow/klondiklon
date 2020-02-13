@@ -19,12 +19,17 @@ package com.github.wmarkow.klondiklon.map;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 
 public class KKCameraController extends InputAdapter
 {
+    private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
+
     final OrthographicCamera camera;
     final Vector3 curr = new Vector3();
     final Vector3 last = new Vector3(-1, -1, -1);
@@ -33,10 +38,15 @@ public class KKCameraController extends InputAdapter
     private EventBus eventBus;
 
     private boolean touchDraggedDetected = false;
+    private boolean touchDownDetected = false;
+    private Timer longTouchDownTimer;
 
     public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
         this.eventBus = eventBus;
+        
+        longTouchDownTimer = new Timer();
+        longTouchDownTimer.start();
     }
 
     @Override
@@ -61,6 +71,20 @@ public class KKCameraController extends InputAdapter
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
         touchDraggedDetected = false;
+        touchDownDetected = true;
+
+        longTouchDownTimer.scheduleTask(new Task()
+        {
+            @Override
+            public void run()
+            {
+                if (touchDownDetected)
+                {
+                    eventBus.publish(new TouchLongDownEvent(screenX, screenY));
+                }
+
+            }
+        }, LONG_TOUCH_DOWN_SECONDS);
 
         return false;
     }
@@ -68,6 +92,9 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean touchUp(int x, int y, int pointer, int button)
     {
+        touchDownDetected = false;
+        longTouchDownTimer.clear();
+
         last.set(-1, -1, -1);
         eventBus.publish(new TouchUpEvent(x, y));
 

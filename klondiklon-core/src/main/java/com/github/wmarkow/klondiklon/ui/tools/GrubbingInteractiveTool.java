@@ -12,6 +12,7 @@ import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
+import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
@@ -46,6 +47,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         this.player = player;
 
         this.eventBus.subscribe(TouchTapEvent.class, this);
+        this.eventBus.subscribe(TouchLongDownEvent.class, this);
     }
 
     @Override
@@ -68,6 +70,14 @@ public class GrubbingInteractiveTool implements EventSubscriber
         if (event instanceof TouchTapEvent)
         {
             processTouchTapEvent((TouchTapEvent) event);
+
+            return;
+        }
+        if (event instanceof TouchLongDownEvent)
+        {
+            processTouchLongDownEvent((TouchLongDownEvent) event);
+
+            return;
         }
     }
 
@@ -83,6 +93,12 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             processSecondTap(event);
         }
+    }
+
+    private void processTouchLongDownEvent(TouchLongDownEvent event)
+    {
+        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
+                event.getScreenY()));
     }
 
     /***
