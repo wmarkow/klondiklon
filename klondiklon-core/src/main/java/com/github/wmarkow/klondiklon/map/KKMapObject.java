@@ -101,11 +101,12 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             float balloonY = getY() + getHeight();
             batch.draw(balloon, balloonX, balloonY);
 
-            Dimension dim = Klondiklon.fontsManager.meassureText(FONT, tooltipText);
+            BitmapFont font = Klondiklon.fontsManager.GRUBBING_FONT;
+            Dimension dim = Klondiklon.fontsManager.meassureText(font, tooltipText);
             float textWidth = dim.getWidth();
             float textHeight = dim.getHeight();
 
-            FONT.draw(batch, tooltipText, getX() - textWidth / 2,
+            font.draw(batch, tooltipText, getX() - textWidth / 2,
                     balloonY + balloon.getHeight() / 2 + textHeight * 0.75f);
         }
     }
