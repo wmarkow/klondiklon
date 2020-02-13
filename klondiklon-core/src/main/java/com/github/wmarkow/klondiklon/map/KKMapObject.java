@@ -102,7 +102,7 @@ class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         {
             BitmapFont font = Klondiklon.fontsManager.GRUBBING_FONT;
 
-            NinePatch balloonNinePatch = new NinePatch(Klondiklon.texturesManager.BALLOON, 12, 12, 12, 12);
+            NinePatch balloonNinePatch = new NinePatch(Klondiklon.texturesManager.BALLOON, 14, 14, 14, 27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
             TextButton button = new TextButton(tooltipText, style);
