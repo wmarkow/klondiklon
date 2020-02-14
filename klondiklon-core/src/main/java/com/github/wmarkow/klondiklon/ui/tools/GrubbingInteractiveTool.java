@@ -97,8 +97,33 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
     private void processTouchLongDownEvent(TouchLongDownEvent event)
     {
-        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
-                event.getScreenY()));
+        resetGrubbing();
+
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+
+        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+
+        for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
+        {
+            mapObject.setSelected(false);
+
+            GrubbingType grubbingType = homeLandLogic.getGrubbingType(mapObject);
+
+            if (GrubbingType.NONE.equals(grubbingType))
+            {
+                continue;
+            }
+
+            if (mapObject.containsPoint(gdxWorldCoordinates))
+            {
+                int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
+                String name = homeLandLogic.getName(mapObject.getObjectType());
+                String tooltip = String.format("%s \n Wytrzyma³oœæ: %s", name, energyToGrub);
+
+                mapObject.setSelectedTrue(tooltip);
+            }
+        }
     }
 
     /***

@@ -109,4 +109,54 @@ public class HomeLandLogic
 
         return 5;
     }
+
+    public String getName(String objectType)
+    {
+        if (ObjectTypes.FIR.equals(objectType))
+        {
+            return "Jod³a";
+        }
+        if (ObjectTypes.COAL_LARGE.equals(objectType))
+        {
+            return "Ha³da wêgla";
+        }
+        if (ObjectTypes.COAL_MEDIUM.equals(objectType))
+        {
+            return "Ha³da wêgla";
+        }
+        if (ObjectTypes.COAL_SMALL.equals(objectType))
+        {
+            return "Ha³da wêgla";
+        }
+        if (ObjectTypes.ICE_COLUMN.equals(objectType))
+        {
+            return "Kolumna lodowa";
+        }
+        if (ObjectTypes.ROCK_LARGE.equals(objectType))
+        {
+            return "Ska³a";
+        }
+        if (ObjectTypes.ROCK_MEDIUM.equals(objectType))
+        {
+            return "Ska³a";
+        }
+        if (ObjectTypes.GRASS_SMALL.equals(objectType))
+        {
+            return "Trawa";
+        }
+        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(objectType))
+        {
+            return "Oœnie¿ony krzak";
+        }
+        if (ObjectTypes.FRAGARIA.equals(objectType))
+        {
+            return "Poziomka";
+        }
+        if (ObjectTypes.RUBUS.equals(objectType))
+        {
+            return "Je¿yna";
+        }
+
+        return null;
+    }
 }
