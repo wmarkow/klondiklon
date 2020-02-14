@@ -12,14 +12,16 @@ public class FontsManager
     public BitmapFont DEFAULT_FONT;
     public BitmapFont GRUBBING_FONT;
     private GlyphLayout layout = new GlyphLayout();
+    private String POLISH_CHARACTERS = "A•BC∆DE FGHIJKL£MN—O”PQRSåTUVWXYZØèaπbcÊdeÍfghijkl≥mnÒoÛpqrsútuvwxyzøü0123456789:";
 
     public void init()
     {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/arialbd.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.characters = POLISH_CHARACTERS;
         parameter.size = 12;
         DEFAULT_FONT = generator.generateFont(parameter);
-        
+
         parameter.size = 40;
         parameter.color = Color.BLACK;
         GRUBBING_FONT = generator.generateFont(parameter);
