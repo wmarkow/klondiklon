@@ -14,6 +14,7 @@
     </modules>
 	
 	<properties>
+   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <gdxVersion>1.9.10</gdxVersion>
 		<roboVMVersion>2.3.8</roboVMVersion>
         <box2DLightsVersion>1.4</box2DLightsVersion>

@@ -119,7 +119,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
             {
                 int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
                 String name = homeLandLogic.getName(mapObject.getObjectType());
-                String tooltip = String.format("%s \n Wytrzyma³oœæ: %s", name, energyToGrub);
+                String tooltip = String.format("%s \n WytrzymaÅ‚oÅ›Ä‡: %s", name, energyToGrub);
 
                 mapObject.setSelectedTrue(tooltip);
             }

@@ -12,7 +12,7 @@ public class FontsManager
     public BitmapFont DEFAULT_FONT;
     public BitmapFont GRUBBING_FONT;
     private GlyphLayout layout = new GlyphLayout();
-    private String POLISH_CHARACTERS = "A¥BCÆDEÊFGHIJKL£MNÑOÓPQRSŒTUVWXYZ¯a¹bcædeêfghijkl³mnñoópqrsœtuvwxyz¿Ÿ0123456789:";
+    private String POLISH_CHARACTERS = "AÄ„BCÄ†DEÄ˜FGHIJKLÅMNÅƒOÃ“PQRSÅšTUVWXYZÅ»Å¹aÄ…bcÄ‡deÄ™fghijklÅ‚mnÅ„oÃ³pqrsÅ›tuvwxyzÅ¼Åº0123456789:";
 
     public void init()
     {

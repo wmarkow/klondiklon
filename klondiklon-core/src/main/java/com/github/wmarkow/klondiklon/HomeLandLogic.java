@@ -114,19 +114,19 @@ public class HomeLandLogic
     {
         if (ObjectTypes.FIR.equals(objectType))
         {
-            return "Jod≥a";
+            return "Jod≈Ça";
         }
         if (ObjectTypes.COAL_LARGE.equals(objectType))
         {
-            return "Ha≥da wÍgla";
+            return "Ha≈Çda wƒôgla";
         }
         if (ObjectTypes.COAL_MEDIUM.equals(objectType))
         {
-            return "Ha≥da wÍgla";
+            return "Ha≈Çda wƒôgla";
         }
         if (ObjectTypes.COAL_SMALL.equals(objectType))
         {
-            return "Ha≥da wÍgla";
+            return "Ha≈Çda wƒôgla";
         }
         if (ObjectTypes.ICE_COLUMN.equals(objectType))
         {
@@ -134,11 +134,11 @@ public class HomeLandLogic
         }
         if (ObjectTypes.ROCK_LARGE.equals(objectType))
         {
-            return "Ska≥a";
+            return "Ska≈Ça";
         }
         if (ObjectTypes.ROCK_MEDIUM.equals(objectType))
         {
-            return "Ska≥a";
+            return "Ska≈Ça";
         }
         if (ObjectTypes.GRASS_SMALL.equals(objectType))
         {
@@ -146,7 +146,7 @@ public class HomeLandLogic
         }
         if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(objectType))
         {
-            return "Oúnieøony krzak";
+            return "O≈õnie≈ºony krzak";
         }
         if (ObjectTypes.FRAGARIA.equals(objectType))
         {
@@ -154,7 +154,7 @@ public class HomeLandLogic
         }
         if (ObjectTypes.RUBUS.equals(objectType))
         {
-            return "Jeøyna";
+            return "Je≈ºyna";
         }
 
         return null;
