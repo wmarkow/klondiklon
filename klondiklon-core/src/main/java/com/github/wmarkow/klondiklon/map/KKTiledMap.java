@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -31,7 +30,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
-public class KKTiledMap extends TiledMap
+public class KKTiledMap extends TiledMap implements KKMapIf
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKTiledMap.class);
 
@@ -43,18 +42,6 @@ public class KKTiledMap extends TiledMap
         this.tiledMap = tiledMap;
 
         wrap();
-    }
-
-    @Override
-    public MapLayers getLayers()
-    {
-        return super.getLayers();
-    }
-
-    @Override
-    public MapProperties getProperties()
-    {
-        return super.getProperties();
     }
 
     @Override
@@ -72,7 +59,21 @@ public class KKTiledMap extends TiledMap
         return (int) getProperties().get("tileheight");
     }
 
-    public KKObjectsLayer getObjectsLayer()
+    @Override
+    public KKMapObjectIf[] getObjects()
+    {
+        KKObjectsLayer objectsLayer = getObjectsLayer();
+
+        if (objectsLayer == null)
+        {
+            return new KKMapObjectIf[]
+            {};
+        }
+
+        return objectsLayer.getMapObjects();
+    }
+
+    private KKObjectsLayer getObjectsLayer()
     {
         for (MapLayer mapLayer : getLayers())
         {

@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
+import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKTiledMap;
 import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
@@ -35,12 +36,10 @@ public class HomeLand extends ApplicationAdapter
     private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
 
     private EventBus eventBus = new EventBus();
-
     private OrthographicCamera camera;
-
     private SpriteBatch batch;
 
-    private KKTiledMap libGdxMap;
+    private KKMapIf klondiklonMap;
     private KKTiledMapRenderer renderer;
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
@@ -58,6 +57,10 @@ public class HomeLand extends ApplicationAdapter
         Klondiklon.init();
         // Klondiklon.musicManager.playMainTheme();
 
+        KKTiledMap libGdxMap = readDefaultMap();
+        klondiklonMap = (KKMapIf) libGdxMap;
+        renderer = new KKTiledMapRenderer(libGdxMap);
+
         coordinateCalculator = new CoordinateCalculator();
 
         float w = Gdx.graphics.getWidth();
@@ -71,22 +74,6 @@ public class HomeLand extends ApplicationAdapter
         cameraController = new KKCameraController(camera, eventBus);
 
         batch = new SpriteBatch();
-
-        File file = new File(
-                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-core\\src\\main\\resources\\home.tmx");
-        TMXMapReader tmxMapReader = new TMXMapReader();
-        Map tmxMap = null;
-        try
-        {
-            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
-        } catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        libGdxMap = new KKTiledMap(tmxMap);
-
-        renderer = new KKTiledMapRenderer(libGdxMap);
 
         homeLandLogic = new HomeLandLogic();
         player = new Player(eventBus);
@@ -114,11 +101,11 @@ public class HomeLand extends ApplicationAdapter
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
-        TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(libGdxMap.getHeightInTiles(),
-                libGdxMap.getTileHeightInPixels(), world);
+        TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(klondiklonMap.getHeightInTiles(),
+                klondiklonMap.getTileHeightInPixels(), world);
         GdxWorldIsoCoordinates worldIso = coordinateCalculator.world2iso(world);
-        TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(libGdxMap.getHeightInTiles(),
-                libGdxMap.getTileHeightInPixels(), tmxOrthogonal);
+        TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(klondiklonMap.getHeightInTiles(),
+                klondiklonMap.getTileHeightInPixels(), tmxOrthogonal);
 
         Klondiklon.fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
@@ -146,5 +133,24 @@ public class HomeLand extends ApplicationAdapter
 
         simulation = new Simulation(epochMilli);
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
+    }
+
+    private KKTiledMap readDefaultMap()
+    {
+        File file = new File(
+                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-core\\src\\main\\resources\\home.tmx");
+        TMXMapReader tmxMapReader = new TMXMapReader();
+        Map tmxMap = null;
+        try
+        {
+            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        KKTiledMap libGdxMap = new KKTiledMap(tmxMap);
+
+        return libGdxMap;
     }
 }

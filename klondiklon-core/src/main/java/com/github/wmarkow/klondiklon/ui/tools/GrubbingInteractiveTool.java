@@ -14,13 +14,12 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
-import com.github.wmarkow.klondiklon.map.KKTiledMap;
+import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.player.Player;
-import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
 public class GrubbingInteractiveTool implements EventSubscriber
@@ -32,7 +31,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private HomeLandLogic homeLandLogic = new HomeLandLogic();
 
     private EventBus eventBus;
-    private KKTiledMap map;
+    private KKMapIf map;
     private Camera camera;
 
     private List<KKMapObjectIf> firstTapSelectedObjects = new ArrayList<KKMapObjectIf>();
@@ -40,7 +39,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private Long lastGrubbingTimestamp = null;
     private Player player;
 
-    public GrubbingInteractiveTool(EventBus eventBus, KKTiledMap map, Camera camera, Player player) {
+    public GrubbingInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera, Player player) {
         this.eventBus = eventBus;
         this.map = map;
         this.camera = camera;
@@ -104,7 +103,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
-        for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
+        for (KKMapObjectIf mapObject : map.getObjects())
         {
             mapObject.setSelected(false);
 
@@ -140,7 +139,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
-        for (KKMapObjectIf mapObject : map.getObjectsLayer().getMapObjects())
+        for (KKMapObjectIf mapObject : map.getObjects())
         {
             mapObject.setSelected(false);
 
