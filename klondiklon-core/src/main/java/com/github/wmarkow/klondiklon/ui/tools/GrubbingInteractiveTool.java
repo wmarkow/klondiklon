@@ -249,6 +249,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         if (objectToGrubb != null)
         {
             // remove object from map
+            map.removeObject(objectToGrubb);
             // add reward
         }
 

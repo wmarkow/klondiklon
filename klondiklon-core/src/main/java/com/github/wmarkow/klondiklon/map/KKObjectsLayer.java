@@ -24,4 +24,9 @@ public class KKObjectsLayer extends MapLayer
         return result.toArray(new KKMapObjectIf[]
         {});
     }
+
+    public void removeObject(KKMapObjectIf object)
+    {
+        getObjects().remove((MapObject) object);
+    }
 }

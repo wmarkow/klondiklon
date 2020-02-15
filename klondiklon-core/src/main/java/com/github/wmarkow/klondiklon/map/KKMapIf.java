@@ -9,4 +9,6 @@ public interface KKMapIf
     int getTileHeightInPixels();
 
     KKMapObjectIf[] getObjects();
+
+    void removeObject(KKMapObjectIf object);
 }

@@ -45,15 +45,12 @@ public class KKTiledMap extends TiledMap implements KKMapIf
     }
 
     @Override
-    public void dispose()
-    {
-    }
-
     public int getHeightInTiles()
     {
         return (int) getProperties().get("height");
     }
 
+    @Override
     public int getTileHeightInPixels()
     {
         return (int) getProperties().get("tileheight");
@@ -71,6 +68,26 @@ public class KKTiledMap extends TiledMap implements KKMapIf
         }
 
         return objectsLayer.getMapObjects();
+    }
+
+    @Override
+    public void removeObject(KKMapObjectIf object)
+    {
+        KKObjectsLayer objectsLayer = getObjectsLayer();
+
+        if (objectsLayer == null)
+        {
+            return;
+        }
+
+        objectsLayer.removeObject(object);
+
+        // TODO: remove it also from the Tiled map
+    }
+
+    @Override
+    public void dispose()
+    {
     }
 
     private KKObjectsLayer getObjectsLayer()
