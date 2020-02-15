@@ -40,6 +40,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
 public class KKTiledMapRenderer extends BatchTiledMapRenderer
 {

@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.map;
+package com.github.wmarkow.klondiklon.map.objects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,15 +7,13 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.github.wmarkow.klondiklon.Klondiklon;
-import com.github.wmarkow.klondiklon.graphics.Dimension;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
-class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
+public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {
     private boolean selected = false;
     private String tooltipText = null;

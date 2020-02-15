@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
 public class KKObjectsLayer extends MapLayer
 {
