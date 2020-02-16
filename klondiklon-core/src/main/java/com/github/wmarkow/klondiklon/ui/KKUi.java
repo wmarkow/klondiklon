@@ -3,10 +3,14 @@ package com.github.wmarkow.klondiklon.ui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.EventBus;
@@ -22,6 +26,9 @@ public class KKUi
     private Table tableLayout;
     private Player player;
     private EventBus eventBus;
+
+    private EnergyWidget energyWidget = null;
+    private ImageButton imageButton = null;
 
     public KKUi(Player player, EventBus eventBus) {
         this.player = player;
@@ -42,17 +49,48 @@ public class KKUi
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
-        // tableLayout.setDebug(true);
+        tableLayout.setDebug(true);
         stage.addActor(tableLayout);
-
-        EnergyWidget energyWidget = new EnergyWidget(mySkin, eventBus);
-        energyWidget.setEnergy(player.getEnergy(), player.getMaxRestorableEnergy());
 
         tableLayout.row();
         tableLayout.add().expandX();
-        tableLayout.add(energyWidget).center();
+        tableLayout.add(getEnergyWidget()).center();
         tableLayout.add().expandX();
         tableLayout.row();
         tableLayout.add().expand();
+        tableLayout.row();
+        tableLayout.add().expandX();
+        tableLayout.add().expandX();
+        tableLayout.add(getBackpackButton()).center();
+    }
+
+    private EnergyWidget getEnergyWidget()
+    {
+        if (energyWidget == null)
+        {
+            energyWidget = new EnergyWidget(mySkin, eventBus);
+            energyWidget.setEnergy(player.getEnergy(), player.getMaxRestorableEnergy());
+        }
+
+        return energyWidget;
+    }
+
+    private ImageButton getBackpackButton()
+    {
+        if (imageButton == null)
+        {
+            ImageButtonStyle style = new ImageButtonStyle();
+            style.up = new TextureRegionDrawable(Klondiklon.texturesManager.BACKPACK);
+            imageButton = new ImageButton(style);
+            imageButton.addListener(new ClickListener()
+            {
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+                {
+                    LOGGER.info("Backpack button clicked");
+                }
+            });
+        }
+
+        return imageButton;
     }
 }

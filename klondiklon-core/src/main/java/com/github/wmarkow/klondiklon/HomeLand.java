@@ -55,7 +55,7 @@ public class HomeLand extends ApplicationAdapter
     public void create()
     {
         Klondiklon.init();
-        // Klondiklon.musicManager.playMainTheme();
+//        Klondiklon.musicManager.playMainTheme();
 
         KKTiledMap libGdxMap = readDefaultMap();
         klondiklonMap = (KKMapIf) libGdxMap;

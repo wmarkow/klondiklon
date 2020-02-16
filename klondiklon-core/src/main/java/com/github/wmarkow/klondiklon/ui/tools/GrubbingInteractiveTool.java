@@ -250,7 +250,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             // remove object from map
             map.removeObject(objectToGrubb);
-            // add reward
+            
+            // TODO: add reward
         }
 
         resetGrubbing();
