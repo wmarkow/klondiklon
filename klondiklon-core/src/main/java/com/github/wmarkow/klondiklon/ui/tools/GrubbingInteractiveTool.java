@@ -19,6 +19,8 @@ import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
+import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 
@@ -28,8 +30,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
     private final static long GRUBBING_MAX_TIME_IN_MILLIS = 6000;
 
-    private HomeLandLogic homeLandLogic = new HomeLandLogic();
-
     private EventBus eventBus;
     private KKMapIf map;
     private Camera camera;
@@ -38,12 +38,15 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private KKMapObjectIf objectToGrubb = null;
     private Long lastGrubbingTimestamp = null;
     private Player player;
+    private ObjectTypesManager objectTypesManager;
 
-    public GrubbingInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera, Player player) {
+    public GrubbingInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera, Player player,
+            ObjectTypesManager objectTypesManager) {
         this.eventBus = eventBus;
         this.map = map;
         this.camera = camera;
         this.player = player;
+        this.objectTypesManager = objectTypesManager;
 
         this.eventBus.subscribe(TouchTapEvent.class, this);
         this.eventBus.subscribe(TouchLongDownEvent.class, this);
@@ -107,17 +110,21 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             mapObject.setSelected(false);
 
-            GrubbingType grubbingType = homeLandLogic.getGrubbingType(mapObject);
+            ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
+            if (descriptor == null)
+            {
+                continue;
+            }
 
-            if (GrubbingType.NONE.equals(grubbingType))
+            if (GrubbingType.NONE.equals(descriptor.getGrubbingType()))
             {
                 continue;
             }
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
-                int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
-                String name = homeLandLogic.getName(mapObject.getObjectType());
+                int energyToGrub = descriptor.getEnergyToGrubb();
+                String name = descriptor.getName();
                 String tooltip = String.format("%s \n Wytrzymałość: %s", name, energyToGrub);
 
                 mapObject.setSelectedTrue(tooltip);
@@ -143,16 +150,20 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             mapObject.setSelected(false);
 
-            GrubbingType grubbingType = homeLandLogic.getGrubbingType(mapObject);
+            ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
+            if (descriptor == null)
+            {
+                continue;
+            }
 
-            if (GrubbingType.NONE.equals(grubbingType))
+            if (GrubbingType.NONE.equals(descriptor.getGrubbingType()))
             {
                 continue;
             }
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
-                int energyToGrub = homeLandLogic.energyToGrub(mapObject.getObjectType());
+                int energyToGrub = descriptor.getEnergyToGrubb();
                 mapObject.setSelectedTrue(String.valueOf(energyToGrub));
                 firstTapSelectedObjects.add(mapObject);
 
@@ -205,7 +216,14 @@ public class GrubbingInteractiveTool implements EventSubscriber
         objectToGrubb = secondTapObjects.get(0);
         lastGrubbingTimestamp = System.currentTimeMillis();
 
-        int energyToGrub = homeLandLogic.energyToGrub(objectToGrubb.getObjectType());
+        ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
+        if (descriptor == null)
+        {
+            resetGrubbing();
+            return;
+        }
+
+        int energyToGrub = descriptor.getEnergyToGrubb();
         if (player.getEnergy() < energyToGrub)
         {
             // to low energy, can not grub
@@ -218,9 +236,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
         LOGGER.info(String.format("Need to grubb the object %s", objectToGrubb));
         firstTapSelectedObjects.clear();
 
-        // now it depends on the grubbing type, it depends on the object type itself
-        GrubbingType grubbingType = homeLandLogic.getGrubbingType(objectToGrubb);
-        switch (grubbingType)
+        // now it depends on the grubbing type
+        switch (descriptor.getGrubbingType())
         {
             case DIGGING:
                 Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_DIGGING, 1.0f, 1,
@@ -250,7 +267,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             // remove object from map
             map.removeObject(objectToGrubb);
-            
+
             // TODO: add reward
         }
 

@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon;
+package com.github.wmarkow.klondiklon.home.objects;
 
 public class ObjectTypes
 {

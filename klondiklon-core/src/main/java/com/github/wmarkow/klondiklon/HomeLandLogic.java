@@ -1,162 +1,123 @@
 package com.github.wmarkow.klondiklon;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.home.objects.ObjectTypes;
+import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
+import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingType;
 
 public class HomeLandLogic
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(HomeLandLogic.class);
-
-    public GrubbingType getGrubbingType(KKMapObjectIf mapObject)
+    public void init(ObjectTypesManager manager)
     {
-        if (ObjectTypes.FIR.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.CHOPPING;
-        }
-        if (ObjectTypes.COAL_LARGE.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.COAL_MEDIUM.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.COAL_SMALL.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.ICE_COLUMN.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.ROCK_LARGE.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.ROCK_MEDIUM.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.MINING;
-        }
-        if (ObjectTypes.GRASS_SMALL.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.DIGGING;
-        }
-        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.DIGGING;
-        }
-        if (ObjectTypes.FRAGARIA.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.DIGGING;
-        }
-        if (ObjectTypes.RUBUS.equals(mapObject.getObjectType()))
-        {
-            return GrubbingType.DIGGING;
-        }
-
-        return GrubbingType.NONE;
+        manager.registerObjectTypeDescriptor(createFir());
+        manager.registerObjectTypeDescriptor(createCoalLarge());
+        manager.registerObjectTypeDescriptor(createCoalMedium());
+        manager.registerObjectTypeDescriptor(createCoalSmall());
+        manager.registerObjectTypeDescriptor(createIceColumn());
+        manager.registerObjectTypeDescriptor(createRockLarge());
+        manager.registerObjectTypeDescriptor(createRockMedium());
+        manager.registerObjectTypeDescriptor(createGrassSmall());
+        manager.registerObjectTypeDescriptor(createSnawyBuschMedium());
+        manager.registerObjectTypeDescriptor(createFragaria());
+        manager.registerObjectTypeDescriptor(createRubus());
     }
 
-    public int energyToGrub(String objectType)
+    private ObjectTypeDescriptor createFir()
     {
-        if (ObjectTypes.FIR.equals(objectType))
-        {
-            return 30;
-        }
-        if (ObjectTypes.COAL_LARGE.equals(objectType))
-        {
-            return 40;
-        }
-        if (ObjectTypes.COAL_MEDIUM.equals(objectType))
-        {
-            return 30;
-        }
-        if (ObjectTypes.COAL_SMALL.equals(objectType))
-        {
-            return 20;
-        }
-        if (ObjectTypes.ICE_COLUMN.equals(objectType))
-        {
-            return 55;
-        }
-        if (ObjectTypes.ROCK_LARGE.equals(objectType))
-        {
-            return 35;
-        }
-        if (ObjectTypes.ROCK_MEDIUM.equals(objectType))
-        {
-            return 20;
-        }
-        if (ObjectTypes.GRASS_SMALL.equals(objectType))
-        {
-            return 10;
-        }
-        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(objectType))
-        {
-            return 20;
-        }
-        if (ObjectTypes.FRAGARIA.equals(objectType))
-        {
-            return 15;
-        }
-        if (ObjectTypes.RUBUS.equals(objectType))
-        {
-            return 25;
-        }
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FIR, "Jodła");
+        obj.setGrubbingType(GrubbingType.CHOPPING);
+        obj.setEnergyToGrubb(30);
 
-        return 5;
+        return obj;
     }
 
-    public String getName(String objectType)
+    private ObjectTypeDescriptor createCoalLarge()
     {
-        if (ObjectTypes.FIR.equals(objectType))
-        {
-            return "Jodła";
-        }
-        if (ObjectTypes.COAL_LARGE.equals(objectType))
-        {
-            return "Hałda węgla";
-        }
-        if (ObjectTypes.COAL_MEDIUM.equals(objectType))
-        {
-            return "Hałda węgla";
-        }
-        if (ObjectTypes.COAL_SMALL.equals(objectType))
-        {
-            return "Hałda węgla";
-        }
-        if (ObjectTypes.ICE_COLUMN.equals(objectType))
-        {
-            return "Kolumna lodowa";
-        }
-        if (ObjectTypes.ROCK_LARGE.equals(objectType))
-        {
-            return "Skała";
-        }
-        if (ObjectTypes.ROCK_MEDIUM.equals(objectType))
-        {
-            return "Skała";
-        }
-        if (ObjectTypes.GRASS_SMALL.equals(objectType))
-        {
-            return "Trawa";
-        }
-        if (ObjectTypes.SNOWY_BUSH_MEDIUM.equals(objectType))
-        {
-            return "Ośnieżony krzak";
-        }
-        if (ObjectTypes.FRAGARIA.equals(objectType))
-        {
-            return "Poziomka";
-        }
-        if (ObjectTypes.RUBUS.equals(objectType))
-        {
-            return "Jeżyna";
-        }
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_LARGE, "Hałda węgla");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(40);
 
-        return null;
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createCoalMedium()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_MEDIUM, "Hałda węgla");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(30);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createCoalSmall()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_SMALL, "Hałda węgla");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(20);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createIceColumn()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ICE_COLUMN, "Kolumna lodowa");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(35);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createRockLarge()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_LARGE, "Skała");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(55);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createRockMedium()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_MEDIUM, "Skała");
+        obj.setGrubbingType(GrubbingType.MINING);
+        obj.setEnergyToGrubb(20);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createGrassSmall()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.GRASS_SMALL, "Trawa");
+        obj.setGrubbingType(GrubbingType.DIGGING);
+        obj.setEnergyToGrubb(4);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createSnawyBuschMedium()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.SNOWY_BUSH_MEDIUM, "Ośnieżony krzak");
+        obj.setGrubbingType(GrubbingType.DIGGING);
+        obj.setEnergyToGrubb(20);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createFragaria()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FRAGARIA, "Poziomka");
+        obj.setGrubbingType(GrubbingType.DIGGING);
+        obj.setEnergyToGrubb(10);
+
+        return obj;
+    }
+
+    private ObjectTypeDescriptor createRubus()
+    {
+        ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.RUBUS, "Jeżyna");
+        obj.setGrubbingType(GrubbingType.DIGGING);
+        obj.setEnergyToGrubb(10);
+
+        return obj;
     }
 }
