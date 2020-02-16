@@ -19,6 +19,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
 import com.github.wmarkow.klondiklon.player.Player;

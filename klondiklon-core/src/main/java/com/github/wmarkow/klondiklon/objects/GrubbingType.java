@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.ui.tools;
+package com.github.wmarkow.klondiklon.objects;
 
 public enum GrubbingType
 {

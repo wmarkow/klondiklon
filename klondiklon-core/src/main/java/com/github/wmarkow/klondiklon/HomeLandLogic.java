@@ -1,9 +1,9 @@
 package com.github.wmarkow.klondiklon;
 
 import com.github.wmarkow.klondiklon.home.objects.ObjectTypes;
+import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
-import com.github.wmarkow.klondiklon.ui.tools.GrubbingType;
 
 public class HomeLandLogic
 {

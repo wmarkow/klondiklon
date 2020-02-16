@@ -1,7 +1,5 @@
 package com.github.wmarkow.klondiklon.objects;
 
-import com.github.wmarkow.klondiklon.ui.tools.GrubbingType;
-
 public class ObjectTypeDescriptor
 {
     private String type;
