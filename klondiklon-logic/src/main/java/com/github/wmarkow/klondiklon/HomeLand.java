@@ -78,6 +78,7 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic = new HomeLandLogic();
         homeLandLogic.init(Klondiklon.objectTypesManager);
         homeLandLogic.initFonts(KlondiklonCore.fontsManager);
+        homeLandLogic.initTextures(KlondiklonCore.texturesManager);
         player = new Player(eventBus);
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player,
                 Klondiklon.objectTypesManager);

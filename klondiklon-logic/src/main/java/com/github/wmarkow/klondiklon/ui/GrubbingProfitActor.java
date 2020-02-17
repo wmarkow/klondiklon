@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.home.objects.StorageItems;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
@@ -69,7 +70,8 @@ public class GrubbingProfitActor extends Group
             {
                 if (StorageItems.BUSH_WOOD.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_BUSH_WOOD);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_BUSH_WOOD));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);
@@ -78,7 +80,8 @@ public class GrubbingProfitActor extends Group
                 }
                 if (StorageItems.FIR_WOOD.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_FIR_WOOD);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_FIR_WOOD));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);
@@ -87,7 +90,8 @@ public class GrubbingProfitActor extends Group
                 }
                 if (StorageItems.GRASS.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_GRASS);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_GRASS));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);
@@ -96,7 +100,8 @@ public class GrubbingProfitActor extends Group
                 }
                 if (StorageItems.ICE.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_ICE);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_ICE));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);
@@ -105,7 +110,8 @@ public class GrubbingProfitActor extends Group
                 }
                 if (StorageItems.STONE.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_STONE);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_STONE));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);
@@ -114,7 +120,8 @@ public class GrubbingProfitActor extends Group
                 }
                 if (StorageItems.WOOD.equals(storageItem))
                 {
-                    Image image = new Image(KlondiklonCore.texturesManager.STORAGE_ITEM_WOOD);
+                    Image image = new Image(
+                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_WOOD));
                     image.setX(start.getX());
                     image.setY(start.getY());
                     addActor(image);

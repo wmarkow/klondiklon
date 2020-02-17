@@ -14,6 +14,7 @@ import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.events.PlayerEnergyChangedEvent;
+import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 
 public class EnergyWidget extends Stack
 {
@@ -66,7 +67,7 @@ public class EnergyWidget extends Stack
     {
         if (lightningImage == null)
         {
-            Texture texture = KlondiklonCore.texturesManager.LIGHTNING;
+            Texture texture = KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.LIGHTNING);
             lightningImage = new ImageWidget(texture);
             lightningImage.setScale(0.65f);
         }

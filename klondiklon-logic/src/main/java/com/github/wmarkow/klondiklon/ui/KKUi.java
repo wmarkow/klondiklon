@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
 
@@ -86,7 +87,7 @@ public class KKUi
         if (imageButton == null)
         {
             ImageButtonStyle style = new ImageButtonStyle();
-            style.up = new TextureRegionDrawable(KlondiklonCore.texturesManager.BACKPACK);
+            style.up = new TextureRegionDrawable(KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.BACKPACK));
             imageButton = new ImageButton(style);
             imageButton.addListener(new ClickListener()
             {
