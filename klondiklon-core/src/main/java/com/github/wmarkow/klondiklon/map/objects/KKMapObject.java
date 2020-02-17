@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
@@ -89,7 +89,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         if (isSelected())
         {
             ShaderProgram currentShader = batch.getShader();
-            batch.setShader(Klondiklon.shadersManager.SHADER_OUTLINE);
+            batch.setShader(KlondiklonCore.shadersManager.SHADER_OUTLINE);
             batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
             batch.setShader(currentShader);
         }
@@ -98,9 +98,9 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
         if (isSelected() && tooltipText != null)
         {
-            BitmapFont font = Klondiklon.fontsManager.GRUBBING_FONT;
+            BitmapFont font = KlondiklonCore.fontsManager.GRUBBING_FONT;
 
-            NinePatch balloonNinePatch = new NinePatch(Klondiklon.texturesManager.BALLOON, 14, 14, 14, 27);
+            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.BALLOON, 14, 14, 14, 27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
             TextButton button = new TextButton(tooltipText, style);

@@ -54,8 +54,8 @@ public class HomeLand extends ApplicationAdapter
     @Override
     public void create()
     {
-        Klondiklon.init();
-        // Klondiklon.musicManager.playMainTheme();
+        KlondiklonCore.init();
+//        KlondiklonCore.musicManager.playMainTheme();
 
         KKTiledMap libGdxMap = readDefaultMap();
         klondiklonMap = (KKMapIf) libGdxMap;
@@ -100,7 +100,7 @@ public class HomeLand extends ApplicationAdapter
         renderer.setView(camera);
         renderer.render();
         batch.begin();
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
@@ -110,18 +110,18 @@ public class HomeLand extends ApplicationAdapter
         TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(klondiklonMap.getHeightInTiles(),
                 klondiklonMap.getTileHeightInPixels(), tmxOrthogonal);
 
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch,
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
                 Gdx.graphics.getHeight() - 0);
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y),
-                0, Gdx.graphics.getHeight() - 20);
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch,
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
+                String.format("       World (x,y): %s, %s", world.x, world.y), 0, Gdx.graphics.getHeight() - 20);
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
                 String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0, Gdx.graphics.getHeight() - 40);
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch,
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
                 Gdx.graphics.getHeight() - 60);
-        Klondiklon.fontsManager.DEFAULT_FONT.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y),
-                0, Gdx.graphics.getHeight() - 80);
+        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
+                String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0, Gdx.graphics.getHeight() - 80);
 
         batch.end();
 

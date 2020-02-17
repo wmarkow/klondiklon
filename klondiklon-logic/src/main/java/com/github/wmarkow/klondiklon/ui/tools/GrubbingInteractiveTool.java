@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.wmarkow.klondiklon.HomeLandLogic;
 import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
@@ -243,16 +244,16 @@ public class GrubbingInteractiveTool implements EventSubscriber
         switch (descriptor.getGrubbingType())
         {
             case DIGGING:
-                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_DIGGING, 1.0f, 1,
+                KlondiklonCore.soundManager.play(KlondiklonCore.soundManager.GRUBBING_DIGGING, 1.0f, 1,
                         new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
-                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_CHOPPING, 1.0f, 3,
+                KlondiklonCore.soundManager.play(KlondiklonCore.soundManager.GRUBBING_CHOPPING, 1.0f, 3,
                         new GrubbingSoundPlayerListener());
                 break;
             case MINING:
-                Klondiklon.soundManager.play(Klondiklon.soundManager.GRUBBING_MINING, 2.5f, 1,
+                KlondiklonCore.soundManager.play(KlondiklonCore.soundManager.GRUBBING_MINING, 2.5f, 1,
                         new GrubbingSoundPlayerListener());
                 break;
             default:
@@ -280,7 +281,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
             stage.addActor(gpa);
-            
+
             // TODO: remove GrubbingProfitActor from stage after animation finishes
         }
 

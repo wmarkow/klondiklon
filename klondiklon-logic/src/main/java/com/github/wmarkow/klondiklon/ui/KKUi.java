@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
@@ -50,7 +51,7 @@ public class KKUi
     private void create()
     {
         stage = new Stage(new ScreenViewport());
-        mySkin = Klondiklon.skinsManager.GLASSY;
+        mySkin = KlondiklonCore.skinsManager.GLASSY;
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
@@ -85,7 +86,7 @@ public class KKUi
         if (imageButton == null)
         {
             ImageButtonStyle style = new ImageButtonStyle();
-            style.up = new TextureRegionDrawable(Klondiklon.texturesManager.BACKPACK);
+            style.up = new TextureRegionDrawable(KlondiklonCore.texturesManager.BACKPACK);
             imageButton = new ImageButton(style);
             imageButton.addListener(new ClickListener()
             {
