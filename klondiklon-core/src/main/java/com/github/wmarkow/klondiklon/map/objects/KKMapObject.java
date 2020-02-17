@@ -98,8 +98,12 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
         if (isSelected() && tooltipText != null)
         {
+            // TODO: not a nice idea to use this font name. It is better to create something
+            // like "tooltip provider"
             BitmapFont font = KlondiklonCore.fontsManager.getFont("GRUBBING_FONT");
 
+            // TODO: not a nice idea to use this font name. It is better to create something
+            // like "tooltip provider"
             NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON"), 14, 14, 14,
                     27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
