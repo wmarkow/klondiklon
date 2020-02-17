@@ -7,7 +7,7 @@ public class ObjectTypeDescriptor
 {
     private String type;
     private String name;
-    private GrubbingType grubbingType = GrubbingType.NONE;
+    private GrubbingType grubbingType = null;
     private int energyToGrubb = 0;
     private Set<GrubbingProfit> grubbingProfits = new HashSet<GrubbingProfit>();
 
@@ -40,7 +40,7 @@ public class ObjectTypeDescriptor
     {
         return grubbingProfits;
     }
-    
+
     public void addGrubbingProfit(GrubbingProfit grubbingProfit)
     {
         grubbingProfits.add(grubbingProfit);

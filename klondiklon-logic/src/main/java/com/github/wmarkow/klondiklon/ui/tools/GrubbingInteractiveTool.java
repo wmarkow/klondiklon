@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.github.wmarkow.klondiklon.HomeLandLogic;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.event.Event;
@@ -21,7 +20,6 @@ import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
-import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
 import com.github.wmarkow.klondiklon.player.Player;
@@ -120,7 +118,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
                 continue;
             }
 
-            if (GrubbingType.NONE.equals(descriptor.getGrubbingType()))
+            if (descriptor.getGrubbingType() == null)
             {
                 continue;
             }
@@ -160,7 +158,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
                 continue;
             }
 
-            if (GrubbingType.NONE.equals(descriptor.getGrubbingType()))
+            if (descriptor.getGrubbingType() == null)
             {
                 continue;
             }
