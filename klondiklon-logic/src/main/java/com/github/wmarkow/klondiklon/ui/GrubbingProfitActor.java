@@ -13,9 +13,9 @@ import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
-import com.github.wmarkow.klondiklon.home.objects.StorageItems;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
+import com.github.wmarkow.klondiklon.objects.StorageItems;
 
 public class GrubbingProfitActor extends Group
 {

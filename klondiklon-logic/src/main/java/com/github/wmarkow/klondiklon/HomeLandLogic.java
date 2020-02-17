@@ -4,12 +4,12 @@ import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
-import com.github.wmarkow.klondiklon.home.objects.ObjectTypes;
-import com.github.wmarkow.klondiklon.home.objects.StorageItems;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
+import com.github.wmarkow.klondiklon.objects.ObjectTypes;
 import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
+import com.github.wmarkow.klondiklon.objects.StorageItems;
 
 public class HomeLandLogic
 {

@@ -3,8 +3,6 @@ package com.github.wmarkow.klondiklon.objects;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.wmarkow.klondiklon.home.objects.StorageItems;
-
 public class ObjectTypeDescriptor
 {
     private String type;
