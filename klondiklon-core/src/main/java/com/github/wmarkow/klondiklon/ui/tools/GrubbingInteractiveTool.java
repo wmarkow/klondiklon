@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.wmarkow.klondiklon.HomeLandLogic;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.event.Event;
@@ -24,6 +25,7 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
+import com.github.wmarkow.klondiklon.ui.GrubbingProfitActor;
 
 public class GrubbingInteractiveTool implements EventSubscriber
 {
@@ -270,6 +272,14 @@ public class GrubbingInteractiveTool implements EventSubscriber
             map.removeObject(objectToGrubb);
 
             // TODO: add reward
+            ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
+            Stage stage = Klondiklon.ui.getStage();
+            CoordinateCalculator cc = new CoordinateCalculator();
+            GdxScreenCoordinates start = cc.world2Screen(camera,
+                    new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
+
+            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
+            stage.addActor(gpa);
         }
 
         resetGrubbing();

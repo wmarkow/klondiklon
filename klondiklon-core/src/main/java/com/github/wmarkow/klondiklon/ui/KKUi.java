@@ -42,6 +42,11 @@ public class KKUi
         return stage;
     }
 
+    public ImageButton getBackpackWidget()
+    {
+        return imageButton;
+    }
+
     private void create()
     {
         stage = new Stage(new ScreenViewport());
@@ -84,7 +89,7 @@ public class KKUi
             imageButton = new ImageButton(style);
             imageButton.addListener(new ClickListener()
             {
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button)
                 {
                     LOGGER.info("Backpack button clicked");
                 }

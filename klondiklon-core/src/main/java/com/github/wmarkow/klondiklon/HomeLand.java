@@ -82,6 +82,7 @@ public class HomeLand extends ApplicationAdapter
                 Klondiklon.objectTypesManager);
 
         klondiklonUi = new KKUi(player, eventBus);
+        Klondiklon.ui = klondiklonUi;
         loadSimulation(player);
 
         InputMultiplexer multiplexer = new InputMultiplexer();

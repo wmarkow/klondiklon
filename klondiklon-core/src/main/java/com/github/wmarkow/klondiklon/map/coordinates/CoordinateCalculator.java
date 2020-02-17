@@ -32,6 +32,13 @@ public class CoordinateCalculator
         return new GdxWorldOrthoCoordinates(camera.unproject(screenCoordinates.toVector3()));
     }
 
+    public GdxScreenCoordinates world2Screen(Camera camera, GdxWorldOrthoCoordinates worldCoordinates)
+    {
+        Vector3 result = camera.project(worldCoordinates);
+
+        return new GdxScreenCoordinates((int) result.x, (int) result.y);
+    }
+
     public TmxOrthoCoordinates world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,
             GdxWorldOrthoCoordinates world)
     {
