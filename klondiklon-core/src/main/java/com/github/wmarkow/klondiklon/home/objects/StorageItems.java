@@ -8,4 +8,5 @@ public class StorageItems
     public final static String FIR_WOOD = "FIR_WOOD";
     public final static String BUSH_WOOD = "BUSH_WOOD";
     public final static String GRASS = "GRASS";
+    public final static String COAL = "COAL";
 }

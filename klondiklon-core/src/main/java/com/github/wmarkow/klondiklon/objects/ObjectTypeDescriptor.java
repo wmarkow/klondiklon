@@ -40,10 +40,12 @@ public class ObjectTypeDescriptor
 
     public Set<GrubbingProfit> getGrubbingProfits()
     {
-        grubbingProfits = new HashSet<GrubbingProfit>();
-        grubbingProfits.add(new GrubbingProfit(StorageItems.ICE, 4));
-        
         return grubbingProfits;
+    }
+    
+    public void addGrubbingProfit(GrubbingProfit grubbingProfit)
+    {
+        grubbingProfits.add(grubbingProfit);
     }
 
     public ObjectTypeDescriptor setGrubbingType(GrubbingType grubbingType)

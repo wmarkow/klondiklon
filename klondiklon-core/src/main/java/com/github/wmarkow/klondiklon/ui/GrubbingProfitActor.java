@@ -17,6 +17,7 @@ import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 
 public class GrubbingProfitActor extends Group
 {
+    private final static float ANIMATION_DURATION_IN_SECONDS = 2.5f;
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
@@ -30,7 +31,7 @@ public class GrubbingProfitActor extends Group
 
         t += delta;
 
-        if (t >= 1.5f)
+        if (t >= ANIMATION_DURATION_IN_SECONDS)
         {
             // end of animation
             return;
@@ -40,7 +41,7 @@ public class GrubbingProfitActor extends Group
         {
             Path<Vector2> path = paths.get(q);
             Vector2 current = new Vector2();
-            path.valueAt(current, t / 1.5f);
+            path.valueAt(current, t / ANIMATION_DURATION_IN_SECONDS);
 
             Actor actor = getChild(q);
             actor.setX(current.x);
