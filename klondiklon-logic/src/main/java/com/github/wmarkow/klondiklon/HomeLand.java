@@ -55,7 +55,7 @@ public class HomeLand extends ApplicationAdapter
     public void create()
     {
         KlondiklonCore.init();
-//        KlondiklonCore.musicManager.playMainTheme();
+        // KlondiklonCore.musicManager.playMainTheme();
 
         KKTiledMap libGdxMap = readDefaultMap();
         klondiklonMap = (KKMapIf) libGdxMap;
@@ -77,6 +77,7 @@ public class HomeLand extends ApplicationAdapter
 
         homeLandLogic = new HomeLandLogic();
         homeLandLogic.init(Klondiklon.objectTypesManager);
+        homeLandLogic.initFonts(KlondiklonCore.fontsManager);
         player = new Player(eventBus);
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player,
                 Klondiklon.objectTypesManager);

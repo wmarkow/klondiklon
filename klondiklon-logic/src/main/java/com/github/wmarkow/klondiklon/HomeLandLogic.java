@@ -1,5 +1,7 @@
 package com.github.wmarkow.klondiklon;
 
+import com.github.wmarkow.klondiklon.graphics.FontsManager;
+import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.home.objects.ObjectTypes;
 import com.github.wmarkow.klondiklon.home.objects.StorageItems;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
@@ -22,6 +24,12 @@ public class HomeLandLogic
         manager.registerObjectTypeDescriptor(createSnawyBuschMedium());
         manager.registerObjectTypeDescriptor(createFragaria());
         manager.registerObjectTypeDescriptor(createRubus());
+    }
+    
+    public void initFonts(FontsManager fontsManager)
+    {
+        FontsRegistrar fontsRegistrar = new FontsRegistrar();
+        fontsRegistrar.register(fontsManager);
     }
 
     private ObjectTypeDescriptor createFir()

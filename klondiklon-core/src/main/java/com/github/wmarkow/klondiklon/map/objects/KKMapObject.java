@@ -98,7 +98,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
         if (isSelected() && tooltipText != null)
         {
-            BitmapFont font = KlondiklonCore.fontsManager.GRUBBING_FONT;
+            BitmapFont font = KlondiklonCore.fontsManager.DEFAULT_FONT;
 
             NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.BALLOON, 14, 14, 14, 27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);

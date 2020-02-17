@@ -1,5 +1,8 @@
 package com.github.wmarkow.klondiklon.graphics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,9 +13,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 public class FontsManager
 {
     public BitmapFont DEFAULT_FONT;
-    public BitmapFont GRUBBING_FONT;
+    public final static String POLISH_CHARACTERS = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŻŹaąbcćdeęfghijklłmnńoópqrsśtuvwxyzżź0123456789:";
     private GlyphLayout layout = new GlyphLayout();
-    private String POLISH_CHARACTERS = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŻŹaąbcćdeęfghijklłmnńoópqrsśtuvwxyzżź0123456789:";
+
+    private Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
 
     public void init()
     {
@@ -21,10 +25,16 @@ public class FontsManager
         parameter.characters = POLISH_CHARACTERS;
         parameter.size = 12;
         DEFAULT_FONT = generator.generateFont(parameter);
+    }
 
-        parameter.size = 40;
-        parameter.color = Color.BLACK;
-        GRUBBING_FONT = generator.generateFont(parameter);
+    public void registerFont(String name, BitmapFont font)
+    {
+        fonts.put(name, font);
+    }
+
+    public BitmapFont getFont(String name)
+    {
+        return fonts.get(name);
     }
 
     public Dimension meassureText(BitmapFont font, String text)
