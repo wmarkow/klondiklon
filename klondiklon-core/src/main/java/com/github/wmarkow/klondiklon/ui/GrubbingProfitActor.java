@@ -40,7 +40,7 @@ public class GrubbingProfitActor extends Group
         {
             Path<Vector2> path = paths.get(q);
             Vector2 current = new Vector2();
-            path.valueAt(current, t/1.5f);
+            path.valueAt(current, t / 1.5f);
 
             Actor actor = getChild(q);
             actor.setX(current.x);
@@ -118,15 +118,15 @@ public class GrubbingProfitActor extends Group
         {
             Actor actor = getChildren().get(q);
 
-            float newX = actor.getX() + random.nextFloat() * 200.0f - 100.0f;
-            float newY = actor.getY() + random.nextFloat() * 200.0f - 100.0f;
+            float newX = actor.getX() + random.nextFloat() * 400.0f - 200.0f;
+            float newY = actor.getY() + random.nextFloat() * 400.0f - 200.0f;
             actor.setX(newX);
             actor.setY(newY);
 
             Actor backpackButton = Klondiklon.ui.getBackpackWidget();
 
-            paths.add(new Bezier<Vector2>(new Vector2(newX, newY),
-                    new Vector2(backpackButton.getX(), backpackButton.getY())));
+            paths.add(new Bezier<Vector2>(new Vector2(start.getX(), start.getY()), new Vector2(newX, newY),
+                    new Vector2(newX, newY), new Vector2(backpackButton.getX(), backpackButton.getY())));
         }
     }
 }
