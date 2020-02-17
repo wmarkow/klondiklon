@@ -280,6 +280,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
             stage.addActor(gpa);
+            
+            // TODO: remove GrubbingProfitActor from stage after animation finishes
         }
 
         resetGrubbing();

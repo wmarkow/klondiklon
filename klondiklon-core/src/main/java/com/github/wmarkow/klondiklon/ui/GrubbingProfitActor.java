@@ -34,18 +34,27 @@ public class GrubbingProfitActor extends Group
         if (t >= ANIMATION_DURATION_IN_SECONDS)
         {
             // end of animation
+            getChildren().clear();
             return;
+        }
+
+        float normalisedT = t / ANIMATION_DURATION_IN_SECONDS;
+        float scale = 1.0f;
+        if (normalisedT > 0.9)
+        {
+            scale = (1.0f - normalisedT) * 5f + 0.5f;
         }
 
         for (int q = 0; q < paths.size; q++)
         {
             Path<Vector2> path = paths.get(q);
             Vector2 current = new Vector2();
-            path.valueAt(current, t / ANIMATION_DURATION_IN_SECONDS);
+            path.valueAt(current, normalisedT);
 
             Actor actor = getChild(q);
             actor.setX(current.x);
             actor.setY(current.y);
+            actor.setScale(scale);
         }
 
     }
