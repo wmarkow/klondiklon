@@ -1,7 +1,7 @@
 package com.github.wmarkow.klondiklon.player;
 
 import com.github.wmarkow.klondiklon.event.EventBus;
-import com.github.wmarkow.klondiklon.event.events.PlayerEnergyChangedEvent;
+import com.github.wmarkow.klondiklon.events.PlayerEnergyChangedEvent;
 
 public class Player
 {
