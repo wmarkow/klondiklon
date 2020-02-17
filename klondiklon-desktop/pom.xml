@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.wmarkow.klondiklon</groupId>
-			<artifactId>klondiklon-core</artifactId>
+			<artifactId>klondiklon-logic</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
