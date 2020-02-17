@@ -5,8 +5,8 @@ import com.github.wmarkow.klondiklon.event.events.PlayerEnergyChangedEvent;
 
 public class Player
 {
-    private final static int MAX_RESTORABLE_ENERGY = 100;
-    private int energy = 100;
+    private final static int MAX_RESTORABLE_ENERGY = 1000;
+    private int energy = 1000;
     private EventBus eventBus;
 
     public Player(EventBus eventBus) {
@@ -26,7 +26,7 @@ public class Player
     public void addEnergy(int delta)
     {
         energy += delta;
-        
+
         eventBus.publish(new PlayerEnergyChangedEvent(energy, MAX_RESTORABLE_ENERGY));
     }
 
