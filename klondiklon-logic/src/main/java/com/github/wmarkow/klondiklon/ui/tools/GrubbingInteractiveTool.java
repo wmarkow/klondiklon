@@ -24,7 +24,7 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
-import com.github.wmarkow.klondiklon.ui.GrubbingProfitActor;
+import com.github.wmarkow.klondiklon.ui.widgets.GrubbingProfitActor;
 
 public class GrubbingInteractiveTool implements EventSubscriber
 {

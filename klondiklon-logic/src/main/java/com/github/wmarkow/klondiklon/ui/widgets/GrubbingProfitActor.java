@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.ui;
+package com.github.wmarkow.klondiklon.ui.widgets;
 
 import java.util.Random;
 import java.util.Set;
