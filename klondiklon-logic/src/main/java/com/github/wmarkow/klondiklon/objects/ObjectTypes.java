@@ -1,5 +1,12 @@
 package com.github.wmarkow.klondiklon.objects;
 
+/***
+ * Object types definition set. An object is here a single object that can be
+ * shown on the map, like coal ice column or a tree.
+ * <p>
+ * Object types should be unique.
+ * </p>
+ */
 public class ObjectTypes
 {
     public final static String COAL_LARGE = "COAL_LARGE"; // węgiel

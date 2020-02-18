@@ -1,5 +1,14 @@
 package com.github.wmarkow.klondiklon.objects;
 
+/***
+ * 
+ * Definitions of the items that can be kept in the storage, like ice, stone,
+ * wood, fire, grass, coal, treasure, etc.
+ * 
+ * <p>
+ * Storage items types should be unique.
+ * </p>
+ */
 public class StorageItemTypes
 {
     public final static String ICE = "ICE";
