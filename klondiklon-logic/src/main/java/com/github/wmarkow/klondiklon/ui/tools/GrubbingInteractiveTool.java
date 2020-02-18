@@ -270,7 +270,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
             // remove object from map
             map.removeObject(objectToGrubb);
 
-            // TODO: add reward
+            // TODO: add reward to the backpack
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
             Stage stage = Klondiklon.ui.getStage();
             CoordinateCalculator cc = new CoordinateCalculator();
@@ -279,8 +279,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
             stage.addActor(gpa);
-
-            // TODO: remove GrubbingProfitActor from stage after animation finishes
         }
 
         resetGrubbing();

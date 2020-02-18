@@ -16,6 +16,11 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
+/***
+ * Performs a nice animation on the screen of grubbed items. This actor removes
+ * itself from the stage after animation is finished.
+ * 
+ */
 public class GrubbingProfitActor extends Group
 {
     private final static float ANIMATION_DURATION_IN_SECONDS = 2.5f;
@@ -36,6 +41,7 @@ public class GrubbingProfitActor extends Group
         {
             // end of animation
             getChildren().clear();
+            getStage().getActors().removeValue(this, true);
             return;
         }
 
@@ -57,7 +63,6 @@ public class GrubbingProfitActor extends Group
             actor.setY(current.y);
             actor.setScale(scale);
         }
-
     }
 
     private void createImages(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start)
