@@ -18,9 +18,9 @@ public class HomeLandLogic
     public void initObjectTypeDescriptors(ObjectTypeDescriptorsManager manager)
     {
         manager.registerObjectTypeDescriptor(createFir());
-        manager.registerObjectTypeDescriptor(createCoalLarge());
-        manager.registerObjectTypeDescriptor(createCoalMedium());
-        manager.registerObjectTypeDescriptor(createCoalSmall());
+//        manager.registerObjectTypeDescriptor(createCoalLarge());
+//        manager.registerObjectTypeDescriptor(createCoalMedium());
+//        manager.registerObjectTypeDescriptor(createCoalSmall());
         manager.registerObjectTypeDescriptor(createIceColumn());
         manager.registerObjectTypeDescriptor(createRockLarge());
         manager.registerObjectTypeDescriptor(createRockMedium());
@@ -30,7 +30,7 @@ public class HomeLandLogic
         manager.registerObjectTypeDescriptor(createRubus());
     }
 
-    public void initStorageIetmDescriptors(StorageItemDescriptorsManager manager)
+    public void initStorageItemDescriptors(StorageItemDescriptorsManager manager)
     {
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.BUSH_WOOD, TexturesRegistrar.STORAGE_ITEM_BUSH_WOOD));
@@ -66,7 +66,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FIR, "Jodła");
         obj.setGrubbingType(GrubbingType.CHOPPING);
         obj.setEnergyToGrubb(30);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.FIR_WOOD, 8));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.FIR_WOOD), 8));
 
         return obj;
     }
@@ -76,7 +77,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_LARGE, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(40);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.COAL, 8));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 8));
 
         return obj;
     }
@@ -86,7 +88,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_MEDIUM, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(30);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.COAL, 6));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 6));
 
         return obj;
     }
@@ -96,7 +99,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_SMALL, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.COAL, 4));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 4));
 
         return obj;
     }
@@ -106,7 +110,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ICE_COLUMN, "Kolumna lodowa");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(35);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.ICE, 10));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.ICE), 10));
 
         return obj;
     }
@@ -116,7 +121,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_LARGE, "Skała");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(55);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.STONE, 8));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STONE), 8));
 
         return obj;
     }
@@ -126,7 +132,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_MEDIUM, "Skała");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.STONE, 6));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STONE), 6));
 
         return obj;
     }
@@ -136,7 +143,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.GRASS_SMALL, "Trawa");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(4);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.GRASS, 3));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.GRASS), 3));
 
         return obj;
     }
@@ -146,8 +154,10 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.SNOWY_BUSH_MEDIUM, "Ośnieżony krzak");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.BUSH_WOOD, 4));
-        obj.addGrubbingProfit(new GrubbingProfit(StorageItemTypes.ICE, 1));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.BUSH_WOOD), 4));
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.ICE), 1));
 
         return obj;
     }

@@ -76,8 +76,8 @@ public class HomeLand extends ApplicationAdapter
         batch = new SpriteBatch();
 
         homeLandLogic = new HomeLandLogic();
+        homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
         homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
-        homeLandLogic.initStorageIetmDescriptors(Klondiklon.storageItemDescriptorsManager);
         homeLandLogic.initFonts(KlondiklonCore.fontsManager);
         homeLandLogic.initTextures(KlondiklonCore.texturesManager);
         player = new Player(eventBus);

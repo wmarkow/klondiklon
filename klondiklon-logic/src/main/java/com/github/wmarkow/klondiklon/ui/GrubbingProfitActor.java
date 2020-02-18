@@ -12,10 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
-import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
-import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
+import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
 public class GrubbingProfitActor extends Group
 {
@@ -65,69 +64,14 @@ public class GrubbingProfitActor extends Group
     {
         for (GrubbingProfit gp : grubbingProfits)
         {
-            String storageItem = gp.getStorageItem();
+            StorageItemDescriptor storageItemDescriptor = gp.getStorageItemDescriptor();
             for (int q = 0; q < gp.getAmount(); q++)
             {
-                if (StorageItemTypes.BUSH_WOOD.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_BUSH_WOOD));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
-                if (StorageItemTypes.FIR_WOOD.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_FIR_WOOD));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
-                if (StorageItemTypes.GRASS.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_GRASS));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
-                if (StorageItemTypes.ICE.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_ICE));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
-                if (StorageItemTypes.STONE.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_STONE));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
-                if (StorageItemTypes.WOOD.equals(storageItem))
-                {
-                    Image image = new Image(
-                            KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_WOOD));
-                    image.setX(start.getX());
-                    image.setY(start.getY());
-                    addActor(image);
-
-                    continue;
-                }
+                Image image = new Image(
+                        KlondiklonCore.texturesManager.getTexture(storageItemDescriptor.getTextureName()));
+                image.setX(start.getX());
+                image.setY(start.getY());
+                addActor(image);
             }
         }
 

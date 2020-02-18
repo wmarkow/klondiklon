@@ -2,17 +2,26 @@ package com.github.wmarkow.klondiklon.objects;
 
 public class GrubbingProfit
 {
-    private String storageItem;
+    private StorageItemDescriptor storageItemDescriptor;
     private int amount;
 
-    public GrubbingProfit(String storageItem, int amount) {
-        this.storageItem = storageItem;
+    public GrubbingProfit(StorageItemDescriptor storageItemDescriptor, int amount) {
+        if (storageItemDescriptor == null)
+        {
+            throw new IllegalArgumentException("StorageItemDescriptor may not be null");
+        }
+        if (amount < 0)
+        {
+            throw new IllegalArgumentException("Amount may not be negative");
+        }
+
+        this.storageItemDescriptor = storageItemDescriptor;
         this.amount = amount;
     }
 
-    public String getStorageItem()
+    public StorageItemDescriptor getStorageItemDescriptor()
     {
-        return storageItem;
+        return storageItemDescriptor;
     }
 
     public int getAmount()
@@ -26,7 +35,7 @@ public class GrubbingProfit
         final int prime = 31;
         int result = 1;
         result = prime * result + amount;
-        result = prime * result + ((storageItem == null) ? 0 : storageItem.hashCode());
+        result = prime * result + ((storageItemDescriptor == null) ? 0 : storageItemDescriptor.hashCode());
         return result;
     }
 
@@ -42,11 +51,11 @@ public class GrubbingProfit
         GrubbingProfit other = (GrubbingProfit) obj;
         if (amount != other.amount)
             return false;
-        if (storageItem == null)
+        if (storageItemDescriptor == null)
         {
-            if (other.storageItem != null)
+            if (other.storageItemDescriptor != null)
                 return false;
-        } else if (!storageItem.equals(other.storageItem))
+        } else if (!storageItemDescriptor.equals(other.storageItemDescriptor))
             return false;
         return true;
     }

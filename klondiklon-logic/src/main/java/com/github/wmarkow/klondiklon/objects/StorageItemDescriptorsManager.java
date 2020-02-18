@@ -12,16 +12,16 @@ public class StorageItemDescriptorsManager
         descriptors.add(descriptor);
     }
 
-    public StorageItemDescriptor getByName(String name)
+    public StorageItemDescriptor getByType(String type)
     {
-        if (name == null)
+        if (type == null)
         {
             return null;
         }
 
         for (StorageItemDescriptor descriptor : descriptors)
         {
-            if (name.equals(descriptor.getStorageItemType()))
+            if (type.equals(descriptor.getStorageItemType()))
             {
                 return descriptor;
             }
