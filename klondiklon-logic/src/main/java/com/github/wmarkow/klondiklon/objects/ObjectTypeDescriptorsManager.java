@@ -3,7 +3,7 @@ package com.github.wmarkow.klondiklon.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectTypesManager
+public class ObjectTypeDescriptorsManager
 {
     private List<ObjectTypeDescriptor> descriptors = new ArrayList<ObjectTypeDescriptor>();
 
