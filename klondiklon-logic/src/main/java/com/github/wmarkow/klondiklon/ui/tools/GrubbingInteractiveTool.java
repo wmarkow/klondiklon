@@ -21,7 +21,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
-import com.github.wmarkow.klondiklon.objects.ObjectTypesManager;
+import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 import com.github.wmarkow.klondiklon.ui.GrubbingProfitActor;
@@ -40,10 +40,10 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private KKMapObjectIf objectToGrubb = null;
     private Long lastGrubbingTimestamp = null;
     private Player player;
-    private ObjectTypesManager objectTypesManager;
+    private ObjectTypeDescriptorsManager objectTypesManager;
 
     public GrubbingInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera, Player player,
-            ObjectTypesManager objectTypesManager) {
+            ObjectTypeDescriptorsManager objectTypesManager) {
         this.eventBus = eventBus;
         this.map = map;
         this.camera = camera;

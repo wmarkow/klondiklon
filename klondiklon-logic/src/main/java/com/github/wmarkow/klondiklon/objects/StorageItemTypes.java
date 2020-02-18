@@ -1,6 +1,6 @@
 package com.github.wmarkow.klondiklon.objects;
 
-public class StorageItems
+public class StorageItemTypes
 {
     public final static String ICE = "ICE";
     public final static String STONE = "STONE";

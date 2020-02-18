@@ -76,12 +76,13 @@ public class HomeLand extends ApplicationAdapter
         batch = new SpriteBatch();
 
         homeLandLogic = new HomeLandLogic();
-        homeLandLogic.init(Klondiklon.objectTypesManager);
+        homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
+        homeLandLogic.initStorageIetmDescriptors(Klondiklon.storageItemDescriptorsManager);
         homeLandLogic.initFonts(KlondiklonCore.fontsManager);
         homeLandLogic.initTextures(KlondiklonCore.texturesManager);
         player = new Player(eventBus);
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player,
-                Klondiklon.objectTypesManager);
+                Klondiklon.objectTypeDescriptorsManager);
 
         klondiklonUi = new KKUi(player, eventBus);
         Klondiklon.ui = klondiklonUi;

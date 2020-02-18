@@ -15,7 +15,7 @@ import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
-import com.github.wmarkow.klondiklon.objects.StorageItems;
+import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
 
 public class GrubbingProfitActor extends Group
 {
@@ -68,7 +68,7 @@ public class GrubbingProfitActor extends Group
             String storageItem = gp.getStorageItem();
             for (int q = 0; q < gp.getAmount(); q++)
             {
-                if (StorageItems.BUSH_WOOD.equals(storageItem))
+                if (StorageItemTypes.BUSH_WOOD.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_BUSH_WOOD));
@@ -78,7 +78,7 @@ public class GrubbingProfitActor extends Group
 
                     continue;
                 }
-                if (StorageItems.FIR_WOOD.equals(storageItem))
+                if (StorageItemTypes.FIR_WOOD.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_FIR_WOOD));
@@ -88,7 +88,7 @@ public class GrubbingProfitActor extends Group
 
                     continue;
                 }
-                if (StorageItems.GRASS.equals(storageItem))
+                if (StorageItemTypes.GRASS.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_GRASS));
@@ -98,7 +98,7 @@ public class GrubbingProfitActor extends Group
 
                     continue;
                 }
-                if (StorageItems.ICE.equals(storageItem))
+                if (StorageItemTypes.ICE.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_ICE));
@@ -108,7 +108,7 @@ public class GrubbingProfitActor extends Group
 
                     continue;
                 }
-                if (StorageItems.STONE.equals(storageItem))
+                if (StorageItemTypes.STONE.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_STONE));
@@ -118,7 +118,7 @@ public class GrubbingProfitActor extends Group
 
                     continue;
                 }
-                if (StorageItems.WOOD.equals(storageItem))
+                if (StorageItemTypes.WOOD.equals(storageItem))
                 {
                     Image image = new Image(
                             KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.STORAGE_ITEM_WOOD));
