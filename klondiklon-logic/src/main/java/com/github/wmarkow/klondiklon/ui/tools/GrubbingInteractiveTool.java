@@ -2,6 +2,7 @@ package com.github.wmarkow.klondiklon.ui.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +21,13 @@ import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 import com.github.wmarkow.klondiklon.ui.widgets.GrubbingProfitActor;
+import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class GrubbingInteractiveTool implements EventSubscriber
 {
@@ -270,8 +273,9 @@ public class GrubbingInteractiveTool implements EventSubscriber
             // remove object from map
             map.removeObject(objectToGrubb);
 
-            // TODO: add reward to the backpack
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
+            addGrubbingProfit(Klondiklon.warehouse, descriptor.getGrubbingProfits());
+
             Stage stage = Klondiklon.ui.getStage();
             CoordinateCalculator cc = new CoordinateCalculator();
             GdxScreenCoordinates start = cc.world2Screen(camera,
@@ -301,6 +305,14 @@ public class GrubbingInteractiveTool implements EventSubscriber
         public void playSoundFinished()
         {
             finishGrubbing();
+        }
+    }
+
+    private void addGrubbingProfit(Warehouse warehouse, Set<GrubbingProfit> grubbingProfits)
+    {
+        for (GrubbingProfit grubbingProfit : grubbingProfits)
+        {
+            warehouse.addItemQuantity(grubbingProfit.getStorageItemDescriptor(), grubbingProfit.getAmount());
         }
     }
 }
