@@ -133,6 +133,12 @@ public class HomeLand extends ApplicationAdapter
         simulation.simulateStep(Instant.now().toEpochMilli());
     }
 
+    @Override
+    public void resize(int width, int height)
+    {
+        klondiklonUi.getStage().getViewport().update(width, height, true);
+    }
+
     private void loadSimulation(Player player)
     {
         long epochMilli = Instant.now().toEpochMilli();
