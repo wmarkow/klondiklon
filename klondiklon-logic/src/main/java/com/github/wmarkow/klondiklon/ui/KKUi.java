@@ -5,19 +5,21 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.KlondiklonCore;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
+import com.github.wmarkow.klondiklon.ui.widgets.WarehouseWidget;
 
 public class KKUi
 {
@@ -25,6 +27,7 @@ public class KKUi
 
     private Stage stage;
     private Skin mySkin;
+    private Stack stack;
     private Table tableLayout;
     private Player player;
     private EventBus eventBus;
@@ -54,10 +57,14 @@ public class KKUi
         stage = new Stage(new ScreenViewport());
         mySkin = KlondiklonCore.skinsManager.GLASSY;
 
+        stack = new Stack();
+        stack.setFillParent(true);
+        stage.addActor(stack);
+
         tableLayout = new Table();
         tableLayout.setFillParent(true);
         tableLayout.setDebug(true);
-        stage.addActor(tableLayout);
+        stack.addActor(tableLayout);
 
         tableLayout.row();
         tableLayout.add().expandX();
@@ -91,13 +98,20 @@ public class KKUi
             imageButton = new ImageButton(style);
             imageButton.addListener(new ClickListener()
             {
-                public void clicked (InputEvent event, float x, float y)
+                public void clicked(InputEvent event, float x, float y)
                 {
+                    event.cancel();
                     LOGGER.info("Backpack button clicked");
+                    showWarehouseWidget();
                 }
             });
         }
 
         return imageButton;
+    }
+    
+    private void showWarehouseWidget()
+    {
+        stack.addActor(new WarehouseWidget());
     }
 }
