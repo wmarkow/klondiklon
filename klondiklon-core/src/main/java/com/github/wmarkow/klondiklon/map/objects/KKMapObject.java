@@ -104,11 +104,11 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"
-            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON"), 14, 14, 14,
+            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON_BLUE"), 14, 14, 14,
                     27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
-            style.fontColor = Color.BLACK;
+            style.fontColor = Color.WHITE;
             
             TextButton button = new TextButton(tooltipText, style);
 

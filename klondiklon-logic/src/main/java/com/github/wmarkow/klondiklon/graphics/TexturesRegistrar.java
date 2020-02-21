@@ -7,6 +7,7 @@ public class TexturesRegistrar
 {
     public final static String LIGHTNING = "LIGHTNING";
     public final static String BALLOON = "BALLOON";
+    public final static String BALLOON_BLUE = "BALLOON_BLUE";
     public final static String BACKPACK = "BACKPACK";
     public final static String WAREHOUSE_BACKGROUND = "WAREHOUSE_BACKGROUND";
     public final static String WAREHOUSE_ITEM_BACKGROUND = "WAREHOUSE_ITEM_BACKGROUND";
@@ -22,6 +23,7 @@ public class TexturesRegistrar
     {
         texturesManager.registerTexture(LIGHTNING, new Texture(Gdx.files.internal("images/lightning.png")));
         texturesManager.registerTexture(BALLOON, new Texture(Gdx.files.internal("images/balloon.png")));
+        texturesManager.registerTexture(BALLOON_BLUE, new Texture(Gdx.files.internal("images/balloon_blue.png")));
         texturesManager.registerTexture(BACKPACK, new Texture(Gdx.files.internal("images/backpack.png")));
 
         texturesManager.registerTexture(STORAGE_ITEM_ICE, new Texture(Gdx.files.internal("images/items/ice.png")));
