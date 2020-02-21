@@ -18,4 +18,6 @@ public class StorageItemTypes
     public final static String BUSH_WOOD = "BUSH_WOOD";
     public final static String GRASS = "GRASS";
     public final static String COAL = "COAL";
+    public final static String FRAGARIA = "FRAGARIA";
+    public final static String RUBUS = "RUBUS";
 }

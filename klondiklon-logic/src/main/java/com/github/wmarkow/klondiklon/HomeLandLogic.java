@@ -18,9 +18,9 @@ public class HomeLandLogic
     public void initObjectTypeDescriptors(ObjectTypeDescriptorsManager manager)
     {
         manager.registerObjectTypeDescriptor(createFir());
-//        manager.registerObjectTypeDescriptor(createCoalLarge());
-//        manager.registerObjectTypeDescriptor(createCoalMedium());
-//        manager.registerObjectTypeDescriptor(createCoalSmall());
+        // manager.registerObjectTypeDescriptor(createCoalLarge());
+        // manager.registerObjectTypeDescriptor(createCoalMedium());
+        // manager.registerObjectTypeDescriptor(createCoalSmall());
         manager.registerObjectTypeDescriptor(createIceColumn());
         manager.registerObjectTypeDescriptor(createRockLarge());
         manager.registerObjectTypeDescriptor(createRockMedium());
@@ -47,6 +47,10 @@ public class HomeLandLogic
                 new StorageItemDescriptor(StorageItemTypes.STONE, TexturesRegistrar.STORAGE_ITEM_STONE));
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.WOOD, TexturesRegistrar.STORAGE_ITEM_WOOD));
+        manager.registerObjectTypeDescriptor(
+                new StorageItemDescriptor(StorageItemTypes.FRAGARIA, TexturesRegistrar.STORAGE_ITEM_FRAGARIA));
+        manager.registerObjectTypeDescriptor(
+                new StorageItemDescriptor(StorageItemTypes.RUBUS, TexturesRegistrar.STORAGE_ITEM_RUBUS));
     }
 
     public void initFonts(FontsManager fontsManager)
@@ -167,6 +171,8 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FRAGARIA, "Poziomka");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.FRAGARIA), 4));
 
         return obj;
     }
@@ -176,7 +182,9 @@ public class HomeLandLogic
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.RUBUS, "Jeżyna");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
-
+        obj.addGrubbingProfit(
+                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.RUBUS), 4));
+        
         return obj;
     }
 }
