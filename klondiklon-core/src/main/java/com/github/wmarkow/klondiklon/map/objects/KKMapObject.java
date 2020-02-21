@@ -108,6 +108,8 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
                     27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
+            style.fontColor = Color.BLACK;
+            
             TextButton button = new TextButton(tooltipText, style);
 
             button.setX(getX() - button.getWidth() / 2);
