@@ -20,6 +20,7 @@ public class TexturesRegistrar
     public final static String STORAGE_ITEM_GRASS = "STORAGE_ITEM_GRASS";
     public final static String STORAGE_ITEM_FRAGARIA = "STORAGE_ITEM_FRAGARIA";
     public final static String STORAGE_ITEM_RUBUS = "STORAGE_ITEM_RUBUS";
+    public final static String STORAGE_ITEM_COAL = "STORAGE_ITEM_COAL";
 
     public void register(TexturesManager texturesManager)
     {
@@ -39,6 +40,9 @@ public class TexturesRegistrar
         texturesManager.registerTexture(STORAGE_ITEM_FRAGARIA,
                 new Texture(Gdx.files.internal("images/items/fragaria.png")));
         texturesManager.registerTexture(STORAGE_ITEM_RUBUS, new Texture(Gdx.files.internal("images/items/rubus.png")));
+        texturesManager.registerTexture(STORAGE_ITEM_COAL,
+                new Texture(Gdx.files.internal("images/items/coal.png")));
+
         texturesManager.registerTexture(WAREHOUSE_BACKGROUND,
                 new Texture(Gdx.files.internal("images/warehouse_background.png")));
         texturesManager.registerTexture(WAREHOUSE_ITEM_BACKGROUND,

@@ -18,9 +18,9 @@ public class HomeLandLogic
     public void initObjectTypeDescriptors(ObjectTypeDescriptorsManager manager)
     {
         manager.registerObjectTypeDescriptor(createFir());
-        // manager.registerObjectTypeDescriptor(createCoalLarge());
-        // manager.registerObjectTypeDescriptor(createCoalMedium());
-        // manager.registerObjectTypeDescriptor(createCoalSmall());
+         manager.registerObjectTypeDescriptor(createCoalLarge());
+         manager.registerObjectTypeDescriptor(createCoalMedium());
+         manager.registerObjectTypeDescriptor(createCoalSmall());
         manager.registerObjectTypeDescriptor(createIceColumn());
         manager.registerObjectTypeDescriptor(createRockLarge());
         manager.registerObjectTypeDescriptor(createRockMedium());
@@ -34,9 +34,8 @@ public class HomeLandLogic
     {
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.BUSH_WOOD, TexturesRegistrar.STORAGE_ITEM_BUSH_WOOD));
-        // manager.registerObjectTypeDescriptor(
-        // new StorageItemDescriptor(StorageItemTypes.COAL,
-        // TexturesRegistrar.STORAGE_ITEM_COAL));
+        manager.registerObjectTypeDescriptor(
+                new StorageItemDescriptor(StorageItemTypes.COAL, TexturesRegistrar.STORAGE_ITEM_COAL));
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.FIR_WOOD, TexturesRegistrar.STORAGE_ITEM_FIR_WOOD));
         manager.registerObjectTypeDescriptor(
@@ -184,7 +183,7 @@ public class HomeLandLogic
         obj.setEnergyToGrubb(10);
         obj.addGrubbingProfit(
                 new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.RUBUS), 4));
-        
+
         return obj;
     }
 }
