@@ -17,7 +17,7 @@ public class FontsRegistrar
         parameter.characters = FontsManager.POLISH_CHARACTERS;
 
         parameter.size = 40;
-        parameter.color = Color.BLACK;
+        parameter.color = Color.WHITE;
         BitmapFont font = generator.generateFont(parameter);
 
         fontsManager.registerFont(GRUBBING_FONT_NAME, font);
