@@ -29,6 +29,7 @@ public class KKUi
     private Skin mySkin;
     private Stack stack;
     private Table tableLayout;
+    private WarehouseWidget warehouseWidget = null;
     private Player player;
     private EventBus eventBus;
 
@@ -109,9 +110,31 @@ public class KKUi
 
         return imageButton;
     }
-    
+
+    private boolean isWarehouseVisible()
+    {
+        if (warehouseWidget == null)
+        {
+            return false;
+        }
+
+        if (stack.getChildren().contains(warehouseWidget, true))
+        {
+            return true;
+        }
+
+        warehouseWidget = null;
+        return false;
+    }
+
     private void showWarehouseWidget()
     {
-        stack.addActor(new WarehouseWidget());
+        if (isWarehouseVisible())
+        {
+            return;
+        }
+
+        warehouseWidget = new WarehouseWidget();
+        stack.addActor(warehouseWidget);
     }
 }
