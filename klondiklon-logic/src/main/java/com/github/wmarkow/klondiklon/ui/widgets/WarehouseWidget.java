@@ -67,9 +67,8 @@ public class WarehouseWidget extends Container<Table>
             {
                 itemsTable.row();
             }
-            final String textureName = itemQuantity.getStorageItemDescriptor().getTextureName();
-            Image image = new Image(KlondiklonCore.texturesManager.getTexture(textureName));
-            itemsTable.add(image);
+            WarehouseItemWidget warehouseItemWidget = new WarehouseItemWidget(itemQuantity);
+            itemsTable.add(warehouseItemWidget).pad(5.0f);
 
             index++;
         }

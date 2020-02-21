@@ -9,6 +9,7 @@ public class TexturesRegistrar
     public final static String BALLOON = "BALLOON";
     public final static String BACKPACK = "BACKPACK";
     public final static String WAREHOUSE_BACKGROUND = "WAREHOUSE_BACKGROUND";
+    public final static String WAREHOUSE_ITEM_BACKGROUND = "WAREHOUSE_ITEM_BACKGROUND";
 
     public final static String STORAGE_ITEM_ICE = "STORAGE_ITEM_ICE";
     public final static String STORAGE_ITEM_STONE = "STORAGE_ITEM_STONE";
@@ -33,5 +34,7 @@ public class TexturesRegistrar
         texturesManager.registerTexture(STORAGE_ITEM_GRASS, new Texture(Gdx.files.internal("images/items/grass.png")));
         texturesManager.registerTexture(WAREHOUSE_BACKGROUND,
                 new Texture(Gdx.files.internal("images/warehouse_background.png")));
+        texturesManager.registerTexture(WAREHOUSE_ITEM_BACKGROUND,
+                new Texture(Gdx.files.internal("images/warehouse_item_background.png")));
     }
 }
