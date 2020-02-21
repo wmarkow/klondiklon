@@ -64,7 +64,7 @@ public class KKUi
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
-        tableLayout.setDebug(true);
+//        tableLayout.setDebug(true);
         stack.addActor(tableLayout);
 
         tableLayout.row();

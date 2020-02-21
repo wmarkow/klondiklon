@@ -40,7 +40,7 @@ public class WarehouseWidget extends Container<Table>
 
         table = new Table();
         table.setFillParent(false);
-        table.setDebug(true);
+//        table.setDebug(true);
         table.setBackground(new NinePatchDrawable(ninePatch));
 
         table.row();
