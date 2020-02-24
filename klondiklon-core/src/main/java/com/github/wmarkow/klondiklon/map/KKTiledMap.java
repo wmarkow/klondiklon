@@ -4,11 +4,13 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mapeditor.core.Frame;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.Properties;
 import org.mapeditor.core.Property;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
+import org.mapeditor.core.TileSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +24,10 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
@@ -241,19 +246,34 @@ public class KKTiledMap extends TiledMap implements KKMapIf
             final Tile tile = tiledMapObject.getTile();
             // derive object type from TMX tile
             final String objectType = tile.getProperties().getProperty(KKMapObjectIf.PROPERTY_TYPE_KEY);
+            loadTexturesFromTileSet(tile.getTileSet());
+
             final String sourceFilePath = tile.getTileSet().getTilebmpFile();
             final int tileId = tile.getId();
-
             TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-            if (!texturesCache.containsKey(textureKey))
-            {
-                Pixmap pixmap = toPixmap(tile.getImage());
-                texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
-            }
             TextureRegion textureRegion = texturesCache.get(textureKey);
-            StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
 
-            KKMapObject libGdxMapObject = new KKMapObject(libGdxTile, objectType);
+            KKMapObject libGdxMapObject = null;
+            if (tile.getAnimation() == null)
+            {
+                StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
+                libGdxMapObject = new KKMapObject(libGdxTile, objectType);
+            } else
+            {
+                IntArray intervals = new IntArray();
+                Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
+                for(Frame frame : tile.getAnimation().getFrame())
+                {
+                    intervals.add(frame.getDuration());
+                    TextureKey frameTextureKey = new TextureKey(sourceFilePath, frame.getTileid());
+                    TextureRegion frameTextureRegion = texturesCache.get(frameTextureKey);
+                    StaticTiledMapTile frameStaticTiledMapTile = new StaticTiledMapTile(frameTextureRegion);
+                    frameTiles.add(frameStaticTiledMapTile);
+                }
+                
+                AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new IntArray(intervals), frameTiles);
+                libGdxMapObject = new KKMapObject(libGdxTile, objectType);
+            }
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
             final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();
@@ -281,6 +301,32 @@ public class KKTiledMap extends TiledMap implements KKMapIf
             }
 
             objectsMapLayer.getObjects().add(libGdxMapObject);
+        }
+    }
+
+    private void loadTexturesFromTileSet(TileSet tileSet)
+    {
+        if (tileSet == null)
+        {
+            throw new IllegalArgumentException("TileSet must not be null");
+        }
+        if (tileSet.getTilecount() == null)
+        {
+            throw new IllegalArgumentException("tilecount in TileSet must not be null");
+        }
+
+        final String sourceFilePath = tileSet.getTilebmpFile();
+        for (int q = 0; q < tileSet.getTilecount(); q++)
+        {
+            final Tile tile = tileSet.getTile(q);
+            final int tileId = tile.getId();
+
+            TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+            if (!texturesCache.containsKey(textureKey))
+            {
+                Pixmap pixmap = toPixmap(tile.getImage());
+                texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+            }
         }
     }
 

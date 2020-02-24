@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
@@ -104,18 +105,23 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"
-            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON_BLUE"), 14, 14, 14,
-                    27);
+            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON_BLUE"), 14,
+                    14, 14, 27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
             style.fontColor = Color.WHITE;
-            
+
             TextButton button = new TextButton(tooltipText, style);
 
             button.setX(getX() - button.getWidth() / 2);
             button.setY(getY() + getHeight());
             button.draw(batch, 1.0f);
         }
+    }
+
+    public TextureRegion getTextureRegion()
+    {
+        return this.getTile().getTextureRegion();
     }
 
     @Override
