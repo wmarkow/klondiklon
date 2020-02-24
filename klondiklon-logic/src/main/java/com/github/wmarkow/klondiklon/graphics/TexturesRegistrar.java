@@ -24,10 +24,14 @@ public class TexturesRegistrar
 
     public void register(TexturesManager texturesManager)
     {
-        texturesManager.registerTexture(LIGHTNING, new Texture(Gdx.files.internal("images/lightning.png")));
-        texturesManager.registerTexture(BALLOON, new Texture(Gdx.files.internal("images/balloon.png")));
-        texturesManager.registerTexture(BALLOON_BLUE, new Texture(Gdx.files.internal("images/balloon_blue.png")));
-        texturesManager.registerTexture(BACKPACK, new Texture(Gdx.files.internal("images/backpack.png")));
+        texturesManager.registerTexture(LIGHTNING, new Texture(Gdx.files.internal("ui/lightning.png")));
+        texturesManager.registerTexture(BALLOON, new Texture(Gdx.files.internal("ui/balloon.png")));
+        texturesManager.registerTexture(BALLOON_BLUE, new Texture(Gdx.files.internal("ui/balloon_blue.png")));
+        texturesManager.registerTexture(BACKPACK, new Texture(Gdx.files.internal("ui/backpack.png")));
+        texturesManager.registerTexture(WAREHOUSE_BACKGROUND,
+                new Texture(Gdx.files.internal("ui/warehouse_background.png")));
+        texturesManager.registerTexture(WAREHOUSE_ITEM_BACKGROUND,
+                new Texture(Gdx.files.internal("ui/warehouse_item_background.png")));
 
         texturesManager.registerTexture(STORAGE_ITEM_ICE, new Texture(Gdx.files.internal("images/items/ice.png")));
         texturesManager.registerTexture(STORAGE_ITEM_STONE, new Texture(Gdx.files.internal("images/items/stone.png")));
@@ -40,12 +44,6 @@ public class TexturesRegistrar
         texturesManager.registerTexture(STORAGE_ITEM_FRAGARIA,
                 new Texture(Gdx.files.internal("images/items/fragaria.png")));
         texturesManager.registerTexture(STORAGE_ITEM_RUBUS, new Texture(Gdx.files.internal("images/items/rubus.png")));
-        texturesManager.registerTexture(STORAGE_ITEM_COAL,
-                new Texture(Gdx.files.internal("images/items/coal.png")));
-
-        texturesManager.registerTexture(WAREHOUSE_BACKGROUND,
-                new Texture(Gdx.files.internal("images/warehouse_background.png")));
-        texturesManager.registerTexture(WAREHOUSE_ITEM_BACKGROUND,
-                new Texture(Gdx.files.internal("images/warehouse_item_background.png")));
+        texturesManager.registerTexture(STORAGE_ITEM_COAL, new Texture(Gdx.files.internal("images/items/coal.png")));
     }
 }
