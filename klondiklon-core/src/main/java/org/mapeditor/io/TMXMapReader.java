@@ -83,6 +83,8 @@ import org.xml.sax.SAXException;
  *
  * @version 1.2.3
  */
+// PATCH wmarkow 24.02.2020 "Tilecount in TileSet is missing"
+// PATCH wmarkow 24.02.2020 "Animation info in Tile is missing"
 public class TMXMapReader
 {
 
@@ -310,6 +312,11 @@ public class TMXMapReader
 
             set.setName(name);
 
+            // PATCH "Tilecount in TileSet is missing" begin
+            final int tileCount = getAttribute(t, "tilecount", 0);
+            set.setTilecount(tileCount);
+            // PATCH end
+
             boolean hasTilesetImage = false;
             NodeList children = t.getChildNodes();
 
@@ -367,6 +374,10 @@ public class TMXMapReader
                     {
                         Tile myTile = set.getTile(tile.getId());
                         myTile.setProperties(tile.getProperties());
+
+                        // PATCH "Animation info in Tile is missing" begin
+                        myTile.setAnimation(tile.getAnimation());
+                        // PATCH end
                         // TODO: there is the possibility here of overlaying images,
                         // which some people may want
                     }
