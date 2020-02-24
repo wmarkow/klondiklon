@@ -20,7 +20,7 @@ public class FontsManager
 
     public void init()
     {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/arialbd.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.classpath("fonts/arialbd.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.characters = POLISH_CHARACTERS;
         parameter.size = 12;

@@ -9,6 +9,6 @@ public class SkinsManager
 
     public void init()
     {
-        GLASSY = new Skin(Gdx.files.internal("skins/glassy/skin/glassy-ui.json"));
+        GLASSY = new Skin(Gdx.files.classpath("skins/glassy/skin/glassy-ui.json"));
     }
 }
