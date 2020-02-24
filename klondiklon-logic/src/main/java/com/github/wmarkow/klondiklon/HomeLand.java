@@ -150,7 +150,7 @@ public class HomeLand extends ApplicationAdapter
     private KKTiledMap readDefaultMap()
     {
         File file = new File(
-                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-logic\\src\\main\\resources\\home.tmx");
+                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-logic\\src\\main\\resources\\worlds\\home\\home.tmx");
         TMXMapReader tmxMapReader = new TMXMapReader();
         Map tmxMap = null;
         try
