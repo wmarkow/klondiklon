@@ -34,22 +34,22 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.classpath("ui/warehouse_item_background.png")));
 
         texturesManager.registerTexture(STORAGE_ITEM_ICE,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/ice.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/ice.png")));
         texturesManager.registerTexture(STORAGE_ITEM_STONE,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/stone.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/stone.png")));
         texturesManager.registerTexture(STORAGE_ITEM_WOOD,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/wood.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/wood.png")));
         texturesManager.registerTexture(STORAGE_ITEM_FIR_WOOD,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/wood_fir.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/wood_fir.png")));
         texturesManager.registerTexture(STORAGE_ITEM_BUSH_WOOD,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/wood_bush.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/wood_bush.png")));
         texturesManager.registerTexture(STORAGE_ITEM_GRASS,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/grass.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/grass.png")));
         texturesManager.registerTexture(STORAGE_ITEM_FRAGARIA,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/fragaria.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/fragaria.png")));
         texturesManager.registerTexture(STORAGE_ITEM_RUBUS,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/rubus.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/rubus.png")));
         texturesManager.registerTexture(STORAGE_ITEM_COAL,
-                new Texture(Gdx.files.classpath("worlds/home/warehouse/items/coal.png")));
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/coal.png")));
     }
 }
