@@ -45,8 +45,6 @@ public class HomeLand extends ApplicationAdapter
     private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
 
-    private KKUi klondiklonUi;
-    private Player player;
     private Simulation simulation;
     private WorldsManager worldsManager = new WorldsManager();
 
@@ -79,18 +77,11 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
         homeLandLogic.initFonts(KlondiklonCore.fontsManager);
         homeLandLogic.initTextures(KlondiklonCore.texturesManager);
-        player = new Player(eventBus);
-        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, player,
-                Klondiklon.objectTypeDescriptorsManager);
 
-        klondiklonUi = new KKUi(player, eventBus);
-        Klondiklon.ui = klondiklonUi;
-        loadSimulation(player);
-
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(klondiklonUi.getStage());
-        multiplexer.addProcessor(cameraController);
-        Gdx.input.setInputProcessor(multiplexer);
+        initPlayer();
+        initUi();
+        initInteractiveTools(libGdxMap);
+        initSimulation(Klondiklon.player);
     }
 
     @Override
@@ -127,18 +118,18 @@ public class HomeLand extends ApplicationAdapter
 
         batch.end();
 
-        klondiklonUi.getStage().act();
-        klondiklonUi.getStage().draw();
+        Klondiklon.ui.getStage().act();
+        Klondiklon.ui.getStage().draw();
         simulation.simulateStep(Instant.now().toEpochMilli());
     }
 
     @Override
     public void resize(int width, int height)
     {
-        klondiklonUi.getStage().getViewport().update(width, height, true);
+        Klondiklon.ui.getStage().getViewport().update(width, height, true);
     }
 
-    private void loadSimulation(Player player)
+    private void initSimulation(Player player)
     {
         long epochMilli = Instant.now().toEpochMilli();
 
@@ -150,5 +141,27 @@ public class HomeLand extends ApplicationAdapter
     {
         worldsManager.copyHomeWorldFromClasspathToInternal();
         return worldsManager.readHomeWorld();
+    }
+
+    private void initPlayer()
+    {
+        Player player = new Player(eventBus);
+        Klondiklon.player = player;
+    }
+
+    private void initUi()
+    {
+        Klondiklon.ui = new KKUi(Klondiklon.player, eventBus);
+
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(Klondiklon.ui.getStage());
+        multiplexer.addProcessor(cameraController);
+        Gdx.input.setInputProcessor(multiplexer);
+    }
+
+    private void initInteractiveTools(KKTiledMap libGdxMap)
+    {
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, Klondiklon.player,
+                Klondiklon.objectTypeDescriptorsManager);
     }
 }
