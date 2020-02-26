@@ -30,6 +30,7 @@ import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
+import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -50,6 +51,7 @@ public class HomeLand extends ApplicationAdapter
     private KKUi klondiklonUi;
     private Player player;
     private Simulation simulation;
+    private WorldsManager worldsManager = new WorldsManager();
 
     @Override
     public void create()
@@ -149,6 +151,8 @@ public class HomeLand extends ApplicationAdapter
 
     private KKTiledMap readDefaultMap()
     {
+        worldsManager.copyHomeWorldFromClasspathToInternal();
+
         File file = new File(
                 "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-logic\\src\\main\\resources\\worlds\\home\\home.tmx");
         TMXMapReader tmxMapReader = new TMXMapReader();
