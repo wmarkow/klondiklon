@@ -1,10 +1,7 @@
 package com.github.wmarkow.klondiklon;
 
-import java.io.File;
 import java.time.Instant;
 
-import org.mapeditor.core.Map;
-import org.mapeditor.io.TMXMapReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +56,7 @@ public class HomeLand extends ApplicationAdapter
         KlondiklonCore.init();
         // KlondiklonCore.musicManager.playMainTheme();
 
-        KKTiledMap libGdxMap = readDefaultMap();
+        KKTiledMap libGdxMap = readHomeWorld();
         klondiklonMap = (KKMapIf) libGdxMap;
         renderer = new KKTiledMapRenderer(libGdxMap);
 
@@ -149,24 +146,9 @@ public class HomeLand extends ApplicationAdapter
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
-    private KKTiledMap readDefaultMap()
+    private KKTiledMap readHomeWorld()
     {
         worldsManager.copyHomeWorldFromClasspathToInternal();
-
-        File file = new File(
-                "C:\\Users\\wmarkowski\\dev-test\\sources\\java\\klondiklon\\klondiklon-logic\\src\\main\\resources\\worlds\\home\\home.tmx");
-        TMXMapReader tmxMapReader = new TMXMapReader();
-        Map tmxMap = null;
-        try
-        {
-            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
-        } catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        KKTiledMap libGdxMap = new KKTiledMap(tmxMap);
-
-        return libGdxMap;
+        return worldsManager.readHomeWorld();
     }
 }

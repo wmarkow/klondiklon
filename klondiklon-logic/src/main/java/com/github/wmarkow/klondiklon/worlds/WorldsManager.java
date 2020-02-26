@@ -6,12 +6,15 @@ import java.lang.invoke.MethodHandles;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.mapeditor.core.Map;
+import org.mapeditor.io.TMXMapReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.badlogic.gdx.Gdx;
+import com.github.wmarkow.klondiklon.map.KKTiledMap;
 
 public class WorldsManager
 {
@@ -50,5 +53,23 @@ public class WorldsManager
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public KKTiledMap readHomeWorld()
+    {
+        File file = new File(Gdx.files.getLocalStoragePath() + WORLDS_DIR_NAME + "\\home\\home.tmx");
+        TMXMapReader tmxMapReader = new TMXMapReader();
+        Map tmxMap = null;
+        try
+        {
+            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        KKTiledMap libGdxMap = new KKTiledMap(tmxMap);
+
+        return libGdxMap;
     }
 }
