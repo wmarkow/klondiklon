@@ -69,6 +69,7 @@ import org.mapeditor.io.xml.XMLWriter;
  *
  * @version 1.2.3
  */
+// PATCH wmarkow 27.02.2020 "Object id not written"
 public class TMXMapWriter
 {
 
@@ -676,6 +677,9 @@ public class TMXMapWriter
     private void writeMapObject(MapObject mapObject, XMLWriter w, String wp) throws IOException
     {
         w.startElement("object");
+        // PATCH "Object id not written" begin
+        w.writeAttribute("id", mapObject.getId());
+        // PATCH end
         w.writeAttribute("name", mapObject.getName());
 
         if (mapObject.getType().length() != 0)
