@@ -75,6 +75,7 @@ import org.mapeditor.io.xml.XMLWriter;
 // PATCH wmarkow 27.02.2020 "Output stream not closed"
 // PATCH wmarkow 27.02.2020 "Layer id not written" begin
 // PATCH wmarkow 27.02.2020 "Not all map attributes written"
+// PATCH wmarkow 27.02.2020 "Add a switch for compress layer data"
 public class TMXMapWriter
 {
 
@@ -93,6 +94,9 @@ public class TMXMapWriter
         public static final String LAYER_COMPRESSION_METHOD_ZLIB = "zlib";
 
         public String layerCompressionMethod = LAYER_COMPRESSION_METHOD_ZLIB;
+        // PATCH "Add a switch for compress layer data" begin
+        public boolean compressLayerData = COMPRESS_LAYER_DATA;
+        // PATCH end
     }
 
     public Settings settings = new Settings();
@@ -531,8 +535,12 @@ public class TMXMapWriter
 
             w.writeAttribute("encoding", "base64");
 
-            DeflaterOutputStream dos;
-            if (COMPRESS_LAYER_DATA)
+            // PATCH "Add a switch for compress layer data" begin
+            // DeflaterOutputStream dos;
+            DeflaterOutputStream dos = null;
+            // if (COMPRESS_LAYER_DATA)
+            if (settings.compressLayerData)
+            // PATCH "Add a switch for compress layer data" end
             {
                 if (Settings.LAYER_COMPRESSION_METHOD_ZLIB.equalsIgnoreCase(settings.layerCompressionMethod))
                 {
@@ -571,7 +579,10 @@ public class TMXMapWriter
                 }
             }
 
-            if (COMPRESS_LAYER_DATA && dos != null)
+            // PATCH "Add a switch for compress layer data" begin
+            // if (COMPRESS_LAYER_DATA && dos != null)
+            if (settings.compressLayerData && dos != null)
+            // PATCH "Add a switch for compress layer data" end
             {
                 dos.finish();
             }
