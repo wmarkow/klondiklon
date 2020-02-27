@@ -19,6 +19,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     private boolean selected = false;
     private String tooltipText = null;
     private String objectType;
+    private int id;
 
     private static BitmapFont FONT = new BitmapFont();
     static
@@ -27,9 +28,10 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         FONT.getData().setScale(2.5f);
     }
 
-    public KKMapObject(TiledMapTile tile, String objectType) {
+    public KKMapObject(TiledMapTile tile, int id, String objectType) {
         super(tile, false, false);
 
+        this.id = id;
         this.objectType = objectType;
     }
 
@@ -148,5 +150,11 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     public String getObjectType()
     {
         return objectType;
+    }
+
+    @Override
+    public int getId()
+    {
+        return id;
     }
 }

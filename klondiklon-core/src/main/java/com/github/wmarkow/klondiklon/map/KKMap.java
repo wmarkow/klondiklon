@@ -1,16 +1,11 @@
 package com.github.wmarkow.klondiklon.map;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.mapeditor.core.Frame;
-import org.mapeditor.core.ObjectGroup;
-import org.mapeditor.core.Properties;
-import org.mapeditor.core.Property;
-import org.mapeditor.core.Tile;
-import org.mapeditor.core.TileLayer;
-import org.mapeditor.core.TileSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,7 +82,29 @@ public class KKMap extends TiledMap implements KKMapIf
 
         objectsLayer.removeObject(object);
 
-        // TODO: remove it also from the Tiled map
+        final int id = object.getId();
+
+        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        {
+            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
+            {
+                List<org.mapeditor.core.MapObject> objectsToRemove = new ArrayList<org.mapeditor.core.MapObject>();
+
+                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
+                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
+                {
+                    if (mapObject.getId().equals(id))
+                    {
+                        objectsToRemove.add(mapObject);
+                    }
+                }
+
+                for (org.mapeditor.core.MapObject objectToRemove : objectsToRemove)
+                {
+                    objectGroup.removeObject(objectToRemove);
+                }
+            }
+        }
     }
 
     @Override
@@ -152,16 +169,16 @@ public class KKMap extends TiledMap implements KKMapIf
 
         MapLayer libGdxMapLayer = null;
 
-        if (tiledMapLayer instanceof TileLayer)
+        if (tiledMapLayer instanceof org.mapeditor.core.TileLayer)
         {
             libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
 
-            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TileLayer) tiledMapLayer);
-        } else if (tiledMapLayer instanceof ObjectGroup)
+            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (org.mapeditor.core.TileLayer) tiledMapLayer);
+        } else if (tiledMapLayer instanceof org.mapeditor.core.ObjectGroup)
         {
             libGdxMapLayer = new KKObjectsLayer();
 
-            handleObjectGroupLayer((KKObjectsLayer) libGdxMapLayer, (ObjectGroup) tiledMapLayer);
+            handleObjectGroupLayer((KKObjectsLayer) libGdxMapLayer, (org.mapeditor.core.ObjectGroup) tiledMapLayer);
         } else
         {
             // not supported map layer
@@ -191,8 +208,8 @@ public class KKMap extends TiledMap implements KKMapIf
             libGdxMapLayer.setVisible(tiledMapLayer.isVisible());
         }
 
-        Properties properties = tiledMapLayer.getProperties();
-        for (Property tiledProperty : properties.getProperties())
+        org.mapeditor.core.Properties properties = tiledMapLayer.getProperties();
+        for (org.mapeditor.core.Property tiledProperty : properties.getProperties())
         {
             final String name = tiledProperty.getName();
             final String value = tiledProperty.getValue();
@@ -203,7 +220,7 @@ public class KKMap extends TiledMap implements KKMapIf
         return libGdxMapLayer;
     }
 
-    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, TileLayer tiledMapLayer)
+    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, org.mapeditor.core.TileLayer tiledMapLayer)
     {
         final int mapWidth = tiledMapLayer.getMap().getWidth();
         final int mapHeight = tiledMapLayer.getMap().getHeight();
@@ -212,7 +229,7 @@ public class KKMap extends TiledMap implements KKMapIf
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                Tile tile = tiledMapLayer.getTileAt(x, y);
+                org.mapeditor.core.Tile tile = tiledMapLayer.getTileAt(x, y);
                 if (tile == null)
                 {
                     continue;
@@ -239,17 +256,18 @@ public class KKMap extends TiledMap implements KKMapIf
         }
     }
 
-    private void handleObjectGroupLayer(KKObjectsLayer objectsMapLayer, ObjectGroup tiledMapLayer)
+    private void handleObjectGroupLayer(KKObjectsLayer objectsMapLayer, org.mapeditor.core.ObjectGroup tiledMapLayer)
     {
         for (org.mapeditor.core.MapObject tiledMapObject : tiledMapLayer.getObjects())
         {
-            final Tile tile = tiledMapObject.getTile();
+            final org.mapeditor.core.Tile tile = tiledMapObject.getTile();
             // derive object type from TMX tile
             final String objectType = tile.getProperties().getProperty(KKMapObjectIf.PROPERTY_TYPE_KEY);
             loadTexturesFromTileSet(tile.getTileSet());
 
             final String sourceFilePath = tile.getTileSet().getTilebmpFile();
             final int tileId = tile.getId();
+            final int objectId = tiledMapObject.getId();
             TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
             TextureRegion textureRegion = texturesCache.get(textureKey);
 
@@ -257,12 +275,12 @@ public class KKMap extends TiledMap implements KKMapIf
             if (tile.getAnimation() == null)
             {
                 StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
-                libGdxMapObject = new KKMapObject(libGdxTile, objectType);
+                libGdxMapObject = new KKMapObject(libGdxTile, objectId, objectType);
             } else
             {
                 IntArray intervals = new IntArray();
                 Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
-                for(Frame frame : tile.getAnimation().getFrame())
+                for (org.mapeditor.core.Frame frame : tile.getAnimation().getFrame())
                 {
                     intervals.add(frame.getDuration());
                     TextureKey frameTextureKey = new TextureKey(sourceFilePath, frame.getTileid());
@@ -270,9 +288,9 @@ public class KKMap extends TiledMap implements KKMapIf
                     StaticTiledMapTile frameStaticTiledMapTile = new StaticTiledMapTile(frameTextureRegion);
                     frameTiles.add(frameStaticTiledMapTile);
                 }
-                
+
                 AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new IntArray(intervals), frameTiles);
-                libGdxMapObject = new KKMapObject(libGdxTile, objectType);
+                libGdxMapObject = new KKMapObject(libGdxTile, objectId, objectType);
             }
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
@@ -304,7 +322,7 @@ public class KKMap extends TiledMap implements KKMapIf
         }
     }
 
-    private void loadTexturesFromTileSet(TileSet tileSet)
+    private void loadTexturesFromTileSet(org.mapeditor.core.TileSet tileSet)
     {
         if (tileSet == null)
         {
@@ -318,7 +336,7 @@ public class KKMap extends TiledMap implements KKMapIf
         final String sourceFilePath = tileSet.getTilebmpFile();
         for (int q = 0; q < tileSet.getTilecount(); q++)
         {
-            final Tile tile = tileSet.getTile(q);
+            final org.mapeditor.core.Tile tile = tileSet.getTile(q);
             final int tileId = tile.getId();
 
             TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
