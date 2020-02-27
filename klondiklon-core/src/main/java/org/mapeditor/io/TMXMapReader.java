@@ -85,6 +85,7 @@ import org.xml.sax.SAXException;
  */
 // PATCH wmarkow 24.02.2020 "Tilecount in TileSet is missing"
 // PATCH wmarkow 24.02.2020 "Animation info in Tile is missing"
+// PATCH wmarkow 27.02.2020 "Object id is missing"
 public class TMXMapReader
 {
 
@@ -399,6 +400,9 @@ public class TMXMapReader
         final String name = getAttributeValue(t, "name");
         final String type = getAttributeValue(t, "type");
         final String gid = getAttributeValue(t, "gid");
+        // PATCH "Object id is missing" begin
+        final String id = getAttributeValue(t, "id");
+        // PATCH end
         final double x = getDoubleAttribute(t, "x", 0);
         final double y = getDoubleAttribute(t, "y", 0);
         final double width = getDoubleAttribute(t, "width", 0);
@@ -407,6 +411,12 @@ public class TMXMapReader
 
         MapObject obj = new MapObject(x, y, width, height, rotation);
         obj.setShape(obj.getBounds());
+        // PATCH "Object id is missing" begin
+        if (id != null)
+        {
+            obj.setId(Integer.parseInt(id));
+        }
+        // PATCH end
         if (name != null)
         {
             obj.setName(name);
