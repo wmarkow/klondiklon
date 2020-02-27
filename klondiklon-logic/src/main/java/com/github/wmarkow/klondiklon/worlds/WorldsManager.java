@@ -14,7 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.badlogic.gdx.Gdx;
-import com.github.wmarkow.klondiklon.map.KKTiledMap;
+import com.github.wmarkow.klondiklon.map.KKMap;
 
 public class WorldsManager
 {
@@ -55,7 +55,7 @@ public class WorldsManager
         }
     }
 
-    public KKTiledMap readHomeWorld()
+    public KKMap readHomeWorld()
     {
         File file = new File(Gdx.files.getLocalStoragePath() + WORLDS_DIR_NAME + "\\home\\home.tmx");
         TMXMapReader tmxMapReader = new TMXMapReader();
@@ -68,7 +68,7 @@ public class WorldsManager
             throw new RuntimeException(e);
         }
 
-        KKTiledMap libGdxMap = new KKTiledMap(tmxMap);
+        KKMap libGdxMap = new KKMap(tmxMap);
 
         return libGdxMap;
     }

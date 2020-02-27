@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
-import com.github.wmarkow.klondiklon.map.KKTiledMap;
-import com.github.wmarkow.klondiklon.map.KKTiledMapRenderer;
+import com.github.wmarkow.klondiklon.map.KKMap;
+import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
@@ -38,7 +38,7 @@ public class HomeLand extends ApplicationAdapter
     private SpriteBatch batch;
 
     private KKMapIf klondiklonMap;
-    private KKTiledMapRenderer renderer;
+    private KKMapRenderer renderer;
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
 
@@ -54,9 +54,9 @@ public class HomeLand extends ApplicationAdapter
         KlondiklonCore.init();
         // KlondiklonCore.musicManager.playMainTheme();
 
-        KKTiledMap libGdxMap = readHomeWorld();
+        KKMap libGdxMap = readHomeWorld();
         klondiklonMap = (KKMapIf) libGdxMap;
-        renderer = new KKTiledMapRenderer(libGdxMap);
+        renderer = new KKMapRenderer(libGdxMap);
 
         coordinateCalculator = new CoordinateCalculator();
 
@@ -137,7 +137,7 @@ public class HomeLand extends ApplicationAdapter
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
-    private KKTiledMap readHomeWorld()
+    private KKMap readHomeWorld()
     {
         worldsManager.copyHomeWorldFromClasspathToInternal();
         return worldsManager.readHomeWorld();
@@ -159,7 +159,7 @@ public class HomeLand extends ApplicationAdapter
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private void initInteractiveTools(KKTiledMap libGdxMap)
+    private void initInteractiveTools(KKMap libGdxMap)
     {
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, Klondiklon.player,
                 Klondiklon.objectTypeDescriptorsManager);

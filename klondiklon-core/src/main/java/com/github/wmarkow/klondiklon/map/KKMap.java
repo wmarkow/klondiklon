@@ -35,15 +35,15 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
-public class KKTiledMap extends TiledMap implements KKMapIf
+public class KKMap extends TiledMap implements KKMapIf
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(KKTiledMap.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(KKMap.class);
 
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
 
-    public KKTiledMap(org.mapeditor.core.Map tiledMap) {
+    public KKMap(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
 
         wrap();
@@ -399,9 +399,9 @@ public class KKTiledMap extends TiledMap implements KKMapIf
             return true;
         }
 
-        private KKTiledMap getOuterType()
+        private KKMap getOuterType()
         {
-            return KKTiledMap.this;
+            return KKMap.this;
         }
     }
 }

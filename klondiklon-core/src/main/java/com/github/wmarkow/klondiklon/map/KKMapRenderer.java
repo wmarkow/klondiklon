@@ -42,15 +42,15 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
-public class KKTiledMapRenderer extends BatchTiledMapRenderer
+public class KKMapRenderer extends BatchTiledMapRenderer
 {
-    public KKTiledMapRenderer(KKTiledMap map) {
+    public KKMapRenderer(KKMap map) {
         super(map, 1.0f);
     }
 
-    private KKTiledMap getKKTiledMap()
+    private KKMap getKKTiledMap()
     {
-        return (KKTiledMap) getMap();
+        return (KKMap) getMap();
     }
 
     @Override
