@@ -74,6 +74,7 @@ import org.mapeditor.io.xml.XMLWriter;
 // PATCH wmarkow 27.02.2020 "Write gid after id"
 // PATCH wmarkow 27.02.2020 "Output stream not closed"
 // PATCH wmarkow 27.02.2020 "Layer id not written" begin
+// PATCH wmarkow 27.02.2020 "Not all map attributes written"
 public class TMXMapWriter
 {
 
@@ -210,15 +211,27 @@ public class TMXMapWriter
         w.writeDocType("map", null, "http://mapeditor.org/dtd/1.0/map.dtd");
         w.startElement("map");
 
-        w.writeAttribute("version", "1.0");
+        // PATCH "Not all map attributes written" begin
+        // w.writeAttribute("version", "1.0");
+        w.writeAttribute("version", map.getVersion());
+        w.writeAttribute("tiledversion", map.getTiledversion());
+        // PATCH "Not all map attributes written" end
 
         Orientation orientation = map.getOrientation();
         w.writeAttribute("orientation", orientation.value());
+        // PATCH "Not all map attributes written" begin
+        w.writeAttribute("renderorder", map.getRenderorder().value());
+        // w.writeAttribute("compressionlevel", "0");
+        // PATCH "Not all map attributes written" end
         w.writeAttribute("width", map.getWidth());
         w.writeAttribute("height", map.getHeight());
         w.writeAttribute("tilewidth", map.getTileWidth());
         w.writeAttribute("tileheight", map.getTileHeight());
-
+        // PATCH "Not all map attributes written" begin
+        w.writeAttribute("infinite", map.getInfinite());
+        w.writeAttribute("nextlayerid", map.getNextlayerid());
+        w.writeAttribute("nextobjectid", map.getNextobjectid());
+        // PATCH "Not all map attributes written" end
         switch (orientation)
         {
             case HEXAGONAL:
