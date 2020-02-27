@@ -73,6 +73,7 @@ import org.mapeditor.io.xml.XMLWriter;
 // PATCH wmarkow 27.02.2020 "Write name at the end"
 // PATCH wmarkow 27.02.2020 "Write gid after id"
 // PATCH wmarkow 27.02.2020 "Output stream not closed"
+// PATCH wmarkow 27.02.2020 "Layer id not written" begin
 public class TMXMapWriter
 {
 
@@ -449,6 +450,9 @@ public class TMXMapWriter
     private void writeLayerAttributes(MapLayer l, XMLWriter w) throws IOException
     {
         Rectangle bounds = l.getBounds();
+        // PATCH "Layer id not written" begin
+        w.writeAttribute("id", l.getId());
+        // PATCH end
         w.writeAttribute("name", l.getName());
         if (l instanceof TileLayer)
         {
