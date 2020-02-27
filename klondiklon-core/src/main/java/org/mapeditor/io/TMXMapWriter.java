@@ -70,6 +70,7 @@ import org.mapeditor.io.xml.XMLWriter;
  * @version 1.2.3
  */
 // PATCH wmarkow 27.02.2020 "Object id not written"
+// PATCH wmarkow 27.02.2020 "Write name at the end"
 public class TMXMapWriter
 {
 
@@ -680,7 +681,9 @@ public class TMXMapWriter
         // PATCH "Object id not written" begin
         w.writeAttribute("id", mapObject.getId());
         // PATCH end
-        w.writeAttribute("name", mapObject.getName());
+        // PATCH "Write name at the end" begin
+        // w.writeAttribute("name", mapObject.getName());
+        // PATCH end
 
         if (mapObject.getType().length() != 0)
         {
@@ -716,7 +719,9 @@ public class TMXMapWriter
             w.writeAttribute("source", getRelativePath(wp, mapObject.getImageSource()));
             w.endElement();
         }
-
+        // PATCH "Write name at the end" begin
+        w.writeAttribute("name", mapObject.getName());
+        // PATCH end
         w.endElement();
     }
 
