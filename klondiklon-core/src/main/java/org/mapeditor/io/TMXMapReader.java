@@ -86,6 +86,7 @@ import org.xml.sax.SAXException;
 // PATCH wmarkow 24.02.2020 "Tilecount in TileSet is missing"
 // PATCH wmarkow 24.02.2020 "Animation info in Tile is missing"
 // PATCH wmarkow 27.02.2020 "Object id is missing"
+// PATCH wmarkow 27.02.2020 "Layer id not read" begin
 public class TMXMapReader
 {
 
@@ -652,12 +653,18 @@ public class TMXMapReader
 
         TileLayer ml = new TileLayer(layerWidth, layerHeight);
 
+        // PATCH "Layer id not read" begin
+        final int id = getAttribute(t, "id", 0);
+        // PATCH end
         final int offsetX = getAttribute(t, "x", 0);
         final int offsetY = getAttribute(t, "y", 0);
         final int visible = getAttribute(t, "visible", 1);
         String opacity = getAttributeValue(t, "opacity");
 
         ml.setName(getAttributeValue(t, "name"));
+        // PATCH "Layer id not read" begin
+        ml.setId(id);
+        // PATCH end
 
         if (opacity != null)
         {
