@@ -72,6 +72,7 @@ import org.mapeditor.io.xml.XMLWriter;
 // PATCH wmarkow 27.02.2020 "Object id not written"
 // PATCH wmarkow 27.02.2020 "Write name at the end"
 // PATCH wmarkow 27.02.2020 "Write gid after id"
+// PATCH wmarkow 27.02.2020 "Output stream not closed"
 public class TMXMapWriter
 {
 
@@ -126,6 +127,10 @@ public class TMXMapWriter
         {
             ((GZIPOutputStream) os).finish();
         }
+
+        // PATCH "Output stream not closed" begin
+        os.close();
+        // PATCH end
     }
 
     /**
@@ -149,6 +154,10 @@ public class TMXMapWriter
         xmlWriter.endDocument();
 
         writer.flush();
+
+        // PATCH "Output stream not closed" begin
+        os.close();
+        // PATCH end
     }
 
     /**
