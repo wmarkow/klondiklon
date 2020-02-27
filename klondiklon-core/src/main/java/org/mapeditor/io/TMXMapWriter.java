@@ -71,6 +71,7 @@ import org.mapeditor.io.xml.XMLWriter;
  */
 // PATCH wmarkow 27.02.2020 "Object id not written"
 // PATCH wmarkow 27.02.2020 "Write name at the end"
+// PATCH wmarkow 27.02.2020 "Write gid after id"
 public class TMXMapWriter
 {
 
@@ -681,6 +682,18 @@ public class TMXMapWriter
         // PATCH "Object id not written" begin
         w.writeAttribute("id", mapObject.getId());
         // PATCH end
+
+        // PATCH "Write gid after id" begin
+        if (mapObject.getTile() != null)
+        {
+            Tile t = mapObject.getTile();
+            w.writeAttribute("gid", firstGidPerTileset.get(t.getTileSet()) + t.getId());
+        } else if (mapObject.getGid() != null)
+        {
+            w.writeAttribute("gid", mapObject.getGid());
+        }
+        // PATCH end
+
         // PATCH "Write name at the end" begin
         // w.writeAttribute("name", mapObject.getName());
         // PATCH end
@@ -702,14 +715,16 @@ public class TMXMapWriter
             w.writeAttribute("height", mapObject.getHeight());
         }
 
-        if (mapObject.getTile() != null)
-        {
-            Tile t = mapObject.getTile();
-            w.writeAttribute("gid", firstGidPerTileset.get(t.getTileSet()) + t.getId());
-        } else if (mapObject.getGid() != null)
-        {
-            w.writeAttribute("gid", mapObject.getGid());
-        }
+        // PATCH "Write gid after id" begin
+        // if (mapObject.getTile() != null)
+        // {
+        // Tile t = mapObject.getTile();
+        // w.writeAttribute("gid", firstGidPerTileset.get(t.getTileSet()) + t.getId());
+        // } else if (mapObject.getGid() != null)
+        // {
+        // w.writeAttribute("gid", mapObject.getGid());
+        // }
+        // PATCH end
 
         writeProperties(mapObject.getProperties(), w);
 
