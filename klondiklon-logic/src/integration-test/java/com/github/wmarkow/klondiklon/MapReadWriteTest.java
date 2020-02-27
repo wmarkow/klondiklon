@@ -27,10 +27,11 @@ public class MapReadWriteTest
         }
 
         TMXMapWriter tmxMapWriter = new TMXMapWriter();
+        tmxMapWriter.settings.compressLayerData = false;
         File finalDst = new File("target/tests/worlds/home/home2.tmx");
         finalDst.getParentFile().mkdirs();
         finalDst.delete();
-        
+
         File tempDst = new File("target/classes/worlds/home/home2.tmx");
 
         tmxMapWriter.writeMap(tmxMap, tempDst.getAbsolutePath());
