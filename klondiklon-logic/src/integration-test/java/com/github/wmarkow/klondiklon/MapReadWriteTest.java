@@ -28,6 +28,8 @@ public class MapReadWriteTest
 
         TMXMapWriter tmxMapWriter = new TMXMapWriter();
         tmxMapWriter.settings.compressLayerData = false;
+        tmxMapWriter.settings.layerEncodingMethod = TMXMapWriter.Settings.LAYER_ENCODING_METHOD_CSV;
+
         File finalDst = new File("target/tests/worlds/home/home2.tmx");
         finalDst.getParentFile().mkdirs();
         finalDst.delete();
