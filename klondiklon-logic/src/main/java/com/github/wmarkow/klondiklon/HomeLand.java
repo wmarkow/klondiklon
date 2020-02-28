@@ -33,7 +33,6 @@ public class HomeLand extends ApplicationAdapter
 {
     private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
 
-    private EventBus eventBus = new EventBus();
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -52,7 +51,7 @@ public class HomeLand extends ApplicationAdapter
         KlondiklonCore.init();
         // KlondiklonCore.musicManager.playMainTheme();
 
-        Klondiklon.gameplayService.loadHomeWorld();
+        Klondiklon.gameplayService.loadGameContext();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();
@@ -65,7 +64,7 @@ public class HomeLand extends ApplicationAdapter
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new KKCameraController(camera, eventBus);
+        cameraController = new KKCameraController(camera, KlondiklonCore.eventBus);
 
         batch = new SpriteBatch();
 
@@ -75,10 +74,9 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic.initFonts(KlondiklonCore.fontsManager);
         homeLandLogic.initTextures(KlondiklonCore.texturesManager);
 
-        initPlayer();
         initUi();
         initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
-        initSimulation(Klondiklon.player);
+        initSimulation(Klondiklon.gameplayService.getPlayer());
     }
 
     @Override
@@ -128,10 +126,11 @@ public class HomeLand extends ApplicationAdapter
     }
 
     @Override
-    public void dispose () {
+    public void dispose()
+    {
         Klondiklon.gameplayService.saveGameContext();
     }
-    
+
     private void initSimulation(Player player)
     {
         long epochMilli = Instant.now().toEpochMilli();
@@ -140,15 +139,9 @@ public class HomeLand extends ApplicationAdapter
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
-    private void initPlayer()
-    {
-        Player player = new Player(eventBus);
-        Klondiklon.player = player;
-    }
-
     private void initUi()
     {
-        Klondiklon.ui = new KKUi(Klondiklon.player, eventBus);
+        Klondiklon.ui = new KKUi(Klondiklon.gameplayService.getPlayer(), KlondiklonCore.eventBus);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(Klondiklon.ui.getStage());
@@ -158,7 +151,7 @@ public class HomeLand extends ApplicationAdapter
 
     private void initInteractiveTools(KKMapIf kkMap)
     {
-        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera, Klondiklon.player,
-                Klondiklon.objectTypeDescriptorsManager);
+        grubbingInteractiveTool = new GrubbingInteractiveTool(KlondiklonCore.eventBus, kkMap, camera,
+                Klondiklon.gameplayService.getPlayer(), Klondiklon.objectTypeDescriptorsManager);
     }
 }

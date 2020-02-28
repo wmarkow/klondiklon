@@ -6,24 +6,30 @@ import org.mapeditor.io.TMXMapWriter;
 
 import com.badlogic.gdx.Gdx;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
+import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class GameplayService
 {
     private WorldsManager worldsManager = new WorldsManager();
+    private Player player = new Player(KlondiklonCore.eventBus);
     private KKMapIf currentWorldMap;
-
-    public KKMapIf loadHomeWorld()
-    {
-        worldsManager.copyHomeWorldFromClasspathToInternal(false);
-        currentWorldMap = worldsManager.readHomeWorld();
-
-        return currentWorldMap;
-    }
 
     public KKMapIf getCurrentWorldMap()
     {
         return currentWorldMap;
+
+    }
+
+    public Player getPlayer()
+    {
+        return player;
+    }
+
+    public void loadGameContext()
+    {
+        worldsManager.copyHomeWorldFromClasspathToInternal(false);
+        currentWorldMap = worldsManager.readHomeWorld();
     }
 
     public void saveGameContext()

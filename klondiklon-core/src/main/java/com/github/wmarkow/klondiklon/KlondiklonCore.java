@@ -1,5 +1,6 @@
 package com.github.wmarkow.klondiklon;
 
+import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.graphics.SkinsManager;
@@ -15,6 +16,7 @@ public class KlondiklonCore
     public final static ShadersManager shadersManager = new ShadersManager();
     public final static FontsManager fontsManager = new FontsManager();
     public final static SkinsManager skinsManager = new SkinsManager();
+    public final static EventBus eventBus = new EventBus();
     
     public static void init()
     {

@@ -12,7 +12,6 @@ public class Klondiklon
     public final static StorageItemDescriptorsManager storageItemDescriptorsManager = new StorageItemDescriptorsManager();
     public final static Warehouse warehouse = new Warehouse();
     public final static GameplayService gameplayService = new GameplayService();
-    public static Player player;
 
     public static KKUi ui;
 }
