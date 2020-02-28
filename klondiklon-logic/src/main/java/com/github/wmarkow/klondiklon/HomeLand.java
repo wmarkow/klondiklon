@@ -37,7 +37,6 @@ public class HomeLand extends ApplicationAdapter
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    private KKMapIf klondiklonMap;
     private KKMapRenderer renderer;
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
@@ -46,7 +45,6 @@ public class HomeLand extends ApplicationAdapter
     private GrubbingInteractiveTool grubbingInteractiveTool;
 
     private Simulation simulation;
-    private WorldsManager worldsManager = new WorldsManager();
 
     @Override
     public void create()
@@ -54,9 +52,8 @@ public class HomeLand extends ApplicationAdapter
         KlondiklonCore.init();
         // KlondiklonCore.musicManager.playMainTheme();
 
-        KKMap libGdxMap = readHomeWorld();
-        klondiklonMap = (KKMapIf) libGdxMap;
-        renderer = new KKMapRenderer(libGdxMap);
+        Klondiklon.gameplayService.loadHomeWorld();
+        renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();
 
@@ -80,7 +77,7 @@ public class HomeLand extends ApplicationAdapter
 
         initPlayer();
         initUi();
-        initInteractiveTools(libGdxMap);
+        initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
         initSimulation(Klondiklon.player);
     }
 
@@ -97,11 +94,12 @@ public class HomeLand extends ApplicationAdapter
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
-        TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(klondiklonMap.getHeightInTiles(),
-                klondiklonMap.getTileHeightInPixels(), world);
+        KKMapIf currentMap = Klondiklon.gameplayService.getCurrentWorldMap();
+        TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(currentMap.getHeightInTiles(),
+                currentMap.getTileHeightInPixels(), world);
         GdxWorldIsoCoordinates worldIso = coordinateCalculator.world2iso(world);
-        TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(klondiklonMap.getHeightInTiles(),
-                klondiklonMap.getTileHeightInPixels(), tmxOrthogonal);
+        TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(currentMap.getHeightInTiles(),
+                currentMap.getTileHeightInPixels(), tmxOrthogonal);
 
         KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
@@ -137,12 +135,6 @@ public class HomeLand extends ApplicationAdapter
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
-    private KKMap readHomeWorld()
-    {
-        worldsManager.copyHomeWorldFromClasspathToInternal();
-        return worldsManager.readHomeWorld();
-    }
-
     private void initPlayer()
     {
         Player player = new Player(eventBus);
@@ -159,9 +151,9 @@ public class HomeLand extends ApplicationAdapter
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private void initInteractiveTools(KKMap libGdxMap)
+    private void initInteractiveTools(KKMapIf kkMap)
     {
-        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, libGdxMap, camera, Klondiklon.player,
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera, Klondiklon.player,
                 Klondiklon.objectTypeDescriptorsManager);
     }
 }
