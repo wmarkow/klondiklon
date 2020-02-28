@@ -127,6 +127,11 @@ public class HomeLand extends ApplicationAdapter
         Klondiklon.ui.getStage().getViewport().update(width, height, true);
     }
 
+    @Override
+    public void dispose () {
+        Klondiklon.gameplayService.saveGameContext();
+    }
+    
     private void initSimulation(Player player)
     {
         long epochMilli = Instant.now().toEpochMilli();

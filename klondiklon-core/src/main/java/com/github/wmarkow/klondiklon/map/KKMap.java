@@ -108,6 +108,12 @@ public class KKMap extends TiledMap implements KKMapIf
     }
 
     @Override
+    public org.mapeditor.core.Map getTmxMap()
+    {
+        return tiledMap;
+    }
+    
+    @Override
     public void dispose()
     {
     }

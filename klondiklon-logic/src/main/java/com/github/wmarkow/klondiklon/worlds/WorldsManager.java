@@ -22,7 +22,7 @@ public class WorldsManager
 
     private final static String WORLDS_DIR_NAME = "worlds";
 
-    public void copyHomeWorldFromClasspathToInternal()
+    public void copyHomeWorldFromClasspathToInternal(boolean overrrideTmx)
     {
         ClassLoader classLoader = MethodHandles.lookup().getClass().getClassLoader();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(classLoader);
@@ -44,6 +44,14 @@ public class WorldsManager
                     String urlString = url.toExternalForm();
                     String targetName = urlString.substring(urlString.indexOf(WORLDS_DIR_NAME));
                     File destination = new File(rootDstDirectory, targetName);
+                    
+                    if(url.getPath().toLowerCase().endsWith("tmx"))
+                    {
+                        if(destination.exists() && !overrrideTmx)
+                        {
+                            continue;
+                        }
+                    }
                     FileUtils.copyURLToFile(url, destination);
                     LOGGER.info("Copied " + url + " to " + destination.getAbsolutePath());
                 }

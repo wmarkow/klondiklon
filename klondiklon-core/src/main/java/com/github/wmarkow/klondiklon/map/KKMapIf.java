@@ -11,4 +11,6 @@ public interface KKMapIf
     KKMapObjectIf[] getObjects();
 
     void removeObject(KKMapObjectIf object);
+    
+    org.mapeditor.core.Map getTmxMap();
 }
