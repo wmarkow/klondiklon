@@ -76,6 +76,7 @@ import org.mapeditor.io.xml.XMLWriter;
 // PATCH wmarkow 27.02.2020 "Layer id not written" begin
 // PATCH wmarkow 27.02.2020 "Not all map attributes written"
 // PATCH wmarkow 27.02.2020 "Add a switch for compress layer data"
+// PATCH wmarkow 27.02.2020 "Add possibility to encode map layer data in csv"
 public class TMXMapWriter
 {
 
@@ -92,10 +93,17 @@ public class TMXMapWriter
         @Deprecated
         public static final String LAYER_COMPRESSION_METHOD_GZIP = "gzip";
         public static final String LAYER_COMPRESSION_METHOD_ZLIB = "zlib";
+        // PATCH "Add possibility to encode map layer data in csv" begin
+        public static final String LAYER_ENCODING_METHOD_BASE64 = "base64";
+        public static final String LAYER_ENCODING_METHOD_CSV = "csv";
+        // PATCH end
 
         public String layerCompressionMethod = LAYER_COMPRESSION_METHOD_ZLIB;
         // PATCH "Add a switch for compress layer data" begin
         public boolean compressLayerData = COMPRESS_LAYER_DATA;
+        // PATCH end
+        // PATCH "Add possibility to encode map layer data in csv" begin
+        public String layerEncodingMethod = LAYER_ENCODING_METHOD_BASE64;
         // PATCH end
     }
 
@@ -533,14 +541,17 @@ public class TMXMapWriter
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             OutputStream out;
 
-            w.writeAttribute("encoding", "base64");
+            // PATCH "Add possibility to encode map layer data in csv" begin
+            // w.writeAttribute("encoding", "base64");
+            w.writeAttribute("encoding", settings.layerEncodingMethod);
+            // PATCH end
 
             // PATCH "Add a switch for compress layer data" begin
             // DeflaterOutputStream dos;
             DeflaterOutputStream dos = null;
             // if (COMPRESS_LAYER_DATA)
             if (settings.compressLayerData)
-            // PATCH "Add a switch for compress layer data" end
+            // PATCH end
             {
                 if (Settings.LAYER_COMPRESSION_METHOD_ZLIB.equalsIgnoreCase(settings.layerCompressionMethod))
                 {
@@ -572,23 +583,54 @@ public class TMXMapWriter
                         gid = getGid(tile);
                     }
 
-                    out.write(gid & LAST_BYTE);
-                    out.write(gid >> Byte.SIZE & LAST_BYTE);
-                    out.write(gid >> Byte.SIZE * 2 & LAST_BYTE);
-                    out.write(gid >> Byte.SIZE * 3 & LAST_BYTE);
+                    // PATCH "Add possibility to encode map layer data in csv" begin
+                    // out.write(gid & LAST_BYTE);
+                    // out.write(gid >> Byte.SIZE & LAST_BYTE);
+                    // out.write(gid >> Byte.SIZE * 2 & LAST_BYTE);
+                    // out.write(gid >> Byte.SIZE * 3 & LAST_BYTE);
+                    if (Settings.LAYER_ENCODING_METHOD_BASE64.equals(settings.layerEncodingMethod))
+                    {
+                        out.write(gid & LAST_BYTE);
+                        out.write(gid >> Byte.SIZE & LAST_BYTE);
+                        out.write(gid >> Byte.SIZE * 2 & LAST_BYTE);
+                        out.write(gid >> Byte.SIZE * 3 & LAST_BYTE);
+                    } else
+                    {
+                        // CSV as fallback
+                        String gidAsString = String.valueOf(gid);
+                        byte[] gidAsStringBytes = gidAsString.getBytes(Charset.forName("UTF-8"));
+                        out.write(gidAsStringBytes);
+                        out.write(",".getBytes(Charset.forName("UTF-8")));
+                    }
+                    // PATCH end
                 }
+                // PATCH "Add possibility to encode map layer data in csv" begin
+                if (y < l.getHeight() - 1)
+                {
+                    out.write("\n\r".getBytes(Charset.forName("UTF-8")));
+                }
+                // PATCH end
             }
 
             // PATCH "Add a switch for compress layer data" begin
             // if (COMPRESS_LAYER_DATA && dos != null)
             if (settings.compressLayerData && dos != null)
-            // PATCH "Add a switch for compress layer data" end
+            // PATCH end
             {
                 dos.finish();
             }
 
             byte[] dec = baos.toByteArray();
-            w.writeCDATA(DatatypeConverter.printBase64Binary(dec));
+            // PATCH "Add possibility to encode map layer data in csv" begin
+            // w.writeCDATA(DatatypeConverter.printBase64Binary(dec));
+            if (Settings.LAYER_ENCODING_METHOD_BASE64.equals(settings.layerEncodingMethod))
+            {
+                w.writeCDATA(DatatypeConverter.printBase64Binary(dec));
+            } else
+            {
+                w.writeCDATA(new String(dec, Charset.forName("UTF-8")));
+            }
+            // PATCH end
         } else
         {
             for (int y = 0; y < l.getHeight(); y++)
