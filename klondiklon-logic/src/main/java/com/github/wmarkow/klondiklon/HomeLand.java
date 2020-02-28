@@ -43,8 +43,6 @@ public class HomeLand extends ApplicationAdapter
     private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
 
-    private Simulation simulation;
-
     @Override
     public void create()
     {
@@ -76,7 +74,6 @@ public class HomeLand extends ApplicationAdapter
 
         initUi();
         initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
-        initSimulation(Klondiklon.gameplayService.getPlayer());
     }
 
     @Override
@@ -116,7 +113,7 @@ public class HomeLand extends ApplicationAdapter
 
         Klondiklon.ui.getStage().act();
         Klondiklon.ui.getStage().draw();
-        simulation.simulateStep(Instant.now().toEpochMilli());
+        Klondiklon.gameplayService.simulateStep(Instant.now().toEpochMilli());
     }
 
     @Override
@@ -129,14 +126,6 @@ public class HomeLand extends ApplicationAdapter
     public void dispose()
     {
         Klondiklon.gameplayService.saveGameContext();
-    }
-
-    private void initSimulation(Player player)
-    {
-        long epochMilli = Instant.now().toEpochMilli();
-
-        simulation = new Simulation(epochMilli);
-        simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
     private void initUi()
