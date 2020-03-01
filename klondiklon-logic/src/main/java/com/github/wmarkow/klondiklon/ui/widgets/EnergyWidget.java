@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.github.wmarkow.klondiklon.Klondiklon;
-import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
@@ -67,7 +67,8 @@ public class EnergyWidget extends Stack
     {
         if (lightningImage == null)
         {
-            Texture texture = KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.LIGHTNING);
+            Texture texture = ServiceRegistry.getInstance().getTexturesManager()
+                    .getTexture(TexturesRegistrar.LIGHTNING);
             lightningImage = new ImageWidget(texture);
             lightningImage.setScale(0.65f);
         }

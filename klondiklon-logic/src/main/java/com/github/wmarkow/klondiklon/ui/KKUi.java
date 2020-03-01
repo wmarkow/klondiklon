@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
@@ -56,7 +56,7 @@ public class KKUi
     private void create()
     {
         stage = new Stage(new ScreenViewport());
-        mySkin = KlondiklonCore.skinsManager.GLASSY;
+        mySkin = ServiceRegistry.getInstance().getSkinsManager().GLASSY;
 
         stack = new Stack();
         stack.setFillParent(true);
@@ -64,7 +64,7 @@ public class KKUi
 
         tableLayout = new Table();
         tableLayout.setFillParent(true);
-//        tableLayout.setDebug(true);
+        // tableLayout.setDebug(true);
         stack.addActor(tableLayout);
 
         tableLayout.row();
@@ -95,7 +95,8 @@ public class KKUi
         if (imageButton == null)
         {
             ImageButtonStyle style = new ImageButtonStyle();
-            style.up = new TextureRegionDrawable(KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.BACKPACK));
+            style.up = new TextureRegionDrawable(
+                    ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.BACKPACK));
             imageButton = new ImageButton(style);
             imageButton.addListener(new ClickListener()
             {

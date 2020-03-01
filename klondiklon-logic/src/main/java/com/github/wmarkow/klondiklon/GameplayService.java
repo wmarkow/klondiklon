@@ -42,7 +42,7 @@ public class GameplayService
         currentWorldMap = worldsManager.readHomeWorld();
 
         // load player
-        player = new Player(KlondiklonCore.eventBus);
+        player = new Player(ServiceRegistry.getInstance().getEventBus());
 
         // load simulation
         long epochMilli = Instant.now().toEpochMilli();

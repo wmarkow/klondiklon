@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
@@ -92,7 +92,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         if (isSelected())
         {
             ShaderProgram currentShader = batch.getShader();
-            batch.setShader(KlondiklonCore.shadersManager.SHADER_OUTLINE);
+            batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE);
             batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
             batch.setShader(currentShader);
         }
@@ -103,12 +103,12 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         {
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"
-            BitmapFont font = KlondiklonCore.fontsManager.getFont("GRUBBING_FONT");
+            BitmapFont font = ServiceRegistry.getInstance().getFontsManager().getFont("GRUBBING_FONT");
 
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"
-            NinePatch balloonNinePatch = new NinePatch(KlondiklonCore.texturesManager.getTexture("BALLOON_BLUE"), 14,
-                    14, 14, 27);
+            NinePatch balloonNinePatch = new NinePatch(
+                    ServiceRegistry.getInstance().getTexturesManager().getTexture("BALLOON_BLUE"), 14, 14, 14, 27);
             NinePatchDrawable balloonDrawable = new NinePatchDrawable(balloonNinePatch);
             TextButtonStyle style = new TextButtonStyle(balloonDrawable, balloonDrawable, balloonDrawable, font);
             style.fontColor = Color.WHITE;

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.github.wmarkow.klondiklon.Klondiklon;
-import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.warehouse.WarehouseItemQuantity;
@@ -36,16 +36,17 @@ public class WarehouseWidget extends Container<Table>
     private void create()
     {
         NinePatch ninePatch = new NinePatch(
-                KlondiklonCore.texturesManager.getTexture(TexturesRegistrar.WAREHOUSE_BACKGROUND), 15, 15, 15, 15);
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.WAREHOUSE_BACKGROUND),
+                15, 15, 15, 15);
 
         table = new Table();
         table.setFillParent(false);
-//        table.setDebug(true);
+        // table.setDebug(true);
         table.setBackground(new NinePatchDrawable(ninePatch));
 
         table.row();
         LabelStyle style = new LabelStyle();
-        style.font = KlondiklonCore.fontsManager.getFont(FontsRegistrar.GRUBBING_FONT_NAME);
+        style.font = ServiceRegistry.getInstance().getFontsManager().getFont(FontsRegistrar.GRUBBING_FONT_NAME);
         style.fontColor = Color.WHITE;
         Label label = new Label("MAGAZYN", style);
         table.add(label).align(Align.top | Align.center);

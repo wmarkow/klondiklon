@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
-import com.github.wmarkow.klondiklon.KlondiklonCore;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -72,8 +72,8 @@ public class GrubbingProfitActor extends Group
             StorageItemDescriptor storageItemDescriptor = gp.getStorageItemDescriptor();
             for (int q = 0; q < gp.getAmount(); q++)
             {
-                Image image = new Image(
-                        KlondiklonCore.texturesManager.getTexture(storageItemDescriptor.getTextureName()));
+                Image image = new Image(ServiceRegistry.getInstance().getTexturesManager()
+                        .getTexture(storageItemDescriptor.getTextureName()));
                 image.setX(start.getX());
                 image.setY(start.getY());
                 addActor(image);

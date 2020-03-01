@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.graphics.FontsManager;
+import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKMap;
@@ -43,11 +45,17 @@ public class HomeLand extends ApplicationAdapter
     private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
 
+    private EventBus eventBus;
+    private FontsManager fontsManager;
+    private TexturesManager texturesManager;
+
     @Override
     public void create()
     {
-        KlondiklonCore.init();
-        // KlondiklonCore.musicManager.playMainTheme();
+        eventBus = ServiceRegistry.getInstance().getEventBus();
+        fontsManager = ServiceRegistry.getInstance().getFontsManager();
+        texturesManager = ServiceRegistry.getInstance().getTexturesManager();
+        ServiceRegistry.getInstance().getMusicManager().playMainTheme();
 
         Klondiklon.gameplayService.loadGameContext();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
@@ -62,15 +70,15 @@ public class HomeLand extends ApplicationAdapter
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new KKCameraController(camera, KlondiklonCore.eventBus);
+        cameraController = new KKCameraController(camera, eventBus);
 
         batch = new SpriteBatch();
 
         homeLandLogic = new HomeLandLogic();
         homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
         homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
-        homeLandLogic.initFonts(KlondiklonCore.fontsManager);
-        homeLandLogic.initTextures(KlondiklonCore.texturesManager);
+        homeLandLogic.initFonts(fontsManager);
+        homeLandLogic.initTextures(texturesManager);
 
         initUi();
         initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
@@ -85,7 +93,7 @@ public class HomeLand extends ApplicationAdapter
         renderer.setView(camera);
         renderer.render();
         batch.begin();
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+        fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
         GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
@@ -96,18 +104,17 @@ public class HomeLand extends ApplicationAdapter
         TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(currentMap.getHeightInTiles(),
                 currentMap.getTileHeightInPixels(), tmxOrthogonal);
 
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
-                String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
-                Gdx.graphics.getHeight() - 0);
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
-                String.format("       World (x,y): %s, %s", world.x, world.y), 0, Gdx.graphics.getHeight() - 20);
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
-                String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0, Gdx.graphics.getHeight() - 40);
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()),
+                0, Gdx.graphics.getHeight() - 0);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
+                Gdx.graphics.getHeight() - 20);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
+                Gdx.graphics.getHeight() - 40);
+        fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
                 Gdx.graphics.getHeight() - 60);
-        KlondiklonCore.fontsManager.DEFAULT_FONT.draw(batch,
-                String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0, Gdx.graphics.getHeight() - 80);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
+                Gdx.graphics.getHeight() - 80);
 
         batch.end();
 
@@ -130,7 +137,7 @@ public class HomeLand extends ApplicationAdapter
 
     private void initUi()
     {
-        Klondiklon.ui = new KKUi(Klondiklon.gameplayService.getPlayer(), KlondiklonCore.eventBus);
+        Klondiklon.ui = new KKUi(Klondiklon.gameplayService.getPlayer(), eventBus);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(Klondiklon.ui.getStage());
@@ -140,7 +147,7 @@ public class HomeLand extends ApplicationAdapter
 
     private void initInteractiveTools(KKMapIf kkMap)
     {
-        grubbingInteractiveTool = new GrubbingInteractiveTool(KlondiklonCore.eventBus, kkMap, camera,
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
                 Klondiklon.gameplayService.getPlayer(), Klondiklon.objectTypeDescriptorsManager);
     }
 }
