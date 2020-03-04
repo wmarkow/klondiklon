@@ -18,18 +18,18 @@ import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.ui.widgets.WarehouseItemWidget;
 import com.github.wmarkow.klondiklon.warehouse.WarehouseItemQuantity;
 
-public class WarehouseWidget extends Container<Table>
+public class WarehouseView extends Container<Table>
 {
     private Table table;
 
-    public WarehouseWidget() {
+    public WarehouseView() {
         create();
 
         addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                WarehouseWidget.this.remove();
+                WarehouseView.this.remove();
             }
         });
     }

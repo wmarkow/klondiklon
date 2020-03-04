@@ -19,7 +19,7 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
-import com.github.wmarkow.klondiklon.ui.views.WarehouseWidget;
+import com.github.wmarkow.klondiklon.ui.views.WarehouseView;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
 
 public class KKUi
@@ -30,7 +30,7 @@ public class KKUi
     private Skin mySkin;
     private Stack stack;
     private Table tableLayout;
-    private WarehouseWidget warehouseWidget = null;
+    private WarehouseView warehouseWidget = null;
     private MoveObjectView moveObjectView = null;
     private Player player;
     private EventBus eventBus;
@@ -153,7 +153,7 @@ public class KKUi
             return;
         }
 
-        warehouseWidget = new WarehouseWidget();
+        warehouseWidget = new WarehouseView();
         stack.addActor(warehouseWidget);
     }
 }
