@@ -18,9 +18,9 @@ public class HomeLandLogic
     public void initObjectTypeDescriptors(ObjectTypeDescriptorsManager manager)
     {
         manager.registerObjectTypeDescriptor(createFir());
-         manager.registerObjectTypeDescriptor(createCoalLarge());
-         manager.registerObjectTypeDescriptor(createCoalMedium());
-         manager.registerObjectTypeDescriptor(createCoalSmall());
+        manager.registerObjectTypeDescriptor(createCoalLarge());
+        manager.registerObjectTypeDescriptor(createCoalMedium());
+        manager.registerObjectTypeDescriptor(createCoalSmall());
         manager.registerObjectTypeDescriptor(createIceColumn());
         manager.registerObjectTypeDescriptor(createRockLarge());
         manager.registerObjectTypeDescriptor(createRockMedium());
@@ -28,6 +28,8 @@ public class HomeLandLogic
         manager.registerObjectTypeDescriptor(createSnawyBuschMedium());
         manager.registerObjectTypeDescriptor(createFragaria());
         manager.registerObjectTypeDescriptor(createRubus());
+
+        manager.registerObjectTypeDescriptor(new ObjectTypeDescriptor(ObjectTypes.BARN, "Stodoła"));
     }
 
     public void initStorageItemDescriptors(StorageItemDescriptorsManager manager)

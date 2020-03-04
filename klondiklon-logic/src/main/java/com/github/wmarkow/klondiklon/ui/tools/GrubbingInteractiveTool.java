@@ -114,8 +114,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
         for (KKMapObjectIf mapObject : map.getObjects())
         {
-            mapObject.setSelected(false);
-
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
             if (descriptor == null)
             {
@@ -126,6 +124,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
             {
                 continue;
             }
+
+            mapObject.setSelected(false);
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
@@ -154,8 +154,6 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
         for (KKMapObjectIf mapObject : map.getObjects())
         {
-            mapObject.setSelected(false);
-
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
             if (descriptor == null)
             {
@@ -166,6 +164,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
             {
                 continue;
             }
+
+            mapObject.setSelected(false);
 
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {

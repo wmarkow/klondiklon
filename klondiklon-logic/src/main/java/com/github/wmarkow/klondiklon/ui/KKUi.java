@@ -19,6 +19,7 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
+import com.github.wmarkow.klondiklon.ui.widgets.MoveObjectView;
 import com.github.wmarkow.klondiklon.ui.widgets.WarehouseWidget;
 
 public class KKUi
@@ -30,6 +31,7 @@ public class KKUi
     private Stack stack;
     private Table tableLayout;
     private WarehouseWidget warehouseWidget = null;
+    private MoveObjectView moveObjectView = null;
     private Player player;
     private EventBus eventBus;
 
@@ -51,6 +53,22 @@ public class KKUi
     public ImageButton getBackpackWidget()
     {
         return imageButton;
+    }
+
+    public void showMoveObjectView()
+    {
+        moveObjectView = new MoveObjectView();
+        stack.addActor(moveObjectView);
+    }
+
+    public void hideMoveObjectView()
+    {
+        if (moveObjectView == null)
+        {
+            return;
+        }
+        stack.removeActor(moveObjectView);
+        moveObjectView = null;
     }
 
     private void create()

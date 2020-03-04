@@ -20,6 +20,8 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     private String tooltipText = null;
     private String objectType;
     private int id;
+    private boolean selectedGreen = false;
+    private boolean selectedRed = false;
 
     private static BitmapFont FONT = new BitmapFont();
     static
@@ -93,6 +95,13 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         {
             ShaderProgram currentShader = batch.getShader();
             batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE);
+            if (selectedGreen)
+            {
+                batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_GREEN);
+            } else if (selectedRed)
+            {
+                batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_RED);
+            }
             batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
             batch.setShader(currentShader);
         }
@@ -137,6 +146,8 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     {
         this.selected = selected;
         this.tooltipText = null;
+        this.selectedGreen = false;
+        this.selectedRed = false;
     }
 
     @Override
@@ -144,6 +155,22 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     {
         this.selected = true;
         this.tooltipText = tooltipText;
+    }
+
+    @Override
+    public void setSelectedTrueGreenColor()
+    {
+        selected = true;
+        selectedGreen = true;
+        selectedRed = false;
+    }
+
+    @Override
+    public void setSelectedTrueRedColor()
+    {
+        selected = true;
+        selectedGreen = false;
+        selectedRed = true;
     }
 
     @Override

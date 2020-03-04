@@ -29,6 +29,7 @@ import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
+import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class HomeLand extends ApplicationAdapter
@@ -44,6 +45,7 @@ public class HomeLand extends ApplicationAdapter
 
     private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
+    private MoveObjectInteractiveTool moveObjectInteractiveTool;
 
     private EventBus eventBus;
     private FontsManager fontsManager;
@@ -55,7 +57,7 @@ public class HomeLand extends ApplicationAdapter
         eventBus = ServiceRegistry.getInstance().getEventBus();
         fontsManager = ServiceRegistry.getInstance().getFontsManager();
         texturesManager = ServiceRegistry.getInstance().getTexturesManager();
-        ServiceRegistry.getInstance().getMusicManager().playMainTheme();
+        // ServiceRegistry.getInstance().getMusicManager().playMainTheme();
 
         Klondiklon.gameplayService.loadGameContext();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
@@ -149,5 +151,7 @@ public class HomeLand extends ApplicationAdapter
     {
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
                 Klondiklon.gameplayService.getPlayer(), Klondiklon.objectTypeDescriptorsManager);
+        moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
+                Klondiklon.objectTypeDescriptorsManager);
     }
 }

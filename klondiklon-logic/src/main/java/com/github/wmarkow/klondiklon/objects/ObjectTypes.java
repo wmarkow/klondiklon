@@ -20,4 +20,6 @@ public class ObjectTypes
     public final static String SNOWY_BUSH_MEDIUM = "SNOWY_BUSH_MEDIUM"; // ośnieżony krzak
     public final static String FRAGARIA = "FRAGARIA"; // poziomka
     public final static String RUBUS = "RUBUS"; // jeżyna
+
+    public final static String BARN = "BARN"; // stodoła
 }

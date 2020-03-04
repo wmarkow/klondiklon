@@ -1,5 +1,6 @@
 package com.github.wmarkow.klondiklon.map.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
@@ -22,6 +23,10 @@ public interface KKMapObjectIf
     void setSelected(boolean selected);
 
     void setSelectedTrue(String tooltipText);
+
+    void setSelectedTrueGreenColor();
+
+    void setSelectedTrueRedColor();
 
     void draw(Batch batch, float[] spriteVertices, int offset, int count);
 
