@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.ui.widgets;
+package com.github.wmarkow.klondiklon.ui.views;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -15,6 +15,7 @@ import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
+import com.github.wmarkow.klondiklon.ui.widgets.WarehouseItemWidget;
 import com.github.wmarkow.klondiklon.warehouse.WarehouseItemQuantity;
 
 public class WarehouseWidget extends Container<Table>
