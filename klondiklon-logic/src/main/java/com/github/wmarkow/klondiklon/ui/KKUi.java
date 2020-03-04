@@ -45,10 +45,13 @@ public class KKUi implements EventSubscriber
     {
         moveObjectView = new MoveObjectView();
         stack.addActor(moveObjectView);
+        mainView.setVisible(false);
     }
 
     public void hideMoveObjectView()
     {
+        mainView.setVisible(true);
+        
         if (moveObjectView == null)
         {
             return;
