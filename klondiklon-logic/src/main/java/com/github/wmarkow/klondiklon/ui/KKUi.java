@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,14 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
+import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.EventSubscriber;
+import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
 import com.github.wmarkow.klondiklon.ui.views.WarehouseView;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
 
-public class KKUi
+public class KKUi implements EventSubscriber
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKUi.class);
 
@@ -43,6 +45,8 @@ public class KKUi
         this.eventBus = eventBus;
 
         create();
+
+        ServiceRegistry.getInstance().getEventBus().subscribe(WarehouseButtonBackpackClickedEvent.class, this);
     }
 
     public Stage getStage()
@@ -69,6 +73,21 @@ public class KKUi
         }
         stack.removeActor(moveObjectView);
         moveObjectView = null;
+    }
+
+    @Override
+    public void onEvent(Event event)
+    {
+        if (event instanceof WarehouseButtonBackpackClickedEvent)
+        {
+            if (warehouseWidget == null)
+            {
+                showWarehouseWidget();
+            } else
+            {
+                hideWarehouseWidget();
+            }
+        }
     }
 
     private void create()
@@ -122,7 +141,7 @@ public class KKUi
                 {
                     event.cancel();
                     LOGGER.info("Backpack button clicked");
-                    showWarehouseWidget();
+                    ServiceRegistry.getInstance().getEventBus().publish(new WarehouseButtonBackpackClickedEvent());
                 }
             });
         }
@@ -130,30 +149,25 @@ public class KKUi
         return imageButton;
     }
 
-    private boolean isWarehouseVisible()
-    {
-        if (warehouseWidget == null)
-        {
-            return false;
-        }
-
-        if (stack.getChildren().contains(warehouseWidget, true))
-        {
-            return true;
-        }
-
-        warehouseWidget = null;
-        return false;
-    }
-
     private void showWarehouseWidget()
     {
-        if (isWarehouseVisible())
+        if (warehouseWidget != null)
         {
             return;
         }
 
         warehouseWidget = new WarehouseView();
         stack.addActor(warehouseWidget);
+    }
+
+    private void hideWarehouseWidget()
+    {
+        if (warehouseWidget == null)
+        {
+            return;
+        }
+
+        stack.removeActor(warehouseWidget);
+        warehouseWidget = null;
     }
 }
