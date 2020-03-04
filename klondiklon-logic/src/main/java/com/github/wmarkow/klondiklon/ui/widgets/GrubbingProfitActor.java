@@ -90,7 +90,7 @@ public class GrubbingProfitActor extends Group
             actor.setX(newX);
             actor.setY(newY);
 
-            Actor backpackButton = Klondiklon.ui.getBackpackWidget();
+            Actor backpackButton = Klondiklon.ui.getMainView().getBackpackWidget();
 
             paths.add(new Bezier<Vector2>(new Vector2(start.getX(), start.getY()), new Vector2(newX, newY),
                     new Vector2(newX, newY), new Vector2(backpackButton.getX(), backpackButton.getY())));

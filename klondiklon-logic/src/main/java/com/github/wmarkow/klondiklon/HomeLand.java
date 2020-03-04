@@ -139,7 +139,7 @@ public class HomeLand extends ApplicationAdapter
 
     private void initUi()
     {
-        Klondiklon.ui = new KKUi(Klondiklon.gameplayService.getPlayer(), eventBus);
+        Klondiklon.ui = new KKUi();
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(Klondiklon.ui.getStage());
