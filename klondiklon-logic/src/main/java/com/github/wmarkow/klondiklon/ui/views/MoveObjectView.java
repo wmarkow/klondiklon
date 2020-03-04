@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.ui.widgets;
+package com.github.wmarkow.klondiklon.ui.views;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

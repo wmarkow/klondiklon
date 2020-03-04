@@ -18,8 +18,8 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
+import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
-import com.github.wmarkow.klondiklon.ui.widgets.MoveObjectView;
 import com.github.wmarkow.klondiklon.ui.widgets.WarehouseWidget;
 
 public class KKUi
