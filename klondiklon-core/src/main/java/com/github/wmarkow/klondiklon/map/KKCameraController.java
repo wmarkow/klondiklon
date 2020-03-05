@@ -62,8 +62,6 @@ public class KKCameraController extends InputAdapter
         }
         last.set(x, y, 0);
 
-        eventBus.publish(new TouchUpEvent(x, y));
-
         return false;
     }
 
