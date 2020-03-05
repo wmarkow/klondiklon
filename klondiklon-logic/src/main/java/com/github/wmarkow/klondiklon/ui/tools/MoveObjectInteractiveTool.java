@@ -70,6 +70,11 @@ public class MoveObjectInteractiveTool implements EventSubscriber
     {
         LOGGER.info(String.format("Long touch down event"));
 
+        if(objectToMove != null)
+        {
+            // already moving this object
+            return;
+        }
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
