@@ -5,6 +5,7 @@ import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.graphics.SkinsManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesManager;
+import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.music.MusicManager;
 import com.github.wmarkow.klondiklon.sound.SoundManager;
 
@@ -17,6 +18,7 @@ public class ServiceRegistry
     private FontsManager fontsManager = new FontsManager();
     private SkinsManager skinsManager = new SkinsManager();
     private EventBus eventBus = new EventBus();
+    public KKCameraController cameraController = null;
 
     private static ServiceRegistry instance = new ServiceRegistry();
 

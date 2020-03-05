@@ -9,6 +9,7 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
+import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonCancelClickedEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonOkClickedEvent;
@@ -39,6 +40,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
 
         // this.eventBus.subscribe(TouchTapEvent.class, this);
         this.eventBus.subscribe(TouchLongDownEvent.class, this);
+        this.eventBus.subscribe(TouchDraggedEvent.class, this);
         this.eventBus.subscribe(MoveObjectButtonOkClickedEvent.class, this);
         this.eventBus.subscribe(MoveObjectButtonCancelClickedEvent.class, this);
     }
@@ -49,6 +51,12 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         if (event instanceof TouchLongDownEvent)
         {
             processTouchLongDownEvent((TouchLongDownEvent) event);
+
+            return;
+        }
+        if (event instanceof TouchDraggedEvent)
+        {
+            processTouchDraggedEvent((TouchDraggedEvent) event);
 
             return;
         }
@@ -70,11 +78,12 @@ public class MoveObjectInteractiveTool implements EventSubscriber
     {
         LOGGER.info(String.format("Long touch down event"));
 
-        if(objectToMove != null)
+        if (objectToMove != null)
         {
             // already moving this object
             return;
         }
+
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
@@ -101,9 +110,19 @@ public class MoveObjectInteractiveTool implements EventSubscriber
                 objectToMove.setSelectedTrueGreenColor();
                 Klondiklon.ui.showMoveObjectView();
 
+                ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
                 return;
             }
         }
+    }
+
+    private void processTouchDraggedEvent(TouchDraggedEvent event)
+    {
+        if (objectToMove == null)
+        {
+            return;
+        }
+        LOGGER.info(String.format("Touch dragged event received x=%s, y=%s", event.getScreenX(), event.getScreenY()));
     }
 
     private void reset()
@@ -115,5 +134,6 @@ public class MoveObjectInteractiveTool implements EventSubscriber
 
         objectToMove = null;
         Klondiklon.ui.hideMoveObjectView();
+        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
     }
 }

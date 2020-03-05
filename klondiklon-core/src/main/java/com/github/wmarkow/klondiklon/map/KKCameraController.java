@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
@@ -40,6 +41,7 @@ public class KKCameraController extends InputAdapter
     private boolean touchDraggedDetected = false;
     private Long touchDownMillis = null;
     private Timer longTouchDownTimer;
+    private boolean lockCameraWhileDragging = false;
 
     public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
@@ -49,18 +51,27 @@ public class KKCameraController extends InputAdapter
         longTouchDownTimer.start();
     }
 
+    public void setLockCameraWhileDragging(boolean lockCameraWhileDragging)
+    {
+        this.lockCameraWhileDragging = lockCameraWhileDragging;
+    }
+
     @Override
     public boolean touchDragged(int x, int y, int pointer)
     {
         touchDraggedDetected = true;
-        camera.unproject(curr.set(x, y, 0));
-        if (!(last.x == -1 && last.y == -1 && last.z == -1))
+        if (lockCameraWhileDragging == false)
         {
-            camera.unproject(delta.set(last.x, last.y, 0));
-            delta.sub(curr);
-            camera.position.add(delta.x, delta.y, 0);
+            camera.unproject(curr.set(x, y, 0));
+            if (!(last.x == -1 && last.y == -1 && last.z == -1))
+            {
+                camera.unproject(delta.set(last.x, last.y, 0));
+                delta.sub(curr);
+                camera.position.add(delta.x, delta.y, 0);
+            }
+            last.set(x, y, 0);
         }
-        last.set(x, y, 0);
+        eventBus.publish(new TouchDraggedEvent(x, y));
 
         return false;
     }

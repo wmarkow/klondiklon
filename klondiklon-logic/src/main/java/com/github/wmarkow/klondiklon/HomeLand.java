@@ -73,6 +73,7 @@ public class HomeLand extends ApplicationAdapter
         camera.update();
 
         cameraController = new KKCameraController(camera, eventBus);
+        ServiceRegistry.getInstance().cameraController = cameraController;
 
         batch = new SpriteBatch();
 
