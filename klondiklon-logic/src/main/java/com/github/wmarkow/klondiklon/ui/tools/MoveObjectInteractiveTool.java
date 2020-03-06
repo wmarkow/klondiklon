@@ -32,6 +32,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
     private ObjectTypeDescriptorsManager objectTypesManager;
     private KKMapObjectIf objectToMove = null;
     private boolean objectTochedDown = false;
+    private GdxWorldOrthoCoordinates objectToMoveOriginalCoordinates = null;
 
     public MoveObjectInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera,
             ObjectTypeDescriptorsManager objectTypesManager) {
@@ -72,13 +73,13 @@ public class MoveObjectInteractiveTool implements EventSubscriber
 
         if (event instanceof MoveObjectButtonOkClickedEvent)
         {
-            reset();
+            acceptMoving();
 
             return;
         }
         if (event instanceof MoveObjectButtonCancelClickedEvent)
         {
-            reset();
+            cancelMoving();
 
             return;
         }
@@ -96,10 +97,11 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         if (objectToMove != null && objectToMove.containsPoint(gdxWorldCoordinates))
         {
             // already moving this object
+            objectTochedDown = true;
             ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
             return;
         }
-        
+
         for (KKMapObjectIf mapObject : map.getObjects())
         {
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
@@ -118,6 +120,8 @@ public class MoveObjectInteractiveTool implements EventSubscriber
             {
                 objectToMove = mapObject;
                 objectTochedDown = true;
+                objectToMoveOriginalCoordinates = new GdxWorldOrthoCoordinates(objectToMove.getX(), objectToMove.getY(),
+                        0.0f);
                 objectToMove.setSelectedTrueGreenColor();
                 Klondiklon.ui.showMoveObjectView();
 
@@ -133,17 +137,38 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         {
             return;
         }
+        if (this.objectTochedDown == false)
+        {
+            return;
+        }
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+
+        this.map.setObjectCoordinates(objectToMove, gdxWorldCoordinates);
+
         LOGGER.info(String.format("Touch dragged event received x=%s, y=%s", event.getScreenX(), event.getScreenY()));
     }
 
-    private void reset()
+    private void acceptMoving()
     {
-        if (objectToMove != null)
-        {
-            objectToMove.setSelected(false);
-        }
-
+        objectToMove.setSelected(false);
         objectToMove = null;
+        objectTochedDown = false;
+        objectToMoveOriginalCoordinates = null;
+
+        Klondiklon.ui.hideMoveObjectView();
+        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+    }
+
+    private void cancelMoving()
+    {
+        objectToMove.setSelected(false);
+        map.setObjectCoordinates(objectToMove, objectToMoveOriginalCoordinates);
+        objectToMove = null;
+        objectTochedDown = false;
+        objectToMoveOriginalCoordinates = null;
+
         Klondiklon.ui.hideMoveObjectView();
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
     }

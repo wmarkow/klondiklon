@@ -108,11 +108,19 @@ public class KKMap extends TiledMap implements KKMapIf
     }
 
     @Override
+    public void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates)
+    {
+        KKMapObject mapObject = (KKMapObject) object;
+        mapObject.setX(newCoordinates.x);
+        mapObject.setY(newCoordinates.y);
+    }
+
+    @Override
     public org.mapeditor.core.Map getTmxMap()
     {
         return tiledMap;
     }
-    
+
     @Override
     public void dispose()
     {
