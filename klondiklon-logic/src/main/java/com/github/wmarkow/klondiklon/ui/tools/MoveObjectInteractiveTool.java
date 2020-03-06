@@ -11,6 +11,7 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
+import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonCancelClickedEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonOkClickedEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
@@ -30,6 +31,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
     private Camera camera;
     private ObjectTypeDescriptorsManager objectTypesManager;
     private KKMapObjectIf objectToMove = null;
+    private boolean objectTochedDown = false;
 
     public MoveObjectInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera,
             ObjectTypeDescriptorsManager objectTypesManager) {
@@ -38,7 +40,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         this.camera = camera;
         this.objectTypesManager = objectTypesManager;
 
-        // this.eventBus.subscribe(TouchTapEvent.class, this);
+        this.eventBus.subscribe(TouchUpEvent.class, this);
         this.eventBus.subscribe(TouchLongDownEvent.class, this);
         this.eventBus.subscribe(TouchDraggedEvent.class, this);
         this.eventBus.subscribe(MoveObjectButtonOkClickedEvent.class, this);
@@ -60,6 +62,14 @@ public class MoveObjectInteractiveTool implements EventSubscriber
 
             return;
         }
+        if (event instanceof TouchUpEvent)
+        {
+            objectTochedDown = false;
+            ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+
+            return;
+        }
+
         if (event instanceof MoveObjectButtonOkClickedEvent)
         {
             reset();
@@ -78,17 +88,18 @@ public class MoveObjectInteractiveTool implements EventSubscriber
     {
         LOGGER.info(String.format("Long touch down event"));
 
-        if (objectToMove != null)
-        {
-            // already moving this object
-            return;
-        }
-
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
         GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
 
+        if (objectToMove != null && objectToMove.containsPoint(gdxWorldCoordinates))
+        {
+            // already moving this object
+            ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+            return;
+        }
+        
         for (KKMapObjectIf mapObject : map.getObjects())
         {
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(mapObject.getObjectType());
@@ -106,7 +117,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
             if (mapObject.containsPoint(gdxWorldCoordinates))
             {
                 objectToMove = mapObject;
-
+                objectTochedDown = true;
                 objectToMove.setSelectedTrueGreenColor();
                 Klondiklon.ui.showMoveObjectView();
 
