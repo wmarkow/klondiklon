@@ -116,29 +116,18 @@ public class KKMap extends TiledMap implements KKMapIf
 
         // save the new coordinates also in TMX map
         final int id = object.getId();
-        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
-        {
-            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
-            {
-                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
-                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
-                {
-                    if (mapObject.getId().equals(id))
-                    {
-                        // in TMX objects coordinates are in TMX Isometric, need to convert
-                        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-                        final int tileMapHeightInTiles = tiledLayer.getMap().getHeight();
-                        final int tileHeightInPixels = tiledLayer.getMap().getTileHeight();
-                        
-                        TmxIsoCoordinates tmxIsoCoordinates = coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
-                                tileHeightInPixels, newCoordinates);
 
-                        mapObject.setX(tmxIsoCoordinates.x);
-                        mapObject.setY(tmxIsoCoordinates.y);
-                    }
-                }
-            }
-        }
+        org.mapeditor.core.MapObject tiledMapObject = getTiledObjectById(tiledMap, id);
+        // in TMX objects coordinates are in TMX Isometric, need to convert
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        final int tileMapHeightInTiles = tiledMap.getHeight();
+        final int tileHeightInPixels = tiledMap.getTileHeight();
+
+        TmxIsoCoordinates tmxIsoCoordinates = coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
+                tileHeightInPixels, newCoordinates);
+
+        tiledMapObject.setX(tmxIsoCoordinates.x);
+        tiledMapObject.setY(tmxIsoCoordinates.y);
     }
 
     @Override
@@ -411,6 +400,26 @@ public class KKMap extends TiledMap implements KKMapIf
         }
 
         return pixmap;
+    }
+
+    private org.mapeditor.core.MapObject getTiledObjectById(org.mapeditor.core.Map tiledMap, int id)
+    {
+        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        {
+            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
+            {
+                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
+                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
+                {
+                    if (mapObject.getId().equals(id))
+                    {
+                        return mapObject;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     private class TextureKey
