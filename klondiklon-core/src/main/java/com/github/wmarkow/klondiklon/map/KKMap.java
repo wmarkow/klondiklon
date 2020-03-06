@@ -82,8 +82,8 @@ public class KKMap extends TiledMap implements KKMapIf
 
         objectsLayer.removeObject(object);
 
+        // delete the object also from TMX map
         final int id = object.getId();
-
         for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
         {
             if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
@@ -110,9 +110,35 @@ public class KKMap extends TiledMap implements KKMapIf
     @Override
     public void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates)
     {
-        KKMapObject mapObject = (KKMapObject) object;
-        mapObject.setX(newCoordinates.x);
-        mapObject.setY(newCoordinates.y);
+        KKMapObject gdxMapObject = (KKMapObject) object;
+        gdxMapObject.setX(newCoordinates.x);
+        gdxMapObject.setY(newCoordinates.y);
+
+        // save the new coordinates also in TMX map
+        final int id = object.getId();
+        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        {
+            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
+            {
+                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
+                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
+                {
+                    if (mapObject.getId().equals(id))
+                    {
+                        // in TMX objects coordinates are in TMX Isometric, need to convert
+                        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+                        final int tileMapHeightInTiles = tiledLayer.getMap().getHeight();
+                        final int tileHeightInPixels = tiledLayer.getMap().getTileHeight();
+                        
+                        TmxIsoCoordinates tmxIsoCoordinates = coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
+                                tileHeightInPixels, newCoordinates);
+
+                        mapObject.setX(tmxIsoCoordinates.x);
+                        mapObject.setY(tmxIsoCoordinates.y);
+                    }
+                }
+            }
+        }
     }
 
     @Override
