@@ -28,7 +28,7 @@ public interface KKMapObjectIf
     void setSelectedTrueRedColor();
 
     void draw(Batch batch, float[] spriteVertices, int offset, int count);
-
+    
     String getObjectType();
 
     int getId();

@@ -59,6 +59,12 @@ public class HomeLand extends ApplicationAdapter
         texturesManager = ServiceRegistry.getInstance().getTexturesManager();
         // ServiceRegistry.getInstance().getMusicManager().playMainTheme();
 
+        homeLandLogic = new HomeLandLogic();
+        homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
+        homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
+        homeLandLogic.initFonts(fontsManager);
+        homeLandLogic.initTextures(texturesManager);
+        
         Klondiklon.gameplayService.loadGameContext();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
@@ -76,12 +82,6 @@ public class HomeLand extends ApplicationAdapter
         ServiceRegistry.getInstance().cameraController = cameraController;
 
         batch = new SpriteBatch();
-
-        homeLandLogic = new HomeLandLogic();
-        homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
-        homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
-        homeLandLogic.initFonts(fontsManager);
-        homeLandLogic.initTextures(texturesManager);
 
         initUi();
         initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());

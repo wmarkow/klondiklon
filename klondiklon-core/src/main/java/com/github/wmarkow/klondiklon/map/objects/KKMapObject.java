@@ -102,11 +102,11 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             {
                 batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_RED);
             }
-            batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
+            drawTextures(batch, spriteVertices, offset, count);
             batch.setShader(currentShader);
         }
 
-        batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
+        drawTextures(batch, spriteVertices, offset, count);
 
         if (isSelected() && tooltipText != null)
         {
@@ -183,5 +183,10 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     public int getId()
     {
         return id;
+    }
+    
+    protected void drawTextures(Batch batch, float[] spriteVertices, int offset, int count)
+    {
+        batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
     }
 }
