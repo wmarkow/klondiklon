@@ -15,6 +15,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.badlogic.gdx.Gdx;
 import com.github.wmarkow.klondiklon.map.KKMap;
+import com.github.wmarkow.klondiklon.map.objects.MapObjectsFactory;
 
 public class WorldsManager
 {
@@ -44,10 +45,10 @@ public class WorldsManager
                     String urlString = url.toExternalForm();
                     String targetName = urlString.substring(urlString.indexOf(WORLDS_DIR_NAME));
                     File destination = new File(rootDstDirectory, targetName);
-                    
-                    if(url.getPath().toLowerCase().endsWith("tmx"))
+
+                    if (url.getPath().toLowerCase().endsWith("tmx"))
                     {
-                        if(destination.exists() && !overrrideTmx)
+                        if (destination.exists() && !overrrideTmx)
                         {
                             continue;
                         }
@@ -76,7 +77,7 @@ public class WorldsManager
             throw new RuntimeException(e);
         }
 
-        KKMap libGdxMap = new KKMap(tmxMap);
+        KKMap libGdxMap = new KKMap(tmxMap, new MapObjectsFactory());
 
         return libGdxMap;
     }

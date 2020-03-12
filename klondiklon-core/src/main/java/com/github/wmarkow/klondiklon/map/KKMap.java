@@ -44,6 +44,13 @@ public class KKMap extends TiledMap implements KKMapIf
 
         wrap();
     }
+    
+    public KKMap(org.mapeditor.core.Map tiledMap, KKMapObjectsFactoryIf objectsFactory) {
+        this.tiledMap = tiledMap;
+        this.objectsFactory = objectsFactory;
+
+        wrap();
+    }
 
     @Override
     public int getHeightInTiles()
