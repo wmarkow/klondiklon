@@ -37,6 +37,7 @@ public class KKMap extends TiledMap implements KKMapIf
     private org.mapeditor.core.Map tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
+    private KKMapObjectsFactoryIf objectsFactory = new KKMapObjectsFactory();
 
     public KKMap(org.mapeditor.core.Map tiledMap) {
         this.tiledMap = tiledMap;
@@ -304,7 +305,7 @@ public class KKMap extends TiledMap implements KKMapIf
             if (tile.getAnimation() == null)
             {
                 StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
-                libGdxMapObject = new KKMapObject(libGdxTile, objectId, objectType);
+                libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
             } else
             {
                 IntArray intervals = new IntArray();
@@ -319,7 +320,7 @@ public class KKMap extends TiledMap implements KKMapIf
                 }
 
                 AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new IntArray(intervals), frameTiles);
-                libGdxMapObject = new KKMapObject(libGdxTile, objectId, objectType);
+                libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
             }
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
