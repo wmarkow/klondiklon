@@ -22,4 +22,5 @@ public class ObjectTypes
     public final static String RUBUS = "RUBUS"; // jeżyna
 
     public final static String BARN = "BARN"; // stodoła
+    public final static String GARDEN = "GARDEN";
 }
