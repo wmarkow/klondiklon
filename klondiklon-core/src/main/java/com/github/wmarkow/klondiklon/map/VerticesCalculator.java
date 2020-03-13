@@ -27,7 +27,7 @@ public class VerticesCalculator
 {
     static protected final int NUM_VERTICES = 20;
     
-    float[] calculate(TextureRegion region, float objectX, float objectY, float color, float unitScale)
+    public float[] calculate(TextureRegion region, float objectX, float objectY, float color, float unitScale)
     {
         float vertices[] = new float[NUM_VERTICES];
         

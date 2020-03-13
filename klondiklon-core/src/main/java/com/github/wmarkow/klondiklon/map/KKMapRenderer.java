@@ -246,22 +246,19 @@ public class KKMapRenderer extends BatchTiledMapRenderer
 
         for (TiledMapTileMapObject tiledMapTileMapObject : objects)
         {
-            TextureRegion region = tiledMapTileMapObject.getTextureRegion();
-
-            VerticesCalculator vc = new VerticesCalculator();
-            float objectX = tiledMapTileMapObject.getX();
-            float objectY = tiledMapTileMapObject.getY();
-            
-            vertices = vc.calculate(region, objectX, objectY, color, unitScale);
-
             if (tiledMapTileMapObject instanceof KKMapObjectIf)
             {
-                ((KKMapObjectIf) tiledMapTileMapObject).draw(batch, vertices, 0, NUM_VERTICES);
+                ((KKMapObjectIf) tiledMapTileMapObject).draw(batch, layer.getOpacity(), unitScale);
             } else
             {
+                VerticesCalculator vc = new VerticesCalculator();
+                float objectX = tiledMapTileMapObject.getX();
+                float objectY = tiledMapTileMapObject.getY();
+                TextureRegion region = tiledMapTileMapObject.getTextureRegion();
+
+                vertices = vc.calculate(region, objectX, objectY, color, unitScale);
                 batch.draw(region.getTexture(), vertices, 0, NUM_VERTICES);
             }
-
         }
     }
 

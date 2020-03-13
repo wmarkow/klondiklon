@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
+import com.github.wmarkow.klondiklon.map.VerticesCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
 public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
@@ -89,6 +90,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     }
 
     @Override
+    @Deprecated
     public void draw(Batch batch, float[] spriteVertices, int offset, int count)
     {
         if (isSelected())
@@ -128,6 +130,23 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             button.setY(getY() + getHeight());
             button.draw(batch, 1.0f);
         }
+    }
+    
+    @Override
+    public void draw(Batch batch, float layerOpacity, float unitScale)
+    {
+        VerticesCalculator vc = new VerticesCalculator();
+        
+        final Color batchColor = batch.getColor();
+        final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b,
+                batchColor.a * layerOpacity);
+        
+        float objectX = getX();
+        float objectY = getY();
+        TextureRegion region = getTextureRegion();
+        float vertices[] = vc.calculate(region, objectX, objectY, color, unitScale);
+        
+        draw(batch, vertices, 0, vertices.length);
     }
 
     public TextureRegion getTextureRegion()
