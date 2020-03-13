@@ -9,9 +9,10 @@ import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 
 public class GardenCellObject extends KKMapObject
 {
-    private TextureRegion wheatGardenCell1;
-    private TextureRegion wheatGardenCell2;
-    private TextureRegion wheatGardenCell3;
+    private TextureRegion wheatPhase1;
+    private TextureRegion wheatPhase2;
+    private TextureRegion wheatPhase3;
+    private TextureRegion wheatPhase4;
 
     private TextureRegion growingObjectTextureRegion = null;
 
@@ -21,28 +22,36 @@ public class GardenCellObject extends KKMapObject
         // TODO: add cache for texture region
         Texture textureWheat1 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_1);
-        wheatGardenCell1 = new TextureRegion(textureWheat1);
+        wheatPhase1 = new TextureRegion(textureWheat1);
         Texture textureWheat2 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_2);
-        wheatGardenCell2 = new TextureRegion(textureWheat2);
+        wheatPhase2 = new TextureRegion(textureWheat2);
         Texture textureWheat3 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_3);
-        wheatGardenCell3 = new TextureRegion(textureWheat3);
+        wheatPhase3 = new TextureRegion(textureWheat3);
+        Texture textureWheat4 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_4);
+        wheatPhase4 = new TextureRegion(textureWheat4);
     }
 
     public void setWheatPhase1()
     {
-        growingObjectTextureRegion = wheatGardenCell1;
+        growingObjectTextureRegion = wheatPhase1;
     }
 
     public void setWheatPhase2()
     {
-        growingObjectTextureRegion = wheatGardenCell2;
+        growingObjectTextureRegion = wheatPhase2;
     }
 
     public void setWheatPhase3()
     {
-        growingObjectTextureRegion = wheatGardenCell3;
+        growingObjectTextureRegion = wheatPhase3;
+    }
+
+    public void setWheatPhase4()
+    {
+        growingObjectTextureRegion = wheatPhase4;
     }
 
     @Override
