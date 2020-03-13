@@ -44,7 +44,7 @@ public class KKMap extends TiledMap implements KKMapIf
 
         wrap();
     }
-    
+
     public KKMap(org.mapeditor.core.Map tiledMap, KKMapObjectsFactoryIf objectsFactory) {
         this.tiledMap = tiledMap;
         this.objectsFactory = objectsFactory;
@@ -76,6 +76,20 @@ public class KKMap extends TiledMap implements KKMapIf
         }
 
         return objectsLayer.getMapObjects();
+    }
+
+    @Override
+    public KKMapObjectIf getObject(int id)
+    {
+        for (KKMapObjectIf mapObject : getObjects())
+        {
+            if (mapObject.getId() == id)
+            {
+                return mapObject;
+            }
+        }
+
+        return null;
     }
 
     @Override

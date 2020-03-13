@@ -13,10 +13,12 @@ public class GardenCellObject extends KKMapObject
     private TextureRegion wheatGardenCell2;
     private TextureRegion wheatGardenCell3;
 
+    private TextureRegion growingObjectTextureRegion = null;
+
     public GardenCellObject(TiledMapTile tile, int id, String objectType) {
         super(tile, id, objectType);
 
-     // TODO: add cache for texture region
+        // TODO: add cache for texture region
         Texture textureWheat1 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_1);
         wheatGardenCell1 = new TextureRegion(textureWheat1);
@@ -28,6 +30,21 @@ public class GardenCellObject extends KKMapObject
         wheatGardenCell3 = new TextureRegion(textureWheat3);
     }
 
+    public void setWheatPhase1()
+    {
+        growingObjectTextureRegion = wheatGardenCell1;
+    }
+
+    public void setWheatPhase2()
+    {
+        growingObjectTextureRegion = wheatGardenCell2;
+    }
+
+    public void setWheatPhase3()
+    {
+        growingObjectTextureRegion = wheatGardenCell3;
+    }
+
     @Override
     protected void drawTextures(Batch batch, float layerOpacity, float unitScale)
     {
@@ -35,6 +52,9 @@ public class GardenCellObject extends KKMapObject
         super.drawTextures(batch, layerOpacity, unitScale);
 
         // draw the plant
-        drawTexture(batch, wheatGardenCell3, layerOpacity, unitScale);
+        if (growingObjectTextureRegion != null)
+        {
+            drawTexture(batch, growingObjectTextureRegion, layerOpacity, unitScale);
+        }
     }
 }

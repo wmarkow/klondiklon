@@ -13,6 +13,8 @@ public interface KKMapIf
 
     void removeObject(KKMapObjectIf object);
     
+    KKMapObjectIf getObject(int id);
+    
     void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates);
     
     org.mapeditor.core.Map getTmxMap();
