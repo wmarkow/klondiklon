@@ -26,6 +26,7 @@ public class TexturesRegistrar
 
     public final static String OBJECT_WHEAT_GARDEN_1 = "OBJECT_WHEAT_GARDEN_1";
     public final static String OBJECT_WHEAT_GARDEN_2 = "OBJECT_WHEAT_GARDEN_2";
+    public final static String OBJECT_WHEAT_GARDEN_3 = "OBJECT_WHEAT_GARDEN_3";
 
     public void register(TexturesManager texturesManager)
     {
@@ -63,5 +64,7 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.local("worlds/home/object_wheat_garden_1.png")));
         texturesManager.registerTexture(OBJECT_WHEAT_GARDEN_2,
                 new Texture(Gdx.files.local("worlds/home/object_wheat_garden_2.png")));
+        texturesManager.registerTexture(OBJECT_WHEAT_GARDEN_3,
+                new Texture(Gdx.files.local("worlds/home/object_wheat_garden_3.png")));
     }
 }

@@ -11,6 +11,7 @@ public class GardenCellObject extends KKMapObject
 {
     private TextureRegion wheatGardenCell1;
     private TextureRegion wheatGardenCell2;
+    private TextureRegion wheatGardenCell3;
 
     public GardenCellObject(TiledMapTile tile, int id, String objectType) {
         super(tile, id, objectType);
@@ -22,6 +23,9 @@ public class GardenCellObject extends KKMapObject
         Texture textureWheat2 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_2);
         wheatGardenCell2 = new TextureRegion(textureWheat2);
+        Texture textureWheat3 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_3);
+        wheatGardenCell3 = new TextureRegion(textureWheat3);
     }
 
     @Override
@@ -31,6 +35,6 @@ public class GardenCellObject extends KKMapObject
         super.drawTextures(batch, layerOpacity, unitScale);
 
         // draw the plant
-        drawTexture(batch, wheatGardenCell2, layerOpacity, unitScale);
+        drawTexture(batch, wheatGardenCell3, layerOpacity, unitScale);
     }
 }
