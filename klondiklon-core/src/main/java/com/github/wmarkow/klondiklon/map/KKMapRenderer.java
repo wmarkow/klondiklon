@@ -248,39 +248,11 @@ public class KKMapRenderer extends BatchTiledMapRenderer
         {
             TextureRegion region = tiledMapTileMapObject.getTextureRegion();
 
-            float x1 = (float) (tiledMapTileMapObject.getX() - (region.getRegionWidth() / 2.0) * unitScale);
-            float y1 = tiledMapTileMapObject.getY() * unitScale;
-            float x2 = x1 + region.getRegionWidth() * unitScale;
-            float y2 = y1 + region.getRegionHeight() * unitScale;
-
-            float u1 = region.getU();
-            float v1 = region.getV2();
-            float u2 = region.getU2();
-            float v2 = region.getV();
-
-            vertices[X1] = x1;
-            vertices[Y1] = y1;
-            vertices[C1] = color;
-            vertices[U1] = u1;
-            vertices[V1] = v1;
-
-            vertices[X2] = x1;
-            vertices[Y2] = y2;
-            vertices[C2] = color;
-            vertices[U2] = u1;
-            vertices[V2] = v2;
-
-            vertices[X3] = x2;
-            vertices[Y3] = y2;
-            vertices[C3] = color;
-            vertices[U3] = u2;
-            vertices[V3] = v2;
-
-            vertices[X4] = x2;
-            vertices[Y4] = y1;
-            vertices[C4] = color;
-            vertices[U4] = u2;
-            vertices[V4] = v1;
+            VerticesCalculator vc = new VerticesCalculator();
+            float objectX = tiledMapTileMapObject.getX();
+            float objectY = tiledMapTileMapObject.getY();
+            
+            vertices = vc.calculate(region, objectX, objectY, color, unitScale);
 
             if (tiledMapTileMapObject instanceof KKMapObjectIf)
             {
