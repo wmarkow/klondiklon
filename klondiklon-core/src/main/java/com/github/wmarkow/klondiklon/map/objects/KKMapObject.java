@@ -90,8 +90,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     }
 
     @Override
-    @Deprecated
-    public void draw(Batch batch, float[] spriteVertices, int offset, int count)
+    public void draw(Batch batch, float layerOpacity, float unitScale)
     {
         if (isSelected())
         {
@@ -104,11 +103,11 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             {
                 batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_RED);
             }
-            drawTextures(batch, spriteVertices, offset, count);
+            drawTextures(batch, layerOpacity, unitScale);
             batch.setShader(currentShader);
         }
 
-        drawTextures(batch, spriteVertices, offset, count);
+        drawTextures(batch, layerOpacity, unitScale);
 
         if (isSelected() && tooltipText != null)
         {
@@ -130,23 +129,6 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
             button.setY(getY() + getHeight());
             button.draw(batch, 1.0f);
         }
-    }
-    
-    @Override
-    public void draw(Batch batch, float layerOpacity, float unitScale)
-    {
-        VerticesCalculator vc = new VerticesCalculator();
-        
-        final Color batchColor = batch.getColor();
-        final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b,
-                batchColor.a * layerOpacity);
-        
-        float objectX = getX();
-        float objectY = getY();
-        TextureRegion region = getTextureRegion();
-        float vertices[] = vc.calculate(region, objectX, objectY, color, unitScale);
-        
-        draw(batch, vertices, 0, vertices.length);
     }
 
     public TextureRegion getTextureRegion()
@@ -203,9 +185,23 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     {
         return id;
     }
-    
-    protected void drawTextures(Batch batch, float[] spriteVertices, int offset, int count)
+
+    protected void drawTextures(Batch batch,  float layerOpacity, float unitScale)
     {
-        batch.draw(getTextureRegion().getTexture(), spriteVertices, 0, count);
+        drawTexture(batch, getTextureRegion(), layerOpacity, unitScale);
+    }
+
+    protected void drawTexture(Batch batch, TextureRegion region, float layerOpacity, float unitScale)
+    {
+        VerticesCalculator vc = new VerticesCalculator();
+
+        final Color batchColor = batch.getColor();
+        final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b, batchColor.a * layerOpacity);
+
+        float objectX = getX();
+        float objectY = getY();
+        float vertices[] = vc.calculate(region, objectX, objectY, color, unitScale);
+
+        batch.draw(region.getTexture(), vertices, 0, vertices.length);
     }
 }

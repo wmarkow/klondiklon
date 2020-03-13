@@ -27,9 +27,6 @@ public interface KKMapObjectIf
 
     void setSelectedTrueRedColor();
 
-    @Deprecated
-    void draw(Batch batch, float[] spriteVertices, int offset, int count);
-    
     void draw(Batch batch, float layerOpacity, float unitScale);
     
     String getObjectType();

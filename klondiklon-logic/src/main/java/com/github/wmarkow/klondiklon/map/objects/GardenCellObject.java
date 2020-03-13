@@ -18,12 +18,11 @@ public class GardenCellObject extends KKMapObject
     }
 
     @Override
-    protected void drawTextures(Batch batch, float[] spriteVertices, int offset, int count)
+    protected void drawTextures(Batch batch, float layerOpacity, float unitScale)
     {
         // draw a default garden cell
-        super.drawTextures(batch, spriteVertices, offset, count);
-
+        super.drawTextures(batch, layerOpacity, unitScale);
         // draw the plant
-        batch.draw(wheatGardenCell1, spriteVertices, offset, count);
+        // batch.draw(wheatGardenCell1, spriteVertices, offset, count);
     }
 }
