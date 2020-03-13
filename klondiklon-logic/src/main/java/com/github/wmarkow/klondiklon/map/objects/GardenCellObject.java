@@ -10,14 +10,18 @@ import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 public class GardenCellObject extends KKMapObject
 {
     private TextureRegion wheatGardenCell1;
+    private TextureRegion wheatGardenCell2;
 
     public GardenCellObject(TiledMapTile tile, int id, String objectType) {
         super(tile, id, objectType);
 
+     // TODO: add cache for texture region
         Texture textureWheat1 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_1);
-
         wheatGardenCell1 = new TextureRegion(textureWheat1);
+        Texture textureWheat2 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_2);
+        wheatGardenCell2 = new TextureRegion(textureWheat2);
     }
 
     @Override
@@ -27,6 +31,6 @@ public class GardenCellObject extends KKMapObject
         super.drawTextures(batch, layerOpacity, unitScale);
 
         // draw the plant
-        drawTexture(batch, wheatGardenCell1, layerOpacity, unitScale);
+        drawTexture(batch, wheatGardenCell2, layerOpacity, unitScale);
     }
 }
