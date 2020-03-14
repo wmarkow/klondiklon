@@ -1,24 +1,18 @@
 package com.github.wmarkow.klondiklon.event.events;
 
 import com.github.wmarkow.klondiklon.event.Event;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
 public class TouchUpEvent extends Event
 {
-    private int screenX;
-    private int screenY;
+    private GdxTouchCoordinates coordinates;
 
-    public TouchUpEvent(int screenX, int screenY) {
-        this.screenX = screenX;
-        this.screenY = screenY;
+    public TouchUpEvent(GdxTouchCoordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
-    public int getScreenX()
+    public GdxTouchCoordinates getGdxTouchCoordinates()
     {
-        return screenX;
-    }
-
-    public int getScreenY()
-    {
-        return screenY;
+        return coordinates;
     }
 }

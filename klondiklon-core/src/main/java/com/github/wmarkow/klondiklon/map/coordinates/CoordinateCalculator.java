@@ -3,7 +3,7 @@ package com.github.wmarkow.klondiklon.map.coordinates;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
@@ -27,16 +27,16 @@ public class CoordinateCalculator
         invIsotransform.inv();
     }
 
-    public GdxWorldOrthoCoordinates screen2World(Camera camera, GdxScreenCoordinates screenCoordinates)
+    public GdxWorldOrthoCoordinates touch2World(Camera camera, GdxTouchCoordinates touchCoordinates)
     {
-        return new GdxWorldOrthoCoordinates(camera.unproject(screenCoordinates.toVector3()));
+        return new GdxWorldOrthoCoordinates(camera.unproject(touchCoordinates.toVector3()));
     }
 
-    public GdxScreenCoordinates world2Screen(Camera camera, GdxWorldOrthoCoordinates worldCoordinates)
+    public GdxTouchCoordinates world2Touch(Camera camera, GdxWorldOrthoCoordinates worldCoordinates)
     {
         Vector3 result = camera.project(worldCoordinates);
 
-        return new GdxScreenCoordinates((int) result.x, (int) result.y);
+        return new GdxTouchCoordinates((int) result.x, (int) result.y);
     }
 
     public TmxOrthoCoordinates world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,

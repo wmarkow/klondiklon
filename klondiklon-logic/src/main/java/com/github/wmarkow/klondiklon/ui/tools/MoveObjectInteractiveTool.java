@@ -16,7 +16,7 @@ import com.github.wmarkow.klondiklon.events.MoveObjectButtonCancelClickedEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonOkClickedEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
@@ -90,9 +90,8 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         LOGGER.info(String.format("Long touch down event"));
 
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         if (objectToMove != null && objectToMove.containsPoint(gdxWorldCoordinates))
         {
@@ -142,12 +141,13 @@ public class MoveObjectInteractiveTool implements EventSubscriber
             return;
         }
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         this.map.setObjectCoordinates(objectToMove, gdxWorldCoordinates);
 
-        LOGGER.info(String.format("Touch dragged event received x=%s, y=%s", event.getScreenX(), event.getScreenY()));
+        LOGGER.info(String.format("Touch dragged event received x=%s, y=%s", event.getGdxTouchCoordinates().getX(),
+                event.getGdxTouchCoordinates().getY()));
     }
 
     private void acceptMoving()

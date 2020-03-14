@@ -18,7 +18,7 @@ import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
@@ -91,8 +91,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
     private void processTouchTapEvent(TouchTapEvent event)
     {
-        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
-                event.getScreenY()));
+        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(),
+                event.getGdxTouchCoordinates().getX(), event.getGdxTouchCoordinates().getX()));
 
         if (firstTapSelectedObjects.size() == 0)
         {
@@ -108,9 +108,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
         resetGrubbing();
 
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         for (KKMapObjectIf mapObject : map.getObjects())
         {
@@ -148,9 +147,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
         firstTapSelectedObjects.clear();
 
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         for (KKMapObjectIf mapObject : map.getObjects())
         {
@@ -187,9 +185,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private void processSecondTap(TouchTapEvent event)
     {
         CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         List<KKMapObjectIf> secondTapObjects = new ArrayList<KKMapObjectIf>();
         for (KKMapObjectIf mapObject : firstTapSelectedObjects)
@@ -277,7 +274,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             Stage stage = Klondiklon.ui.getStage();
             CoordinateCalculator cc = new CoordinateCalculator();
-            GdxScreenCoordinates start = cc.world2Screen(camera,
+            GdxTouchCoordinates start = cc.world2Touch(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
             GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);

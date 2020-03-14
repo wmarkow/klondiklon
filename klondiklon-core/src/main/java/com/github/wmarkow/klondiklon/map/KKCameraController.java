@@ -26,6 +26,7 @@ import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
 public class KKCameraController extends InputAdapter
 {
@@ -57,28 +58,32 @@ public class KKCameraController extends InputAdapter
     }
 
     @Override
-    public boolean touchDragged(int x, int y, int pointer)
+    public boolean touchDragged(int touchX, int touchY, int pointer)
     {
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
+
         touchDraggedDetected = true;
         if (lockCameraWhileDragging == false)
         {
-            camera.unproject(curr.set(x, y, 0));
+            camera.unproject(curr.set(touchX, touchY, 0));
             if (!(last.x == -1 && last.y == -1 && last.z == -1))
             {
                 camera.unproject(delta.set(last.x, last.y, 0));
                 delta.sub(curr);
                 camera.position.add(delta.x, delta.y, 0);
             }
-            last.set(x, y, 0);
+            last.set(touchX, touchY, 0);
         }
-        eventBus.publish(new TouchDraggedEvent(x, y));
+        eventBus.publish(new TouchDraggedEvent(touchCoordinates));
 
         return false;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    public boolean touchDown(int touchX, int touchY, int pointer, int button)
     {
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
+
         touchDraggedDetected = false;
         touchDownMillis = System.currentTimeMillis();
 
@@ -89,7 +94,7 @@ public class KKCameraController extends InputAdapter
             {
                 if (touchDownMillis != null)
                 {
-                    eventBus.publish(new TouchLongDownEvent(screenX, screenY));
+                    eventBus.publish(new TouchLongDownEvent(touchCoordinates));
                 }
 
             }
@@ -99,14 +104,16 @@ public class KKCameraController extends InputAdapter
     }
 
     @Override
-    public boolean touchUp(int x, int y, int pointer, int button)
+    public boolean touchUp(int touchX, int touchY, int pointer, int button)
     {
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
+
         Long localTouchDownInMillis = touchDownMillis;
         touchDownMillis = null;
         longTouchDownTimer.clear();
 
         last.set(-1, -1, -1);
-        eventBus.publish(new TouchUpEvent(x, y));
+        eventBus.publish(new TouchUpEvent(touchCoordinates));
 
         if (touchDraggedDetected)
         {
@@ -116,7 +123,7 @@ public class KKCameraController extends InputAdapter
         if (localTouchDownInMillis != null
                 && System.currentTimeMillis() - localTouchDownInMillis < 1000 * LONG_TOUCH_DOWN_SECONDS)
         {
-            eventBus.publish(new TouchTapEvent(x, y));
+            eventBus.publish(new TouchTapEvent(touchCoordinates));
         }
 
         return false;

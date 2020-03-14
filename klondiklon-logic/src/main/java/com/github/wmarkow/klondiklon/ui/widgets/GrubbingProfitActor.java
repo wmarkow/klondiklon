@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
@@ -27,7 +27,7 @@ public class GrubbingProfitActor extends Group
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
-    public GrubbingProfitActor(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start) {
+    public GrubbingProfitActor(Set<GrubbingProfit> grubbingProfits, GdxTouchCoordinates start) {
         createImages(grubbingProfits, start);
     }
 
@@ -65,7 +65,7 @@ public class GrubbingProfitActor extends Group
         }
     }
 
-    private void createImages(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start)
+    private void createImages(Set<GrubbingProfit> grubbingProfits, GdxTouchCoordinates start)
     {
         for (GrubbingProfit gp : grubbingProfits)
         {

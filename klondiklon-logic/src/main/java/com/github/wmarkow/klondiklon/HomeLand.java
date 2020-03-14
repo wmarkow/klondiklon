@@ -19,7 +19,7 @@ import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
@@ -100,8 +100,8 @@ public class HomeLand extends ApplicationAdapter
         batch.begin();
         fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
-        GdxScreenCoordinates screen = new GdxScreenCoordinates(Gdx.input.getX(), Gdx.input.getY());
-        GdxWorldOrthoCoordinates world = coordinateCalculator.screen2World(camera, screen);
+        GdxTouchCoordinates touch = new GdxTouchCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        GdxWorldOrthoCoordinates world = coordinateCalculator.touch2World(camera, touch);
         KKMapIf currentMap = Klondiklon.gameplayService.getCurrentWorldMap();
         TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(currentMap.getHeightInTiles(),
                 currentMap.getTileHeightInPixels(), world);
@@ -109,8 +109,8 @@ public class HomeLand extends ApplicationAdapter
         TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(currentMap.getHeightInTiles(),
                 currentMap.getTileHeightInPixels(), tmxOrthogonal);
 
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("     Screen (x,y): %s, %s", screen.getX(), screen.getY()),
-                0, Gdx.graphics.getHeight() - 0);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("     Touch (x,y): %s, %s", touch.getX(), touch.getY()), 0,
+                Gdx.graphics.getHeight() - 0);
         fontsManager.DEFAULT_FONT.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
                 Gdx.graphics.getHeight() - 20);
         fontsManager.DEFAULT_FONT.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,

@@ -14,7 +14,7 @@ import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
@@ -59,15 +59,14 @@ public class SickleInteractiveTools implements EventSubscriber
 
     private void processTouchTapEvent(TouchTapEvent event)
     {
-        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(), event.getScreenX(),
-                event.getScreenY()));
+        LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(),
+                event.getGdxTouchCoordinates().getX(), event.getGdxTouchCoordinates().getY()));
 
         reset();
-        
-        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
-        GdxScreenCoordinates screenCoordinates = new GdxScreenCoordinates(event.getScreenX(), event.getScreenY());
-        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.screen2World(camera, screenCoordinates);
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
 
         for (KKMapObjectIf mapObject : map.getObjects())
         {
@@ -84,16 +83,14 @@ public class SickleInteractiveTools implements EventSubscriber
                 gardenCell.setSelectedTrueGreenColor();
 
                 sickleView = Klondiklon.ui.showSickleView();
-                int y = Gdx.graphics.getHeight() - 1 - event.getScreenY();
-                GdxScreenCoordinates realScreenCoordinates = new GdxScreenCoordinates(event.getScreenX(), y);
-                sickleView.setSickleCoordinates(realScreenCoordinates);
+                sickleView.setSickleCoordinates(event.getGdxTouchCoordinates());
                 ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
-                
+
                 return;
             }
         }
     }
-    
+
     private void processTouchDraggedEvent(TouchDraggedEvent event)
     {
         // to sa touch coordinates
@@ -102,21 +99,18 @@ public class SickleInteractiveTools implements EventSubscriber
             return;
         }
 
-        int y = Gdx.graphics.getHeight() - 1 - event.getScreenY();
-        GdxScreenCoordinates realScreenCoordinates = new GdxScreenCoordinates(event.getScreenX(), y);
- 
-        sickleView.setSickleCoordinates(realScreenCoordinates);
+        sickleView.setSickleCoordinates(event.getGdxTouchCoordinates());
     }
-    
+
     private void reset()
     {
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
-        
-        if(gardenCell != null)
+
+        if (gardenCell != null)
         {
             gardenCell.setSelected(false);
             Klondiklon.ui.hideSickleView();
-            
+
             gardenCell = null;
             sickleView = null;
         }
