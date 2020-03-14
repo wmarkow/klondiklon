@@ -5,10 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
+import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
 public class SickleView extends Group
 {
+    private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
     private Image sickleImage = null;
 
     public SickleView() {
@@ -22,11 +25,12 @@ public class SickleView extends Group
 
     public void setSickleCoordinates(GdxTouchCoordinates touchCoordinates)
     {
+        GdxScreenCoordinates screenCoordinates = coordinateCalculator.touch2Screen(touchCoordinates);
+
         Image sickle = getSickleImage();
 
-        int screenY = Gdx.graphics.getHeight() - 1 - touchCoordinates.getY();
-        sickle.setX(touchCoordinates.getX());
-        sickle.setY(screenY);
+        sickle.setX(screenCoordinates.getX());
+        sickle.setY(screenCoordinates.getY());
     }
 
     private Image getSickleImage()

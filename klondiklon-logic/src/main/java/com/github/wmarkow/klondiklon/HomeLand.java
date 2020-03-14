@@ -15,23 +15,20 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
-import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKMap;
+import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
-import com.github.wmarkow.klondiklon.player.Player;
-import com.github.wmarkow.klondiklon.simulation.Simulation;
-import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.SickleInteractiveTools;
-import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -101,6 +98,7 @@ public class HomeLand extends ApplicationAdapter
         fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
         GdxTouchCoordinates touch = new GdxTouchCoordinates(Gdx.input.getX(), Gdx.input.getY());
+        GdxScreenCoordinates screen = coordinateCalculator.touch2Screen(touch);
         GdxWorldOrthoCoordinates world = coordinateCalculator.touch2World(camera, touch);
         KKMapIf currentMap = Klondiklon.gameplayService.getCurrentWorldMap();
         TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(currentMap.getHeightInTiles(),
@@ -111,15 +109,17 @@ public class HomeLand extends ApplicationAdapter
 
         fontsManager.DEFAULT_FONT.draw(batch, String.format("     Touch (x,y): %s, %s", touch.getX(), touch.getY()), 0,
                 Gdx.graphics.getHeight() - 0);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("    Screen (x,y): %s, %s", screen.getX(), screen.getY()),
+                0, Gdx.graphics.getHeight() - 20);
         fontsManager.DEFAULT_FONT.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
-                Gdx.graphics.getHeight() - 20);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
                 Gdx.graphics.getHeight() - 40);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
+                Gdx.graphics.getHeight() - 60);
         fontsManager.DEFAULT_FONT.draw(batch,
                 String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
-                Gdx.graphics.getHeight() - 60);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
                 Gdx.graphics.getHeight() - 80);
+        fontsManager.DEFAULT_FONT.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
+                Gdx.graphics.getHeight() - 100);
 
         batch.end();
 

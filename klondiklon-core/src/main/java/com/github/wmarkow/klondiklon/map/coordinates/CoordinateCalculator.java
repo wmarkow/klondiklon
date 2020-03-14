@@ -1,8 +1,10 @@
 package com.github.wmarkow.klondiklon.map.coordinates;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
@@ -25,6 +27,14 @@ public class CoordinateCalculator
         // ... and the inverse matrix
         invIsotransform = new Matrix4(isoTransform);
         invIsotransform.inv();
+    }
+
+    public GdxScreenCoordinates touch2Screen(GdxTouchCoordinates touchCoordinates)
+    {
+        int screenX = touchCoordinates.getX();
+        int screenY = Gdx.graphics.getHeight() - 1 - touchCoordinates.getY();
+
+        return new GdxScreenCoordinates(screenX, screenY);
     }
 
     public GdxWorldOrthoCoordinates touch2World(Camera camera, GdxTouchCoordinates touchCoordinates)

@@ -3,7 +3,6 @@ package com.github.wmarkow.klondiklon.ui.widgets;
 import java.util.Random;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
+import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -25,6 +26,9 @@ import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 public class GrubbingProfitActor extends Group
 {
     private final static float ANIMATION_DURATION_IN_SECONDS = 2.5f;
+
+    private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
@@ -68,6 +72,8 @@ public class GrubbingProfitActor extends Group
 
     private void createImages(Set<GrubbingProfit> grubbingProfits, GdxTouchCoordinates start)
     {
+        GdxScreenCoordinates screenCoordinates = coordinateCalculator.touch2Screen(start);
+
         for (GrubbingProfit gp : grubbingProfits)
         {
             StorageItemDescriptor storageItemDescriptor = gp.getStorageItemDescriptor();
@@ -76,9 +82,8 @@ public class GrubbingProfitActor extends Group
                 Image image = new Image(ServiceRegistry.getInstance().getTexturesManager()
                         .getTexture(storageItemDescriptor.getTextureName()));
 
-                int screenY = Gdx.graphics.getHeight() - 1 - start.getY();
-                image.setX(start.getX());
-                image.setY(screenY);
+                image.setX(screenCoordinates.getX());
+                image.setY(screenCoordinates.getY());
 
                 addActor(image);
             }
