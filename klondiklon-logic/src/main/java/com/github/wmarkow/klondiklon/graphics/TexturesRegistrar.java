@@ -13,6 +13,7 @@ public class TexturesRegistrar
     public final static String WAREHOUSE_ITEM_BACKGROUND = "WAREHOUSE_ITEM_BACKGROUND";
     public final static String BUTTON_OK = "BUTTON_OK";
     public final static String BUTTON_CANCEL = "BUTTON_CANCEL";
+    public final static String SICKLE = "SICKLE";
 
     public final static String STORAGE_ITEM_ICE = "STORAGE_ITEM_ICE";
     public final static String STORAGE_ITEM_STONE = "STORAGE_ITEM_STONE";
@@ -41,6 +42,7 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.classpath("ui/warehouse_item_background.png")));
         texturesManager.registerTexture(BUTTON_OK, new Texture(Gdx.files.classpath("ui/button_ok.png")));
         texturesManager.registerTexture(BUTTON_CANCEL, new Texture(Gdx.files.classpath("ui/button_cancel.png")));
+        texturesManager.registerTexture(SICKLE, new Texture(Gdx.files.classpath("ui/sickle.png")));
 
         texturesManager.registerTexture(STORAGE_ITEM_ICE,
                 new Texture(Gdx.files.local("worlds/home/warehouse/items/ice.png")));

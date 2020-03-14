@@ -12,6 +12,7 @@ import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
 import com.github.wmarkow.klondiklon.ui.views.MainView;
 import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
+import com.github.wmarkow.klondiklon.ui.views.SickleView;
 import com.github.wmarkow.klondiklon.ui.views.WarehouseView;
 
 public class KKUi implements EventSubscriber
@@ -24,6 +25,7 @@ public class KKUi implements EventSubscriber
     private MainView mainView = null;
     private WarehouseView warehouseWidget = null;
     private MoveObjectView moveObjectView = null;
+    private SickleView sickleView = null;
 
     public KKUi() {
         create();
@@ -51,13 +53,31 @@ public class KKUi implements EventSubscriber
     public void hideMoveObjectView()
     {
         mainView.setVisible(true);
-        
+
         if (moveObjectView == null)
         {
             return;
         }
         stack.removeActor(moveObjectView);
         moveObjectView = null;
+    }
+
+    public SickleView showSickleView()
+    {
+        sickleView = new SickleView();
+        stack.addActor(sickleView);
+
+        return sickleView;
+    }
+
+    public void hideSickleView()
+    {
+        if (sickleView == null)
+        {
+            return;
+        }
+        stack.removeActor(sickleView);
+        sickleView = null;
     }
 
     @Override
