@@ -3,6 +3,7 @@ package com.github.wmarkow.klondiklon.ui.widgets;
 import java.util.Random;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
@@ -74,8 +75,11 @@ public class GrubbingProfitActor extends Group
             {
                 Image image = new Image(ServiceRegistry.getInstance().getTexturesManager()
                         .getTexture(storageItemDescriptor.getTextureName()));
+
+                int screenY = Gdx.graphics.getHeight() - 1 - start.getY();
                 image.setX(start.getX());
-                image.setY(start.getY());
+                image.setY(screenY);
+
                 addActor(image);
             }
         }
