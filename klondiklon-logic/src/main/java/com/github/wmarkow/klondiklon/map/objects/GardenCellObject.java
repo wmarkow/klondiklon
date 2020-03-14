@@ -54,6 +54,16 @@ public class GardenCellObject extends KKMapObject
         growingObjectTextureRegion = wheatPhase4;
     }
 
+    public boolean isReadyForSickle()
+    {
+        if (growingObjectTextureRegion == wheatPhase4)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     protected void drawTextures(Batch batch, float layerOpacity, float unitScale)
     {
