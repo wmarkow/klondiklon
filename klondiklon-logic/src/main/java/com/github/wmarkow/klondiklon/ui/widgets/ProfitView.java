@@ -14,7 +14,6 @@ import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
@@ -23,7 +22,7 @@ import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
  * itself from the stage after animation is finished.
  * 
  */
-public class GrubbingProfitActor extends Group
+public class ProfitView extends Group
 {
     private final static float ANIMATION_DURATION_IN_SECONDS = 2.5f;
 
@@ -32,7 +31,7 @@ public class GrubbingProfitActor extends Group
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
-    public GrubbingProfitActor(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start) {
+    public ProfitView(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start) {
         createImages(grubbingProfits, start);
     }
 

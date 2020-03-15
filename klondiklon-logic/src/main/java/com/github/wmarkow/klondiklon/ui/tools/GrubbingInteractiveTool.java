@@ -28,7 +28,7 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
-import com.github.wmarkow.klondiklon.ui.widgets.GrubbingProfitActor;
+import com.github.wmarkow.klondiklon.ui.widgets.ProfitView;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class GrubbingInteractiveTool implements EventSubscriber
@@ -278,8 +278,8 @@ public class GrubbingInteractiveTool implements EventSubscriber
             GdxScreenCoordinates start = cc.world2Screen(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
-            stage.addActor(gpa);
+            ProfitView profitView = new ProfitView(descriptor.getGrubbingProfits(), start);
+            stage.addActor(profitView);
         }
 
         resetGrubbing();
