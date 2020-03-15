@@ -112,6 +112,8 @@ public class SickleInteractiveTools implements EventSubscriber
         if (sickleView == null)
         {
             reset();
+            
+            return;
         }
 
         GdxScreenCoordinates point = coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates());
