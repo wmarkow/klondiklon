@@ -3,7 +3,6 @@ package com.github.wmarkow.klondiklon.ui.tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
@@ -12,9 +11,9 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
+import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
@@ -32,6 +31,7 @@ public class SickleInteractiveTools implements EventSubscriber
 
     private GardenCellObject gardenCell = null;
     private SickleView sickleView = null;
+    private boolean sickleTouchedDown = false;
 
     public SickleInteractiveTools(EventBus eventBus, KKMapIf map, Camera camera) {
         this.eventBus = eventBus;
@@ -39,6 +39,7 @@ public class SickleInteractiveTools implements EventSubscriber
         this.camera = camera;
 
         this.eventBus.subscribe(TouchTapEvent.class, this);
+        this.eventBus.subscribe(TouchUpEvent.class, this);
         this.eventBus.subscribe(TouchDraggedEvent.class, this);
     }
 
@@ -48,6 +49,12 @@ public class SickleInteractiveTools implements EventSubscriber
         if (event instanceof TouchTapEvent)
         {
             processTouchTapEvent((TouchTapEvent) event);
+
+            return;
+        }
+        if (event instanceof TouchUpEvent)
+        {
+            processTouchUpEvent((TouchUpEvent) event);
 
             return;
         }
@@ -103,11 +110,22 @@ public class SickleInteractiveTools implements EventSubscriber
         }
     }
 
+    private void processTouchUpEvent(TouchUpEvent event)
+    {
+        reset();
+    }
+
     private void processTouchDraggedEvent(TouchDraggedEvent event)
     {
-        // to sa touch coordinates
         if (gardenCell == null)
         {
+            return;
+        }
+
+        if (sickleTouchedDown == false)
+        {
+            reset();
+
             return;
         }
 
@@ -121,10 +139,11 @@ public class SickleInteractiveTools implements EventSubscriber
         if (gardenCell != null)
         {
             gardenCell.setSelected(false);
-            Klondiklon.ui.hideSickleView();
-
-            gardenCell = null;
-            sickleView = null;
         }
+
+        Klondiklon.ui.hideSickleView();
+        gardenCell = null;
+        sickleView = null;
+        sickleTouchedDown = false;
     }
 }
