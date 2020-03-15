@@ -1,5 +1,7 @@
 package com.github.wmarkow.klondiklon.ui;
 
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +12,11 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
+import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.ui.views.MainView;
 import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
+import com.github.wmarkow.klondiklon.ui.views.ProfitView;
 import com.github.wmarkow.klondiklon.ui.views.SickleView;
 import com.github.wmarkow.klondiklon.ui.views.WarehouseView;
 
@@ -78,6 +83,12 @@ public class KKUi implements EventSubscriber
         }
         stack.removeActor(sickleView);
         sickleView = null;
+    }
+
+    public void showProfitView(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates startPoint)
+    {
+        ProfitView profitView = new ProfitView(grubbingProfits, startPoint);
+        stack.addActor(profitView);
     }
 
     @Override

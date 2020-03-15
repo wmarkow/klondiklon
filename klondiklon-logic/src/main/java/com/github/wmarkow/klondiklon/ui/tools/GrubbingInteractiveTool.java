@@ -273,13 +273,11 @@ public class GrubbingInteractiveTool implements EventSubscriber
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
             addGrubbingProfit(Klondiklon.warehouse, descriptor.getGrubbingProfits());
 
-            Stage stage = Klondiklon.ui.getStage();
             CoordinateCalculator cc = new CoordinateCalculator();
             GdxScreenCoordinates start = cc.world2Screen(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            ProfitView profitView = new ProfitView(descriptor.getGrubbingProfits(), start);
-            stage.addActor(profitView);
+            Klondiklon.ui.showProfitView(descriptor.getGrubbingProfits(), start);
         }
 
         resetGrubbing();

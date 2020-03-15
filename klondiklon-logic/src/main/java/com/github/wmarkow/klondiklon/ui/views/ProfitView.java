@@ -26,8 +26,6 @@ public class ProfitView extends Group
 {
     private final static float ANIMATION_DURATION_IN_SECONDS = 2.5f;
 
-    private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
@@ -45,7 +43,9 @@ public class ProfitView extends Group
         {
             // end of animation
             getChildren().clear();
-            getStage().getActors().removeValue(this, true);
+            // remove itself from parent
+            remove();
+
             return;
         }
 
