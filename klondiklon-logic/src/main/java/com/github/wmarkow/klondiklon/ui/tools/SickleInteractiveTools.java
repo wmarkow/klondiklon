@@ -97,8 +97,6 @@ public class SickleInteractiveTools implements EventSubscriber
         }
 
         // we can use sickle tool on this object
-        gardenCell.setSelectedTrueGreenColor();
-
         sickleView = Klondiklon.ui.showSickleView();
         sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
@@ -167,8 +165,6 @@ public class SickleInteractiveTools implements EventSubscriber
                 continue;
             }
 
-            mapObject.setSelected(false);
-
             GardenCellObject gardenCellObject = (GardenCellObject) mapObject;
 
             if (!gardenCellObject.isReadyForSickle())
@@ -198,11 +194,6 @@ public class SickleInteractiveTools implements EventSubscriber
     private void reset()
     {
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
-
-        if (gardenCell != null)
-        {
-            gardenCell.setSelected(false);
-        }
 
         Klondiklon.ui.hideSickleView();
         gardenCell = null;
