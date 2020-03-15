@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.event.events.TouchDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
@@ -86,6 +87,8 @@ public class KKCameraController extends InputAdapter
 
         touchDraggedDetected = false;
         touchDownMillis = System.currentTimeMillis();
+
+        eventBus.publish(new TouchDownEvent(touchCoordinates));
 
         longTouchDownTimer.scheduleTask(new Task()
         {

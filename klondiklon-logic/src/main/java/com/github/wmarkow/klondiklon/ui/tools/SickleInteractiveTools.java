@@ -9,11 +9,13 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
+import com.github.wmarkow.klondiklon.event.events.TouchDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
@@ -40,6 +42,7 @@ public class SickleInteractiveTools implements EventSubscriber
 
         this.eventBus.subscribe(TouchTapEvent.class, this);
         this.eventBus.subscribe(TouchUpEvent.class, this);
+        this.eventBus.subscribe(TouchDownEvent.class, this);
         this.eventBus.subscribe(TouchDraggedEvent.class, this);
     }
 
@@ -55,6 +58,12 @@ public class SickleInteractiveTools implements EventSubscriber
         if (event instanceof TouchUpEvent)
         {
             processTouchUpEvent((TouchUpEvent) event);
+
+            return;
+        }
+        if (event instanceof TouchDownEvent)
+        {
+            processTouchDownEvent((TouchDownEvent) event);
 
             return;
         }
@@ -113,6 +122,23 @@ public class SickleInteractiveTools implements EventSubscriber
     private void processTouchUpEvent(TouchUpEvent event)
     {
         reset();
+    }
+
+    private void processTouchDownEvent(TouchDownEvent event)
+    {
+        if (sickleView == null)
+        {
+            reset();
+        }
+
+        GdxScreenCoordinates point = coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates());
+        if (!sickleView.getSickleImageBounds().containsPoint(point))
+        {
+            reset();
+            return;
+        }
+
+        sickleTouchedDown = true;
     }
 
     private void processTouchDraggedEvent(TouchDraggedEvent event)

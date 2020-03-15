@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenBounds;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
@@ -29,6 +30,16 @@ public class SickleView extends Group
 
         sickle.setX(screenCoordinates.getX());
         sickle.setY(screenCoordinates.getY());
+    }
+
+    public GdxScreenBounds getSickleImageBounds()
+    {
+        int x = (int) sickleImage.getX();
+        int y = (int) sickleImage.getY();
+        int width = (int) sickleImage.getImageWidth();
+        int height = (int) sickleImage.getImageHeight();
+
+        return new GdxScreenBounds(x, y, width, height);
     }
 
     private Image getSickleImage()
