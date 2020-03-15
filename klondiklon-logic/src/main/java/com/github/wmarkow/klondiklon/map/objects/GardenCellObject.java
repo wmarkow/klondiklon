@@ -1,11 +1,20 @@
 package com.github.wmarkow.klondiklon.map.objects;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
+import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
+import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
+import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
 
 public class GardenCellObject extends KKMapObject
 {
@@ -62,6 +71,19 @@ public class GardenCellObject extends KKMapObject
         }
 
         return false;
+    }
+
+    public Set<GrubbingProfit> sickleIt()
+    {
+        growingObjectTextureRegion = null;
+
+        StorageItemDescriptor wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager
+                .getByType(StorageItemTypes.WHEAT);
+
+        Set<GrubbingProfit> result = new HashSet<GrubbingProfit>();
+        result.add(new GrubbingProfit(wheatItemDescriptor, 1));
+
+        return result;
     }
 
     @Override

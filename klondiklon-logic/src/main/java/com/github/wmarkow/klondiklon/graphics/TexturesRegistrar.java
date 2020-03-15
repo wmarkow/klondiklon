@@ -24,6 +24,7 @@ public class TexturesRegistrar
     public final static String STORAGE_ITEM_FRAGARIA = "STORAGE_ITEM_FRAGARIA";
     public final static String STORAGE_ITEM_RUBUS = "STORAGE_ITEM_RUBUS";
     public final static String STORAGE_ITEM_COAL = "STORAGE_ITEM_COAL";
+    public final static String STORAGE_ITEM_WHEAT = "STORAGE_ITEM_WHEAT";
 
     public final static String OBJECT_WHEAT_GARDEN_1 = "OBJECT_WHEAT_GARDEN_1";
     public final static String OBJECT_WHEAT_GARDEN_2 = "OBJECT_WHEAT_GARDEN_2";
@@ -62,6 +63,8 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.local("worlds/home/warehouse/items/rubus.png")));
         texturesManager.registerTexture(STORAGE_ITEM_COAL,
                 new Texture(Gdx.files.local("worlds/home/warehouse/items/coal.png")));
+        texturesManager.registerTexture(STORAGE_ITEM_WHEAT,
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/wheat.png")));
 
         texturesManager.registerTexture(OBJECT_WHEAT_GARDEN_1,
                 new Texture(Gdx.files.local("worlds/home/object_wheat_garden_1.png")));

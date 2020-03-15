@@ -1,5 +1,8 @@
 package com.github.wmarkow.klondiklon.ui.tools;
 
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +22,9 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.ui.views.SickleView;
+import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class SickleInteractiveTools implements EventSubscriber
 {
@@ -85,38 +90,18 @@ public class SickleInteractiveTools implements EventSubscriber
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
                 event.getGdxTouchCoordinates());
 
-        for (KKMapObjectIf mapObject : map.getObjects())
+        gardenCell = findGardenReadyToSickle(gdxWorldCoordinates);
+        if (gardenCell == null)
         {
-            if (mapObject instanceof GardenCellObject == false)
-            {
-                continue;
-            }
-
-            mapObject.setSelected(false);
-
-            GardenCellObject gardenCellObject = (GardenCellObject) mapObject;
-
-            if (!gardenCellObject.isReadyForSickle())
-            {
-                continue;
-            }
-
-            if (!mapObject.containsPoint(gdxWorldCoordinates))
-            {
-                continue;
-            }
-
-            // we can use sickle tool on this object
-            gardenCell = (GardenCellObject) mapObject;
-            gardenCell.setSelectedTrueGreenColor();
-
-            sickleView = Klondiklon.ui.showSickleView();
-            sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
-            ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
-
             return;
-
         }
+
+        // we can use sickle tool on this object
+        gardenCell.setSelectedTrueGreenColor();
+
+        sickleView = Klondiklon.ui.showSickleView();
+        sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
+        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
     }
 
     private void processTouchUpEvent(TouchUpEvent event)
@@ -155,7 +140,59 @@ public class SickleInteractiveTools implements EventSubscriber
             return;
         }
 
-        sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
+        GdxScreenCoordinates screenCoordinates = coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates());
+        sickleView.setSickleCoordinates(screenCoordinates);
+
+        GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
+                event.getGdxTouchCoordinates());
+
+        GardenCellObject gardenToSickle = findGardenReadyToSickle(gdxWorldCoordinates);
+        if (gardenToSickle == null)
+        {
+            return;
+        }
+
+        Set<GrubbingProfit> profit = gardenToSickle.sickleIt();
+        addSickleProfit(Klondiklon.warehouse, profit);
+
+        Klondiklon.ui.showProfitView(profit, screenCoordinates);
+    }
+
+    private GardenCellObject findGardenReadyToSickle(GdxWorldOrthoCoordinates gdxWorldCoordinates)
+    {
+        for (KKMapObjectIf mapObject : map.getObjects())
+        {
+            if (mapObject instanceof GardenCellObject == false)
+            {
+                continue;
+            }
+
+            mapObject.setSelected(false);
+
+            GardenCellObject gardenCellObject = (GardenCellObject) mapObject;
+
+            if (!gardenCellObject.isReadyForSickle())
+            {
+                continue;
+            }
+
+            if (!mapObject.containsPoint(gdxWorldCoordinates))
+            {
+                continue;
+            }
+
+            return (GardenCellObject) mapObject;
+        }
+
+        return null;
+    }
+
+    private void addSickleProfit(Warehouse warehouse, Set<GrubbingProfit> grubbingProfits)
+    {
+        for (GrubbingProfit grubbingProfit : grubbingProfits)
+        {
+            warehouse.addItemQuantity(grubbingProfit.getStorageItemDescriptor(), grubbingProfit.getAmount());
+        }
     }
 
     private void reset()

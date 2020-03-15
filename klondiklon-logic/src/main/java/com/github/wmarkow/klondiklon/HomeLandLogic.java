@@ -52,6 +52,8 @@ public class HomeLandLogic
                 new StorageItemDescriptor(StorageItemTypes.FRAGARIA, TexturesRegistrar.STORAGE_ITEM_FRAGARIA));
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.RUBUS, TexturesRegistrar.STORAGE_ITEM_RUBUS));
+        manager.registerObjectTypeDescriptor(
+                new StorageItemDescriptor(StorageItemTypes.WHEAT, TexturesRegistrar.STORAGE_ITEM_WHEAT));
     }
 
     public void initFonts(FontsManager fontsManager)
