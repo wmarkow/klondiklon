@@ -39,14 +39,38 @@ public class CoordinateCalculator
 
     public GdxWorldOrthoCoordinates touch2World(Camera camera, GdxTouchCoordinates touchCoordinates)
     {
+        /***
+         * Java doc from {@link Camera#unproject}: Function to translate a point given
+         * in screen coordinates to world space. It's the same as GLU gluUnProject but
+         * does not rely on OpenGL. The viewport is assumed to span the whole screen and
+         * is fetched from Graphics.getWidth() and Graphics.getHeight(). The x- and
+         * y-coordinate of vec are assumed to be in screen coordinates (origin is the
+         * top left corner, y pointing down, x pointing to the right) as reported by the
+         * touch methods in Input. A z-coordinate of 0 will return a point on the near
+         * plane, a z-coordinate of 1 will return a point on the far plane.
+         * <p>
+         * So it converts from GdxTouchCoordinates to GdxWorldOrthoCoordinates
+         * </p>
+         */
         return new GdxWorldOrthoCoordinates(camera.unproject(touchCoordinates.toVector3()));
     }
 
-    public GdxTouchCoordinates world2Touch(Camera camera, GdxWorldOrthoCoordinates worldCoordinates)
+    public GdxScreenCoordinates world2Screen(Camera camera, GdxWorldOrthoCoordinates worldCoordinates)
     {
+        /***
+         * Java doc from {@link Camera#project}: Projects the Vector3 given in world
+         * space to screen coordinates. It's the same as GLU gluProject with one small
+         * deviation: The viewport is assumed to span the whole screen. The screen
+         * coordinate system has its origin in the bottom left, with the y-axis pointing
+         * upwards and the x-axis pointing to the right. This makes it easily useable in
+         * conjunction with Batch and similar classes.
+         * <p>
+         * So it converts from GdxWorldOrthoCoordinates to GdxScreenCoordinates
+         * </p>
+         */
         Vector3 result = camera.project(worldCoordinates);
 
-        return new GdxTouchCoordinates((int) result.x, (int) result.y);
+        return new GdxScreenCoordinates((int) result.x, (int) result.y);
     }
 
     public TmxOrthoCoordinates world2TmxOrthogonal(int tileMapHeightInTiles, int tileHeightInPixels,

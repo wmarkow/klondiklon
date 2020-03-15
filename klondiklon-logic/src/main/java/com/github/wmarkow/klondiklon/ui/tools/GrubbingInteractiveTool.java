@@ -18,6 +18,7 @@ import com.github.wmarkow.klondiklon.event.events.TouchLongDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
@@ -274,10 +275,10 @@ public class GrubbingInteractiveTool implements EventSubscriber
 
             Stage stage = Klondiklon.ui.getStage();
             CoordinateCalculator cc = new CoordinateCalculator();
-            GdxTouchCoordinates start = cc.world2Touch(camera,
+            GdxScreenCoordinates start = cc.world2Screen(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), cc.touch2Screen(start));
+            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
             stage.addActor(gpa);
         }
 
