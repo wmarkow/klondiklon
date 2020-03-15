@@ -45,6 +45,11 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         }
     }
 
+    public int getGardenObjectId()
+    {
+        return gardenObjectId;
+    }
+
     private GardenCellObject getGardenCell()
     {
         return (GardenCellObject) map.getObject(gardenObjectId);

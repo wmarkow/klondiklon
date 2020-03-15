@@ -23,6 +23,11 @@ public class Simulation
         simulables.add(simulable);
     }
 
+    public void removeSimulable(Simulable simulable)
+    {
+        simulables.remove(simulable);
+    }
+
     /***
      * Tries to perform a single simulation step. Simulation step is internally
      * performed once per {@link SIMULATION_RESOLUTION_IN_MILLIS} milliseconds.
@@ -55,4 +60,11 @@ public class Simulation
 
         return true;
     }
+
+    public Simulable[] getSimulables()
+    {
+        return simulables.toArray(new Simulable[]
+        {});
+    }
+
 }

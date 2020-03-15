@@ -151,6 +151,7 @@ public class SickleInteractiveTools implements EventSubscriber
         }
 
         Set<GrubbingProfit> profit = gardenToSickle.sickleIt();
+        Klondiklon.gameplayService.stopGardenSimulation(gardenToSickle.getId());
         addSickleProfit(Klondiklon.warehouse, profit);
 
         Klondiklon.ui.showProfitView(profit, screenCoordinates);

@@ -10,6 +10,7 @@ import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.ObjectTypes;
 import com.github.wmarkow.klondiklon.player.Player;
+import com.github.wmarkow.klondiklon.simulation.Simulable;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.GrowGardenPlantSimulationProcess;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
@@ -48,7 +49,7 @@ public class GameplayService
         player = new Player(ServiceRegistry.getInstance().getEventBus());
 
         // load simulation
-        loadSImulation();
+        loadSimulation();
     }
 
     public void saveGameContext()
@@ -67,7 +68,26 @@ public class GameplayService
         }
     }
 
-    private void loadSImulation()
+    public void stopGardenSimulation(int gardenId)
+    {
+        for (Simulable simulable : simulation.getSimulables())
+        {
+            if (simulable instanceof GrowGardenPlantSimulationProcess == false)
+            {
+                continue;
+            }
+
+            GrowGardenPlantSimulationProcess ggpsp = (GrowGardenPlantSimulationProcess) simulable;
+            if (ggpsp.getGardenObjectId() == gardenId)
+            {
+                simulation.removeSimulable(simulable);
+
+                return;
+            }
+        }
+    }
+
+    private void loadSimulation()
     {
         long epochMilli = Instant.now().toEpochMilli();
         simulation = new Simulation(epochMilli);
