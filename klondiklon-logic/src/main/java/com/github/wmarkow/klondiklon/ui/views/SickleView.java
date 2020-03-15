@@ -23,10 +23,8 @@ public class SickleView extends Group
 
     }
 
-    public void setSickleCoordinates(GdxTouchCoordinates touchCoordinates)
+    public void setSickleCoordinates(GdxScreenCoordinates screenCoordinates)
     {
-        GdxScreenCoordinates screenCoordinates = coordinateCalculator.touch2Screen(touchCoordinates);
-
         Image sickle = getSickleImage();
 
         sickle.setX(screenCoordinates.getX());

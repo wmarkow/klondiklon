@@ -277,7 +277,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
             GdxTouchCoordinates start = cc.world2Touch(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), start);
+            GrubbingProfitActor gpa = new GrubbingProfitActor(descriptor.getGrubbingProfits(), cc.touch2Screen(start));
             stage.addActor(gpa);
         }
 

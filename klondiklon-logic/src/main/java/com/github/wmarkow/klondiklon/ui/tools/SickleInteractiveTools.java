@@ -28,6 +28,8 @@ public class SickleInteractiveTools implements EventSubscriber
     private KKMapIf map;
     private Camera camera;
 
+    private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+
     private GardenCellObject gardenCell = null;
     private SickleView sickleView = null;
 
@@ -64,7 +66,6 @@ public class SickleInteractiveTools implements EventSubscriber
 
         reset();
 
-        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
                 event.getGdxTouchCoordinates());
 
@@ -94,7 +95,7 @@ public class SickleInteractiveTools implements EventSubscriber
             gardenCell.setSelectedTrueGreenColor();
 
             sickleView = Klondiklon.ui.showSickleView();
-            sickleView.setSickleCoordinates(event.getGdxTouchCoordinates());
+            sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
             ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
 
             return;
@@ -110,7 +111,7 @@ public class SickleInteractiveTools implements EventSubscriber
             return;
         }
 
-        sickleView.setSickleCoordinates(event.getGdxTouchCoordinates());
+        sickleView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
     }
 
     private void reset()

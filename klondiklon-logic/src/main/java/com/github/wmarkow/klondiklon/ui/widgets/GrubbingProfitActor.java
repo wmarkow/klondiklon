@@ -32,7 +32,7 @@ public class GrubbingProfitActor extends Group
     private Array<Path<Vector2>> paths = new Array<Path<Vector2>>();
     private float t = 0;
 
-    public GrubbingProfitActor(Set<GrubbingProfit> grubbingProfits, GdxTouchCoordinates start) {
+    public GrubbingProfitActor(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start) {
         createImages(grubbingProfits, start);
     }
 
@@ -70,10 +70,8 @@ public class GrubbingProfitActor extends Group
         }
     }
 
-    private void createImages(Set<GrubbingProfit> grubbingProfits, GdxTouchCoordinates start)
+    private void createImages(Set<GrubbingProfit> grubbingProfits, GdxScreenCoordinates start)
     {
-        GdxScreenCoordinates screenCoordinates = coordinateCalculator.touch2Screen(start);
-
         for (GrubbingProfit gp : grubbingProfits)
         {
             StorageItemDescriptor storageItemDescriptor = gp.getStorageItemDescriptor();
@@ -82,8 +80,8 @@ public class GrubbingProfitActor extends Group
                 Image image = new Image(ServiceRegistry.getInstance().getTexturesManager()
                         .getTexture(storageItemDescriptor.getTextureName()));
 
-                image.setX(screenCoordinates.getX());
-                image.setY(screenCoordinates.getY());
+                image.setX(start.getX());
+                image.setY(start.getY());
 
                 addActor(image);
             }
