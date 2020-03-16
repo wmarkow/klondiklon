@@ -1,6 +1,5 @@
 package com.github.wmarkow.klondiklon.ui.tools;
 
-import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
-import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
@@ -45,7 +43,6 @@ public class SickleInteractiveTools implements EventSubscriber
         this.map = map;
         this.camera = camera;
 
-        this.eventBus.subscribe(TouchTapEvent.class, this);
         this.eventBus.subscribe(TouchUpEvent.class, this);
         this.eventBus.subscribe(TouchDownEvent.class, this);
         this.eventBus.subscribe(TouchDraggedEvent.class, this);
@@ -54,12 +51,6 @@ public class SickleInteractiveTools implements EventSubscriber
     @Override
     public void onEvent(Event event)
     {
-        if (event instanceof TouchTapEvent)
-        {
-            processTouchTapEvent((TouchTapEvent) event);
-
-            return;
-        }
         if (event instanceof TouchUpEvent)
         {
             processTouchUpEvent((TouchUpEvent) event);
@@ -80,15 +71,18 @@ public class SickleInteractiveTools implements EventSubscriber
         }
     }
 
-    private void processTouchTapEvent(TouchTapEvent event)
+    private void processTouchUpEvent(TouchUpEvent event)
     {
         LOGGER.info(String.format("Event %s received x=%s, y=%s.", event.getClass().getSimpleName(),
                 event.getGdxTouchCoordinates().getX(), event.getGdxTouchCoordinates().getY()));
 
-        reset();
-
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
                 event.getGdxTouchCoordinates());
+
+        if (gardenCell != null)
+        {
+            reset();
+        }
 
         gardenCell = findGardenReadyToSickle(gdxWorldCoordinates);
         if (gardenCell == null)
@@ -102,17 +96,10 @@ public class SickleInteractiveTools implements EventSubscriber
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
     }
 
-    private void processTouchUpEvent(TouchUpEvent event)
-    {
-        reset();
-    }
-
     private void processTouchDownEvent(TouchDownEvent event)
     {
         if (sickleView == null)
         {
-            reset();
-            
             return;
         }
 
@@ -135,8 +122,6 @@ public class SickleInteractiveTools implements EventSubscriber
 
         if (sickleTouchedDown == false)
         {
-            reset();
-
             return;
         }
 
