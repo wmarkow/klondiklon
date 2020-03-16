@@ -17,8 +17,11 @@ public class SickleView extends Group
 
     public void setSickleCoordinates(GdxScreenCoordinates screenCoordinates)
     {
-        sickleImage.setX(screenCoordinates.getX());
-        sickleImage.setY(screenCoordinates.getY());
+        int width = (int)sickleImage.getImageWidth();
+        int height = (int) sickleImage.getImageHeight();
+        
+        sickleImage.setX(screenCoordinates.getX() - width / 2);
+        sickleImage.setY(screenCoordinates.getY() - height / 2);
     }
 
     public GdxScreenBounds getSickleImageBounds()

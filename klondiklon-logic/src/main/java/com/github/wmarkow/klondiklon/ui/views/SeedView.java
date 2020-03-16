@@ -34,11 +34,23 @@ public class SeedView extends Group
 
     public void setSeedItemCoordinates(StorageItemDescriptor seedItemDescriptor, GdxScreenCoordinates screenPoint)
     {
+        Image image = null;
+
         if (StorageItemTypes.WHEAT.equals(seedItemDescriptor.getStorageItemType()))
         {
-            wheatImage.setX(screenPoint.getX());
-            wheatImage.setY(screenPoint.getY());
+            image = wheatImage;
+
         }
+
+        if (image == null)
+        {
+            return;
+        }
+
+        int width = (int) image.getImageWidth();
+        int height = (int) image.getImageHeight();
+        image.setX(screenPoint.getX() - width / 2);
+        image.setY(screenPoint.getY() - height / 2);
     }
 
     private void createWheatImage()
