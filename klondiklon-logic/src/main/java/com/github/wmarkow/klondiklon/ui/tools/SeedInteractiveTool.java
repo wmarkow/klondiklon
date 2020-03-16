@@ -126,6 +126,7 @@ public class SeedInteractiveTool implements EventSubscriber
         // seed the plant
         int gardenId = gardenToSeed.getId();
         Klondiklon.gameplayService.addGardenSimulation(gardenId, seedItemDescriptor);
+        ServiceRegistry.getInstance().getSoundManager().GARDEN_SEED.play();
     }
 
     private GardenCellObject findGardenToSeed(GdxWorldOrthoCoordinates gdxWorldCoordinates)

@@ -142,6 +142,7 @@ public class SickleInteractiveTools implements EventSubscriber
         addSickleProfit(Klondiklon.warehouse, profit);
 
         Klondiklon.ui.showProfitView(profit, screenCoordinates);
+        ServiceRegistry.getInstance().getSoundManager().GARDEN_HARVEST.play();
     }
 
     private GardenCellObject findGardenReadyToSickle(GdxWorldOrthoCoordinates gdxWorldCoordinates)
