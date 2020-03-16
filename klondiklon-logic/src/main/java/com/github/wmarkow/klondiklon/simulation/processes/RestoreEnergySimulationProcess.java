@@ -21,6 +21,12 @@ public class RestoreEnergySimulationProcess implements Simulable
     }
 
     @Override
+    public void stepInit()
+    {
+        // nothing to do here
+    }
+
+    @Override
     public void stepEverySecond()
     {
         secondsCounter++;

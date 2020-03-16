@@ -73,6 +73,16 @@ public class GardenCellObject extends KKMapObject
         return false;
     }
 
+    public boolean isReadyForSeed()
+    {
+        if (growingObjectTextureRegion == null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public Set<GrubbingProfit> sickleIt()
     {
         growingObjectTextureRegion = null;

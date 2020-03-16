@@ -21,6 +21,7 @@ public class Simulation
     public void addSimulable(Simulable simulable)
     {
         simulables.add(simulable);
+        simulable.stepInit();
     }
 
     public void removeSimulable(Simulable simulable)

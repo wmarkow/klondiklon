@@ -29,6 +29,7 @@ import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.SickleInteractiveTools;
+import com.github.wmarkow.klondiklon.ui.tools.SeedInteractiveTool;
 
 public class HomeLand extends ApplicationAdapter
 {
@@ -45,6 +46,7 @@ public class HomeLand extends ApplicationAdapter
     private GrubbingInteractiveTool grubbingInteractiveTool;
     private MoveObjectInteractiveTool moveObjectInteractiveTool;
     private SickleInteractiveTools sickleInteractiveTools;
+    private SeedInteractiveTool sowInteractiveTools;
 
     private EventBus eventBus;
     private FontsManager fontsManager;
@@ -157,5 +159,6 @@ public class HomeLand extends ApplicationAdapter
         moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
                 Klondiklon.objectTypeDescriptorsManager);
         sickleInteractiveTools = new SickleInteractiveTools(eventBus, kkMap, camera);
+        sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }
 }

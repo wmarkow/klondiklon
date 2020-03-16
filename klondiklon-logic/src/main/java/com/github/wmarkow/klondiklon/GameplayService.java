@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.ObjectTypes;
+import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulable;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
@@ -68,6 +69,11 @@ public class GameplayService
         }
     }
 
+    public void addGardenSimulation(int gardenId, StorageItemDescriptor seedItemDescriptor)
+    {
+        simulation.addSimulable(new GrowGardenPlantSimulationProcess(gardenId, seedItemDescriptor, currentWorldMap));
+    }
+
     public void stopGardenSimulation(int gardenId)
     {
         for (Simulable simulable : simulation.getSimulables())
@@ -92,15 +98,5 @@ public class GameplayService
         long epochMilli = Instant.now().toEpochMilli();
         simulation = new Simulation(epochMilli);
         simulation.addSimulable(new RestoreEnergySimulationProcess(player));
-
-        // seed wheat in all gardens
-        for (KKMapObjectIf mapObject : currentWorldMap.getObjects())
-        {
-            if (ObjectTypes.GARDEN.equals(mapObject.getObjectType()))
-            {
-                int id = mapObject.getId();
-                simulation.addSimulable(new GrowGardenPlantSimulationProcess(id, currentWorldMap));
-            }
-        }
     }
 }

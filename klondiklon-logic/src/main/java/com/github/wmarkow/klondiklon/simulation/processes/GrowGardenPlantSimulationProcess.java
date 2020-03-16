@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
+import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.simulation.Simulable;
 
 public class GrowGardenPlantSimulationProcess implements Simulable
@@ -15,10 +16,16 @@ public class GrowGardenPlantSimulationProcess implements Simulable
     private int gardenObjectId;
     private KKMapIf map;
 
-    public GrowGardenPlantSimulationProcess(int gardenObjectId, KKMapIf map) {
+    public GrowGardenPlantSimulationProcess(int gardenObjectId, StorageItemDescriptor seedItemDescriptor, KKMapIf map) {
         this.gardenObjectId = gardenObjectId;
         this.secondsCounter = 0;
         this.map = map;
+    }
+
+    @Override
+    public void stepInit()
+    {
+        stepEverySecond();
     }
 
     @Override
