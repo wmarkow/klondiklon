@@ -11,6 +11,7 @@ import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
 import com.github.wmarkow.klondiklon.event.events.TouchDownEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchDraggedEvent;
+import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
@@ -24,14 +25,13 @@ import com.github.wmarkow.klondiklon.ui.views.SeedView;
 public class SeedInteractiveTool implements EventSubscriber
 {
     private static Logger LOGGER = LoggerFactory.getLogger(SeedInteractiveTool.class);
-    
+
     private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
     private EventBus eventBus;
     private KKMapIf map;
     private Camera camera;
 
-    private GardenCellObject gardenCell = null;
     private SeedView seedView = null;
     private StorageItemDescriptor seedItemDescriptor = null;
 
@@ -40,6 +40,7 @@ public class SeedInteractiveTool implements EventSubscriber
         this.map = map;
         this.camera = camera;
 
+        this.eventBus.subscribe(TouchTapEvent.class, this);
         this.eventBus.subscribe(TouchUpEvent.class, this);
         this.eventBus.subscribe(TouchDownEvent.class, this);
         this.eventBus.subscribe(TouchDraggedEvent.class, this);
@@ -48,6 +49,12 @@ public class SeedInteractiveTool implements EventSubscriber
     @Override
     public void onEvent(Event event)
     {
+        if (event instanceof TouchTapEvent)
+        {
+            processTouchTapEvent((TouchTapEvent) event);
+
+            return;
+        }
         if (event instanceof TouchUpEvent)
         {
             processTouchUpEvent((TouchUpEvent) event);
@@ -68,24 +75,30 @@ public class SeedInteractiveTool implements EventSubscriber
         }
     }
 
-    private void processTouchUpEvent(TouchUpEvent event)
+    private void processTouchTapEvent(TouchTapEvent event)
     {
         GdxWorldOrthoCoordinates gdxWorldCoordinates = coordinateCalculator.touch2World(camera,
                 event.getGdxTouchCoordinates());
 
-        if (gardenCell != null)
-        {
-            reset();
-        }
-
-        gardenCell = findGardenToSeed(gdxWorldCoordinates);
-        if (gardenCell == null)
+        if (findGardenToSeed(gdxWorldCoordinates) == null)
         {
             return;
         }
 
         seedView = Klondiklon.ui.showSeedView(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+    }
+
+    private void processTouchUpEvent(TouchUpEvent event)
+    {
+        if (seedItemDescriptor == null)
+        {
+            return;
+        }
+        
+        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+        Klondiklon.ui.hideSeedView();
+        seedView = null;
+        seedItemDescriptor = null;
     }
 
     private void processTouchDownEvent(TouchDownEvent event)
@@ -99,18 +112,17 @@ public class SeedInteractiveTool implements EventSubscriber
         seedItemDescriptor = seedView.getSeedItemDescriptor(screenCoordinates);
         if (seedItemDescriptor == null)
         {
-            reset();
+            Klondiklon.ui.hideSeedView();
+            seedView = null;
+            seedItemDescriptor = null;
             return;
         }
+
+        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
     }
 
     private void processTouchDraggedEvent(TouchDraggedEvent event)
     {
-        if (gardenCell == null)
-        {
-            return;
-        }
-
         if (seedItemDescriptor == null)
         {
             return;
@@ -159,16 +171,5 @@ public class SeedInteractiveTool implements EventSubscriber
         }
 
         return null;
-    }
-
-    private void reset()
-    {
-        LOGGER.info("reset");
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
-
-        Klondiklon.ui.hideSeedView();
-        gardenCell = null;
-        seedView = null;
-        seedItemDescriptor = null;
     }
 }
