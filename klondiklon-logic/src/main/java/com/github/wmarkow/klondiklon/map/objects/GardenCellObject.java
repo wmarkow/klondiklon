@@ -1,8 +1,6 @@
 package com.github.wmarkow.klondiklon.map.objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +20,7 @@ public class GardenCellObject extends KKMapObject
     private TextureRegion wheatPhase2;
     private TextureRegion wheatPhase3;
     private TextureRegion wheatPhase4;
-    
+
     private TextureRegion beanPhase1;
     private TextureRegion beanPhase2;
     private TextureRegion beanPhase3;
@@ -45,7 +43,7 @@ public class GardenCellObject extends KKMapObject
         Texture textureWheat4 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_4);
         wheatPhase4 = new TextureRegion(textureWheat4);
-        
+
         Texture textureBean1 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_1);
         beanPhase1 = new TextureRegion(textureBean1);
@@ -76,7 +74,7 @@ public class GardenCellObject extends KKMapObject
     {
         growingObjectTextureRegion = wheatPhase4;
     }
-    
+
     public void setBeanPhase1()
     {
         growingObjectTextureRegion = beanPhase1;
@@ -98,7 +96,7 @@ public class GardenCellObject extends KKMapObject
         {
             return true;
         }
-        
+
         if (growingObjectTextureRegion == beanPhase3)
         {
             return true;
@@ -119,10 +117,29 @@ public class GardenCellObject extends KKMapObject
 
     public Set<GrubbingProfit> sickleIt()
     {
+        if (!isReadyForSickle())
+        {
+            return new HashSet<GrubbingProfit>();
+        }
+
+        StorageItemDescriptor wheatItemDescriptor = null;
+
+        if (growingObjectTextureRegion == wheatPhase4)
+        {
+            wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.WHEAT);
+        }
+
+        if (growingObjectTextureRegion == beanPhase3)
+        {
+            wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.BEAN);
+        }
+
         growingObjectTextureRegion = null;
 
-        StorageItemDescriptor wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager
-                .getByType(StorageItemTypes.WHEAT);
+        if (wheatItemDescriptor == null)
+        {
+            return new HashSet<GrubbingProfit>();
+        }
 
         Set<GrubbingProfit> result = new HashSet<GrubbingProfit>();
         result.add(new GrubbingProfit(wheatItemDescriptor, 1));

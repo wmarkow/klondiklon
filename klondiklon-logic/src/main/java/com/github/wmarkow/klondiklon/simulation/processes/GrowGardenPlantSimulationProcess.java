@@ -60,15 +60,15 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         if (secondsCounter <= 5)
         {
             // growing phase 1
-            getGardenCell().setWheatPhase1();
+            getGardenCell().setBeanPhase1();
         } else if (secondsCounter <= 10)
         {
             // growing phase 2
-            getGardenCell().setWheatPhase2();
+            getGardenCell().setBeanPhase2();
         } else
         {
             // growing phase 3
-            getGardenCell().setWheatPhase4();
+            getGardenCell().setBeanPhase3();
         }
     }
 
