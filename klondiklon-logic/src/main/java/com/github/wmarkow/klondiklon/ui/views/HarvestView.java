@@ -7,11 +7,11 @@ import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenBounds;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 
-public class SickleView extends Group
+public class HarvestView extends Group
 {
     private Image sickleImage = null;
 
-    public SickleView() {
+    public HarvestView() {
         createSickleImage();
     }
 

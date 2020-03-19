@@ -28,7 +28,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
-import com.github.wmarkow.klondiklon.ui.tools.SickleInteractiveTools;
+import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
 import com.github.wmarkow.klondiklon.ui.tools.SeedInteractiveTool;
 
 public class HomeLand extends ApplicationAdapter
@@ -45,7 +45,7 @@ public class HomeLand extends ApplicationAdapter
     private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
     private MoveObjectInteractiveTool moveObjectInteractiveTool;
-    private SickleInteractiveTools sickleInteractiveTools;
+    private HarvestInteractiveTools sickleInteractiveTools;
     private SeedInteractiveTool sowInteractiveTools;
 
     private EventBus eventBus;
@@ -158,7 +158,7 @@ public class HomeLand extends ApplicationAdapter
                 Klondiklon.gameplayService.getPlayer(), Klondiklon.objectTypeDescriptorsManager);
         moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
                 Klondiklon.objectTypeDescriptorsManager);
-        sickleInteractiveTools = new SickleInteractiveTools(eventBus, kkMap, camera);
+        sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
         sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }
 }

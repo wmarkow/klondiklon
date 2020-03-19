@@ -21,12 +21,12 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
-import com.github.wmarkow.klondiklon.ui.views.SickleView;
+import com.github.wmarkow.klondiklon.ui.views.HarvestView;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
-public class SickleInteractiveTools implements EventSubscriber
+public class HarvestInteractiveTools implements EventSubscriber
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(SickleInteractiveTools.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(HarvestInteractiveTools.class);
 
     private EventBus eventBus;
     private KKMapIf map;
@@ -35,10 +35,10 @@ public class SickleInteractiveTools implements EventSubscriber
     private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
     private GardenCellObject gardenCell = null;
-    private SickleView sickleView = null;
+    private HarvestView sickleView = null;
     private boolean sickleTouchedDown = false;
 
-    public SickleInteractiveTools(EventBus eventBus, KKMapIf map, Camera camera) {
+    public HarvestInteractiveTools(EventBus eventBus, KKMapIf map, Camera camera) {
         this.eventBus = eventBus;
         this.map = map;
         this.camera = camera;

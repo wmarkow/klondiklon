@@ -18,7 +18,7 @@ import com.github.wmarkow.klondiklon.ui.views.MainView;
 import com.github.wmarkow.klondiklon.ui.views.MoveObjectView;
 import com.github.wmarkow.klondiklon.ui.views.ProfitView;
 import com.github.wmarkow.klondiklon.ui.views.SeedView;
-import com.github.wmarkow.klondiklon.ui.views.SickleView;
+import com.github.wmarkow.klondiklon.ui.views.HarvestView;
 import com.github.wmarkow.klondiklon.ui.views.WarehouseView;
 
 public class KKUi implements EventSubscriber
@@ -31,7 +31,7 @@ public class KKUi implements EventSubscriber
     private MainView mainView = null;
     private WarehouseView warehouseWidget = null;
     private MoveObjectView moveObjectView = null;
-    private SickleView sickleView = null;
+    private HarvestView sickleView = null;
     private SeedView seedView = null;
 
     public KKUi() {
@@ -69,9 +69,9 @@ public class KKUi implements EventSubscriber
         moveObjectView = null;
     }
 
-    public SickleView showSickleView()
+    public HarvestView showSickleView()
     {
-        sickleView = new SickleView();
+        sickleView = new HarvestView();
         stack.addActor(sickleView);
 
         return sickleView;
