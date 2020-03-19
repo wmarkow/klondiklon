@@ -31,7 +31,7 @@ public class KKUi implements EventSubscriber
     private MainView mainView = null;
     private WarehouseView warehouseWidget = null;
     private MoveObjectView moveObjectView = null;
-    private HarvestView sickleView = null;
+    private HarvestView harvestView = null;
     private SeedView seedView = null;
 
     public KKUi() {
@@ -69,22 +69,22 @@ public class KKUi implements EventSubscriber
         moveObjectView = null;
     }
 
-    public HarvestView showSickleView()
+    public HarvestView showHarvestView()
     {
-        sickleView = new HarvestView();
-        stack.addActor(sickleView);
+        harvestView = new HarvestView();
+        stack.addActor(harvestView);
 
-        return sickleView;
+        return harvestView;
     }
 
-    public void hideSickleView()
+    public void hideHarvestView()
     {
-        if (sickleView == null)
+        if (harvestView == null)
         {
             return;
         }
-        stack.removeActor(sickleView);
-        sickleView = null;
+        stack.removeActor(harvestView);
+        harvestView = null;
     }
 
     public SeedView showSeedView(GdxScreenCoordinates gdxScreenCoordinates)
