@@ -1,5 +1,8 @@
 package com.github.wmarkow.klondiklon.ui.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
@@ -20,6 +23,8 @@ import com.github.wmarkow.klondiklon.ui.views.SeedView;
 
 public class SeedInteractiveTool implements EventSubscriber
 {
+    private static Logger LOGGER = LoggerFactory.getLogger(SeedInteractiveTool.class);
+    
     private CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
     private EventBus eventBus;
@@ -158,6 +163,7 @@ public class SeedInteractiveTool implements EventSubscriber
 
     private void reset()
     {
+        LOGGER.info("reset");
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
 
         Klondiklon.ui.hideSeedView();

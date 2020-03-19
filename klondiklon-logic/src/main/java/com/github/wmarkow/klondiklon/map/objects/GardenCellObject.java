@@ -22,6 +22,10 @@ public class GardenCellObject extends KKMapObject
     private TextureRegion wheatPhase2;
     private TextureRegion wheatPhase3;
     private TextureRegion wheatPhase4;
+    
+    private TextureRegion beanPhase1;
+    private TextureRegion beanPhase2;
+    private TextureRegion beanPhase3;
 
     private TextureRegion growingObjectTextureRegion = null;
 
@@ -41,6 +45,16 @@ public class GardenCellObject extends KKMapObject
         Texture textureWheat4 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_4);
         wheatPhase4 = new TextureRegion(textureWheat4);
+        
+        Texture textureBean1 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_1);
+        beanPhase1 = new TextureRegion(textureBean1);
+        Texture textureBean2 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_2);
+        beanPhase2 = new TextureRegion(textureBean2);
+        Texture textureBean3 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_3);
+        beanPhase3 = new TextureRegion(textureBean3);
     }
 
     public void setWheatPhase1()
@@ -62,10 +76,30 @@ public class GardenCellObject extends KKMapObject
     {
         growingObjectTextureRegion = wheatPhase4;
     }
+    
+    public void setBeanPhase1()
+    {
+        growingObjectTextureRegion = beanPhase1;
+    }
+
+    public void setBeanPhase2()
+    {
+        growingObjectTextureRegion = beanPhase2;
+    }
+
+    public void setBeanPhase3()
+    {
+        growingObjectTextureRegion = beanPhase3;
+    }
 
     public boolean isReadyForSickle()
     {
         if (growingObjectTextureRegion == wheatPhase4)
+        {
+            return true;
+        }
+        
+        if (growingObjectTextureRegion == beanPhase3)
         {
             return true;
         }

@@ -21,4 +21,5 @@ public class StorageItemTypes
     public final static String FRAGARIA = "FRAGARIA";
     public final static String RUBUS = "RUBUS";
     public final static String WHEAT = "WHEAT";
+    public final static String BEAN = "BEAN";
 }

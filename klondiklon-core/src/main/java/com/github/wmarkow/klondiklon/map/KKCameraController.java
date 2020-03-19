@@ -16,6 +16,9 @@
 
 package com.github.wmarkow.klondiklon.map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -31,6 +34,8 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
 public class KKCameraController extends InputAdapter
 {
+    private static Logger LOGGER = LoggerFactory.getLogger(KKCameraController.class);
+    
     private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
 
     final OrthographicCamera camera;
@@ -55,6 +60,8 @@ public class KKCameraController extends InputAdapter
 
     public void setLockCameraWhileDragging(boolean lockCameraWhileDragging)
     {
+        LOGGER.info(String.format("setLockCameraWhileDragging(%s)", lockCameraWhileDragging));
+        
         this.lockCameraWhileDragging = lockCameraWhileDragging;
     }
 

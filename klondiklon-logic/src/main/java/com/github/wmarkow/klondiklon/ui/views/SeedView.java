@@ -13,18 +13,27 @@ import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
 public class SeedView extends Group
 {
     private Image wheatImage = null;
+    private Image beanImage = null;
 
     public SeedView(GdxScreenCoordinates screenCoordinates) {
         createWheatImage();
+        createBeanImage();
 
-        wheatImage.setX(screenCoordinates.getX() - 200);
-        wheatImage.setY(screenCoordinates.getY());
+        beanImage.setX(screenCoordinates.getX() - 200);
+        beanImage.setY(screenCoordinates.getY());
+
+        wheatImage.setX(screenCoordinates.getX() - 100);
+        wheatImage.setY(screenCoordinates.getY() + 100);
     }
 
     public StorageItemDescriptor getSeedItemDescriptor(GdxScreenCoordinates screenPoint)
     {
-        GdxScreenBounds wheatBounds = getBounds(wheatImage);
-        if (wheatBounds.containsPoint(screenPoint))
+        if (getBounds(beanImage).containsPoint(screenPoint))
+        {
+            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.BEAN);
+        }
+
+        if (getBounds(wheatImage).containsPoint(screenPoint))
         {
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.WHEAT);
         }
@@ -39,7 +48,9 @@ public class SeedView extends Group
         if (StorageItemTypes.WHEAT.equals(seedItemDescriptor.getStorageItemType()))
         {
             image = wheatImage;
-
+        } else if (StorageItemTypes.BEAN.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            image = beanImage;
         }
 
         if (image == null)
@@ -61,6 +72,16 @@ public class SeedView extends Group
         wheatImage.setY(0);
 
         addActor(wheatImage);
+    }
+
+    private void createBeanImage()
+    {
+        beanImage = new Image(
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_BEAN));
+        beanImage.setX(0);
+        beanImage.setY(0);
+
+        addActor(beanImage);
     }
 
     private GdxScreenBounds getBounds(Image image)
