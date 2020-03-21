@@ -14,16 +14,21 @@ public class SeedView extends Group
 {
     private Image wheatImage = null;
     private Image beanImage = null;
+    private Image grassImage = null;
 
     public SeedView(GdxScreenCoordinates screenCoordinates) {
         createWheatImage();
         createBeanImage();
+        createGrassImage();
 
         beanImage.setX(screenCoordinates.getX() - 200);
         beanImage.setY(screenCoordinates.getY());
 
-        wheatImage.setX(screenCoordinates.getX() - 100);
-        wheatImage.setY(screenCoordinates.getY() + 100);
+        wheatImage.setX(screenCoordinates.getX() - 75);
+        wheatImage.setY(screenCoordinates.getY() + 70);
+
+        grassImage.setX(screenCoordinates.getX() - 185);
+        grassImage.setY(screenCoordinates.getY() + 100);
     }
 
     public StorageItemDescriptor getSeedItemDescriptor(GdxScreenCoordinates screenPoint)
@@ -36,6 +41,11 @@ public class SeedView extends Group
         if (getBounds(wheatImage).containsPoint(screenPoint))
         {
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.WHEAT);
+        }
+
+        if (getBounds(grassImage).containsPoint(screenPoint))
+        {
+            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.GRASS);
         }
 
         return null;
@@ -51,6 +61,9 @@ public class SeedView extends Group
         } else if (StorageItemTypes.BEAN.equals(seedItemDescriptor.getStorageItemType()))
         {
             image = beanImage;
+        } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            image = grassImage;
         }
 
         if (image == null)
@@ -82,6 +95,16 @@ public class SeedView extends Group
         beanImage.setY(0);
 
         addActor(beanImage);
+    }
+
+    private void createGrassImage()
+    {
+        grassImage = new Image(
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_GRASS));
+        grassImage.setX(0);
+        grassImage.setY(0);
+
+        addActor(grassImage);
     }
 
     private GdxScreenBounds getBounds(Image image)

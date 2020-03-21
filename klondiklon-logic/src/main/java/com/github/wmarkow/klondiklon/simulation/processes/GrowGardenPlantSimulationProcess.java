@@ -42,6 +42,9 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         } else if (StorageItemTypes.WHEAT.equals(seedItemDescriptor.getStorageItemType()))
         {
             stepEverySecondForWheat();
+        } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            stepEverySecondForGrass();
         }
     }
 
@@ -90,6 +93,23 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         {
             // growing phase 4
             getGardenCell().setWheatPhase4();
+        }
+    }
+
+    private void stepEverySecondForGrass()
+    {
+        if (secondsCounter <= 5)
+        {
+            // growing phase 1
+            getGardenCell().setGrassPhase1();
+        } else if (secondsCounter <= 10)
+        {
+            // growing phase 2
+            getGardenCell().setGrassPhase2();
+        } else
+        {
+            // growing phase 3
+            getGardenCell().setGrassPhase3();
         }
     }
 }

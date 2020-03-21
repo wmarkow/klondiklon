@@ -34,6 +34,9 @@ public class TexturesRegistrar
     public final static String OBJECT_BEAN_GARDEN_1 = "OBJECT_BEAN_GARDEN_1";
     public final static String OBJECT_BEAN_GARDEN_2 = "OBJECT_BEAN_GARDEN_2";
     public final static String OBJECT_BEAN_GARDEN_3 = "OBJECT_BEAN_GARDEN_3";
+    public final static String OBJECT_GRASS_GARDEN_1 = "OBJECT_GRASS_GARDEN_1";
+    public final static String OBJECT_GRASS_GARDEN_2 = "OBJECT_GRASS_GARDEN_2";
+    public final static String OBJECT_GRASS_GARDEN_3 = "OBJECT_GRASS_GARDEN_3";
 
     public void register(TexturesManager texturesManager)
     {
@@ -86,5 +89,12 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.local("worlds/home/object_bean_garden_2.png")));
         texturesManager.registerTexture(OBJECT_BEAN_GARDEN_3,
                 new Texture(Gdx.files.local("worlds/home/object_bean_garden_3.png")));
+        
+        texturesManager.registerTexture(OBJECT_GRASS_GARDEN_1,
+                new Texture(Gdx.files.local("worlds/home/object_grass_garden_1.png")));
+        texturesManager.registerTexture(OBJECT_GRASS_GARDEN_2,
+                new Texture(Gdx.files.local("worlds/home/object_grass_garden_2.png")));
+        texturesManager.registerTexture(OBJECT_GRASS_GARDEN_3,
+                new Texture(Gdx.files.local("worlds/home/object_grass_garden_3.png")));
     }
 }
