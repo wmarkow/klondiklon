@@ -26,6 +26,7 @@ public class TexturesRegistrar
     public final static String STORAGE_ITEM_COAL = "STORAGE_ITEM_COAL";
     public final static String STORAGE_ITEM_WHEAT = "STORAGE_ITEM_WHEAT";
     public final static String STORAGE_ITEM_BEAN = "STORAGE_ITEM_BEAN";
+    public final static String STORAGE_ITEM_CORN = "STORAGE_ITEM_CORN";
 
     public final static String OBJECT_WHEAT_GARDEN_1 = "OBJECT_WHEAT_GARDEN_1";
     public final static String OBJECT_WHEAT_GARDEN_2 = "OBJECT_WHEAT_GARDEN_2";
@@ -37,6 +38,9 @@ public class TexturesRegistrar
     public final static String OBJECT_GRASS_GARDEN_1 = "OBJECT_GRASS_GARDEN_1";
     public final static String OBJECT_GRASS_GARDEN_2 = "OBJECT_GRASS_GARDEN_2";
     public final static String OBJECT_GRASS_GARDEN_3 = "OBJECT_GRASS_GARDEN_3";
+    public final static String OBJECT_CORN_GARDEN_1 = "OBJECT_CORN_GARDEN_1";
+    public final static String OBJECT_CORN_GARDEN_2 = "OBJECT_CORN_GARDEN_2";
+    public final static String OBJECT_CORN_GARDEN_3 = "OBJECT_CORN_GARDEN_3";
 
     public void register(TexturesManager texturesManager)
     {
@@ -74,6 +78,8 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.local("worlds/home/warehouse/items/wheat.png")));
         texturesManager.registerTexture(STORAGE_ITEM_BEAN,
                 new Texture(Gdx.files.local("worlds/home/warehouse/items/bean.png")));
+        texturesManager.registerTexture(STORAGE_ITEM_CORN,
+                new Texture(Gdx.files.local("worlds/home/warehouse/items/corn.png")));
 
         texturesManager.registerTexture(OBJECT_WHEAT_GARDEN_1,
                 new Texture(Gdx.files.local("worlds/home/object_wheat_garden_1.png")));
@@ -89,12 +95,19 @@ public class TexturesRegistrar
                 new Texture(Gdx.files.local("worlds/home/object_bean_garden_2.png")));
         texturesManager.registerTexture(OBJECT_BEAN_GARDEN_3,
                 new Texture(Gdx.files.local("worlds/home/object_bean_garden_3.png")));
-        
+
         texturesManager.registerTexture(OBJECT_GRASS_GARDEN_1,
                 new Texture(Gdx.files.local("worlds/home/object_grass_garden_1.png")));
         texturesManager.registerTexture(OBJECT_GRASS_GARDEN_2,
                 new Texture(Gdx.files.local("worlds/home/object_grass_garden_2.png")));
         texturesManager.registerTexture(OBJECT_GRASS_GARDEN_3,
                 new Texture(Gdx.files.local("worlds/home/object_grass_garden_3.png")));
+
+        texturesManager.registerTexture(OBJECT_CORN_GARDEN_1,
+                new Texture(Gdx.files.local("worlds/home/object_corn_garden_1.png")));
+        texturesManager.registerTexture(OBJECT_CORN_GARDEN_2,
+                new Texture(Gdx.files.local("worlds/home/object_corn_garden_2.png")));
+        texturesManager.registerTexture(OBJECT_CORN_GARDEN_3,
+                new Texture(Gdx.files.local("worlds/home/object_corn_garden_3.png")));
     }
 }

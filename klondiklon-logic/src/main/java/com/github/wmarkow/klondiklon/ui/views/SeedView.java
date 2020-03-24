@@ -15,17 +15,27 @@ public class SeedView extends Group
     private Image wheatImage = null;
     private Image beanImage = null;
     private Image grassImage = null;
+    private Image cornImage = null;
 
     public SeedView(GdxScreenCoordinates screenCoordinates) {
         createWheatImage();
         createBeanImage();
         createGrassImage();
+        createCornImage();
 
-        beanImage.setX(screenCoordinates.getX() - 200);
-        beanImage.setY(screenCoordinates.getY());
+        int deltaX = 125;
+        int startX = -200;
+        int startY = 0;
+        int deltaY = 70;
 
-        wheatImage.setX(screenCoordinates.getX() - 75);
-        wheatImage.setY(screenCoordinates.getY() + 70);
+        beanImage.setX(screenCoordinates.getX() + startX);
+        beanImage.setY(screenCoordinates.getY() + startY);
+
+        wheatImage.setX(screenCoordinates.getX() + startX + deltaX);
+        wheatImage.setY(screenCoordinates.getY() + startY + deltaY);
+
+        cornImage.setX(screenCoordinates.getX() + startX + 2 * deltaX);
+        cornImage.setY(screenCoordinates.getY() + startY + 2 * deltaY);
 
         grassImage.setX(screenCoordinates.getX() - 185);
         grassImage.setY(screenCoordinates.getY() + 100);
@@ -48,6 +58,11 @@ public class SeedView extends Group
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.GRASS);
         }
 
+        if (getBounds(cornImage).containsPoint(screenPoint))
+        {
+            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.CORN);
+        }
+
         return null;
     }
 
@@ -64,6 +79,9 @@ public class SeedView extends Group
         } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
         {
             image = grassImage;
+        } else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            image = cornImage;
         }
 
         if (image == null)
@@ -105,6 +123,16 @@ public class SeedView extends Group
         grassImage.setY(0);
 
         addActor(grassImage);
+    }
+
+    private void createCornImage()
+    {
+        cornImage = new Image(
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_CORN));
+        cornImage.setX(0);
+        cornImage.setY(0);
+
+        addActor(cornImage);
     }
 
     private GdxScreenBounds getBounds(Image image)

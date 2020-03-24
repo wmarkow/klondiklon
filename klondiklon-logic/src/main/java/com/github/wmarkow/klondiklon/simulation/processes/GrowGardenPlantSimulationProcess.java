@@ -45,7 +45,10 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
         {
             stepEverySecondForGrass();
-        }
+        }else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            stepEverySecondForCorn();
+        }    
     }
 
     public int getGardenObjectId()
@@ -110,6 +113,23 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         {
             // growing phase 3
             getGardenCell().setGrassPhase3();
+        }
+    }
+    
+    private void stepEverySecondForCorn()
+    {
+        if (secondsCounter <= 5)
+        {
+            // growing phase 1
+            getGardenCell().setCornPhase1();
+        } else if (secondsCounter <= 10)
+        {
+            // growing phase 2
+            getGardenCell().setCornPhase2();
+        } else
+        {
+            // growing phase 3
+            getGardenCell().setCornPhase3();
         }
     }
 }
