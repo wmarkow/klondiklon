@@ -58,6 +58,8 @@ public class HomeLandLogic
                 new StorageItemDescriptor(StorageItemTypes.BEAN, TexturesRegistrar.STORAGE_ITEM_BEAN));
         manager.registerObjectTypeDescriptor(
                 new StorageItemDescriptor(StorageItemTypes.CORN, TexturesRegistrar.STORAGE_ITEM_CORN));
+        manager.registerObjectTypeDescriptor(
+                new StorageItemDescriptor(StorageItemTypes.STRAWBERRY, TexturesRegistrar.STORAGE_ITEM_STRAWBERRY));
     }
 
     public void initFonts(FontsManager fontsManager)

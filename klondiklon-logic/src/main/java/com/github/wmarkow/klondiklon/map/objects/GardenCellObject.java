@@ -33,6 +33,10 @@ public class GardenCellObject extends KKMapObject
     private TextureRegion cornPhase2;
     private TextureRegion cornPhase3;
 
+    private TextureRegion strawberryPhase1;
+    private TextureRegion strawberryPhase2;
+    private TextureRegion strawberryPhase3;
+
     private TextureRegion growingObjectTextureRegion = null;
 
     public GardenCellObject(TiledMapTile tile, int id, String objectType) {
@@ -81,6 +85,16 @@ public class GardenCellObject extends KKMapObject
         Texture textureCorn3 = ServiceRegistry.getInstance().getTexturesManager()
                 .getTexture(TexturesRegistrar.OBJECT_CORN_GARDEN_3);
         cornPhase3 = new TextureRegion(textureCorn3);
+
+        Texture textureStrawberry1 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_1);
+        strawberryPhase1 = new TextureRegion(textureStrawberry1);
+        Texture textureStrawberry2 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_2);
+        strawberryPhase2 = new TextureRegion(textureStrawberry2);
+        Texture textureCStrawberry3 = ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_3);
+        strawberryPhase3 = new TextureRegion(textureCStrawberry3);
     }
 
     public void setWheatPhase1()
@@ -148,6 +162,21 @@ public class GardenCellObject extends KKMapObject
         growingObjectTextureRegion = cornPhase3;
     }
 
+    public void setStrawberryPhase1()
+    {
+        growingObjectTextureRegion = strawberryPhase1;
+    }
+
+    public void setStrawberryPhase2()
+    {
+        growingObjectTextureRegion = strawberryPhase2;
+    }
+
+    public void setStrawberryPhase3()
+    {
+        growingObjectTextureRegion = strawberryPhase3;
+    }
+
     public boolean isReadyForSickle()
     {
         if (growingObjectTextureRegion == wheatPhase4)
@@ -166,6 +195,11 @@ public class GardenCellObject extends KKMapObject
         }
 
         if (growingObjectTextureRegion == cornPhase3)
+        {
+            return true;
+        }
+
+        if (growingObjectTextureRegion == strawberryPhase3)
         {
             return true;
         }
@@ -204,6 +238,9 @@ public class GardenCellObject extends KKMapObject
         } else if (growingObjectTextureRegion == cornPhase3)
         {
             wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.CORN);
+        } else if (growingObjectTextureRegion == strawberryPhase3)
+        {
+            wheatItemDescriptor = Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STRAWBERRY);
         }
 
         growingObjectTextureRegion = null;

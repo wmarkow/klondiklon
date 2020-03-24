@@ -16,12 +16,14 @@ public class SeedView extends Group
     private Image beanImage = null;
     private Image grassImage = null;
     private Image cornImage = null;
+    private Image strawberryImage = null;
 
     public SeedView(GdxScreenCoordinates screenCoordinates) {
         createWheatImage();
         createBeanImage();
         createGrassImage();
         createCornImage();
+        createStrawberryImage();
 
         int deltaX = 125;
         int startX = -200;
@@ -39,6 +41,9 @@ public class SeedView extends Group
 
         grassImage.setX(screenCoordinates.getX() - 185);
         grassImage.setY(screenCoordinates.getY() + 100);
+
+        strawberryImage.setX(screenCoordinates.getX() - 185 + deltaX);
+        strawberryImage.setY(screenCoordinates.getY() + 100 + deltaY);
     }
 
     public StorageItemDescriptor getSeedItemDescriptor(GdxScreenCoordinates screenPoint)
@@ -62,6 +67,11 @@ public class SeedView extends Group
         {
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.CORN);
         }
+        
+        if (getBounds(strawberryImage).containsPoint(screenPoint))
+        {
+            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STRAWBERRY);
+        }
 
         return null;
     }
@@ -82,6 +92,9 @@ public class SeedView extends Group
         } else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
         {
             image = cornImage;
+        } else if (StorageItemTypes.STRAWBERRY.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            image = strawberryImage;
         }
 
         if (image == null)
@@ -133,6 +146,16 @@ public class SeedView extends Group
         cornImage.setY(0);
 
         addActor(cornImage);
+    }
+
+    private void createStrawberryImage()
+    {
+        strawberryImage = new Image(ServiceRegistry.getInstance().getTexturesManager()
+                .getTexture(TexturesRegistrar.STORAGE_ITEM_STRAWBERRY));
+        strawberryImage.setX(0);
+        strawberryImage.setY(0);
+
+        addActor(strawberryImage);
     }
 
     private GdxScreenBounds getBounds(Image image)

@@ -45,10 +45,13 @@ public class GrowGardenPlantSimulationProcess implements Simulable
         } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
         {
             stepEverySecondForGrass();
-        }else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
+        } else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
         {
             stepEverySecondForCorn();
-        }    
+        } else if (StorageItemTypes.STRAWBERRY.equals(seedItemDescriptor.getStorageItemType()))
+        {
+            stepEverySecondForStrawberry();
+        }
     }
 
     public int getGardenObjectId()
@@ -115,7 +118,7 @@ public class GrowGardenPlantSimulationProcess implements Simulable
             getGardenCell().setGrassPhase3();
         }
     }
-    
+
     private void stepEverySecondForCorn()
     {
         if (secondsCounter <= 5)
@@ -132,4 +135,22 @@ public class GrowGardenPlantSimulationProcess implements Simulable
             getGardenCell().setCornPhase3();
         }
     }
+
+    private void stepEverySecondForStrawberry()
+    {
+        if (secondsCounter <= 5)
+        {
+            // growing phase 1
+            getGardenCell().setStrawberryPhase1();
+        } else if (secondsCounter <= 10)
+        {
+            // growing phase 2
+            getGardenCell().setStrawberryPhase2();
+        } else
+        {
+            // growing phase 3
+            getGardenCell().setStrawberryPhase3();
+        }
+    }
+
 }
