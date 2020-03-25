@@ -9,6 +9,7 @@ import org.mapeditor.io.TMXMapWriter;
 import com.badlogic.gdx.Gdx;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
@@ -181,6 +182,7 @@ public class GameplayService
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(MapperFeature.AUTO_DETECT_CREATORS, MapperFeature.AUTO_DETECT_FIELDS,
                 MapperFeature.AUTO_DETECT_GETTERS, MapperFeature.AUTO_DETECT_IS_GETTERS);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         return mapper;
     }
