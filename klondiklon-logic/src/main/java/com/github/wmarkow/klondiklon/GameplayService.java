@@ -23,7 +23,7 @@ public class GameplayService
 {
     private WorldsManager worldsManager = new WorldsManager();
     private Player player;
-    private Warehouse warehouse = new Warehouse();
+    private Warehouse warehouse;
     private Simulation simulation;
     private KKMapIf currentWorldMap;
 
@@ -42,7 +42,7 @@ public class GameplayService
     {
         return warehouse;
     }
-    
+
     public boolean simulateStep(long currentSimulationTimeInMillis)
     {
         return simulation.simulateStep(currentSimulationTimeInMillis);
@@ -54,8 +54,8 @@ public class GameplayService
         worldsManager.copyHomeWorldFromClasspathToInternal(false);
         currentWorldMap = worldsManager.readHomeWorld();
 
-        // load player
         player = loadPlayer();
+        warehouse = loadWarehouse();
 
         // load simulation
         loadSimulation();
@@ -77,8 +77,8 @@ public class GameplayService
             e.printStackTrace();
         }
 
-        // save player
         savePlayer(player);
+        saveWarehouse(warehouse);
 
         // save simulation
     }
@@ -116,12 +116,7 @@ public class GameplayService
 
     private void savePlayer(Player player)
     {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(MapperFeature.AUTO_DETECT_CREATORS, MapperFeature.AUTO_DETECT_FIELDS,
-                MapperFeature.AUTO_DETECT_GETTERS, MapperFeature.AUTO_DETECT_IS_GETTERS);
-        // // if you want to prevent an exception when classes have no annotated
-        // properties
-        // mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        ObjectMapper mapper = createObjectMapper();
 
         String filePath = Gdx.files.getLocalStoragePath() + "/player.json";
         try
@@ -135,7 +130,7 @@ public class GameplayService
 
     private Player loadPlayer()
     {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = createObjectMapper();
 
         String filePath = Gdx.files.getLocalStoragePath() + "/player.json";
 
@@ -149,5 +144,44 @@ public class GameplayService
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private void saveWarehouse(Warehouse warehouse)
+    {
+        ObjectMapper mapper = createObjectMapper();
+
+        String filePath = Gdx.files.getLocalStoragePath() + "/warehouse.json";
+
+        try
+        {
+            mapper.writeValue(new File(filePath), warehouse);
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Warehouse loadWarehouse()
+    {
+        ObjectMapper mapper = createObjectMapper();
+
+        String filePath = Gdx.files.getLocalStoragePath() + "/warehouse.json";
+
+        try
+        {
+            return mapper.readValue(new File(filePath), Warehouse.class);
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private ObjectMapper createObjectMapper()
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.AUTO_DETECT_CREATORS, MapperFeature.AUTO_DETECT_FIELDS,
+                MapperFeature.AUTO_DETECT_GETTERS, MapperFeature.AUTO_DETECT_IS_GETTERS);
+
+        return mapper;
     }
 }

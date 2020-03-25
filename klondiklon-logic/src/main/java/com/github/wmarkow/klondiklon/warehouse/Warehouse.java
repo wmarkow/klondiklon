@@ -5,19 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
 public class Warehouse
 {
-    private Map<String, Integer> warehouse = new HashMap<String, Integer>();
+    @JsonProperty("items")
+    private Map<String, Integer> items = new HashMap<String, Integer>();
 
     public synchronized int getItemQuantity(StorageItemDescriptor descriptor)
     {
         String storageItemType = descriptor.getStorageItemType();
 
-        if (warehouse.containsKey(storageItemType))
+        if (items.containsKey(storageItemType))
         {
-            return warehouse.get(storageItemType);
+            return items.get(storageItemType);
         }
 
         return 0;
@@ -26,9 +28,9 @@ public class Warehouse
     public synchronized List<WarehouseItemQuantity> getWarehouseItemQuantities()
     {
         List<WarehouseItemQuantity> result = new ArrayList<WarehouseItemQuantity>();
-        for (String storageItemType : warehouse.keySet())
+        for (String storageItemType : items.keySet())
         {
-            int quantity = warehouse.get(storageItemType);
+            int quantity = items.get(storageItemType);
             result.add(new WarehouseItemQuantity(storageItemType, quantity));
         }
 
@@ -44,15 +46,15 @@ public class Warehouse
 
         String storageItemType = descriptor.getStorageItemType();
 
-        if (warehouse.containsKey(storageItemType))
+        if (items.containsKey(storageItemType))
         {
-            int current = warehouse.get(storageItemType);
+            int current = items.get(storageItemType);
 
-            warehouse.put(storageItemType, current + deltaQuantity);
+            items.put(storageItemType, current + deltaQuantity);
 
             return;
         }
 
-        warehouse.put(storageItemType, deltaQuantity);
+        items.put(storageItemType, deltaQuantity);
     }
 }
