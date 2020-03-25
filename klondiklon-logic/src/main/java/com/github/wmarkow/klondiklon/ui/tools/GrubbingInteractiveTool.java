@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
@@ -19,7 +18,6 @@ import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
@@ -28,7 +26,6 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
-import com.github.wmarkow.klondiklon.ui.views.ProfitView;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class GrubbingInteractiveTool implements EventSubscriber
@@ -271,7 +268,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
             map.removeObject(objectToGrubb);
 
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
-            addGrubbingProfit(Klondiklon.warehouse, descriptor.getGrubbingProfits());
+            addGrubbingProfit(Klondiklon.gameplayService.getWarehouse(), descriptor.getGrubbingProfits());
 
             CoordinateCalculator cc = new CoordinateCalculator();
             GdxScreenCoordinates start = cc.world2Screen(camera,

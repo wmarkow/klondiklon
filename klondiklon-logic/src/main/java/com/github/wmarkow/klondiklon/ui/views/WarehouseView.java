@@ -63,7 +63,8 @@ public class WarehouseView extends Container<Table>
         itemsTable.setFillParent(false);
 
         int index = 0;
-        for (WarehouseItemQuantity itemQuantity : Klondiklon.warehouse.getWarehouseItemQuantities())
+        for (WarehouseItemQuantity itemQuantity : Klondiklon.gameplayService.getWarehouse()
+                .getWarehouseItemQuantities())
         {
             if (index % 5 == 0)
             {

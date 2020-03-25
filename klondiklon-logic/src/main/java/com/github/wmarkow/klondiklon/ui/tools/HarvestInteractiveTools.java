@@ -139,7 +139,7 @@ public class HarvestInteractiveTools implements EventSubscriber
 
         Set<GrubbingProfit> profit = gardenToSickle.sickleIt();
         Klondiklon.gameplayService.stopGardenSimulation(gardenToSickle.getId());
-        addSickleProfit(Klondiklon.warehouse, profit);
+        addSickleProfit(Klondiklon.gameplayService.getWarehouse(), profit);
 
         Klondiklon.ui.showProfitView(profit, screenCoordinates);
         ServiceRegistry.getInstance().getSoundManager().GARDEN_HARVEST.play();

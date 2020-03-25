@@ -7,26 +7,23 @@ import java.time.Instant;
 import org.mapeditor.io.TMXMapWriter;
 
 import com.badlogic.gdx.Gdx;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
-import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
-import com.github.wmarkow.klondiklon.objects.ObjectTypes;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulable;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.GrowGardenPlantSimulationProcess;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
+import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class GameplayService
 {
     private WorldsManager worldsManager = new WorldsManager();
     private Player player;
+    private Warehouse warehouse = new Warehouse();
     private Simulation simulation;
     private KKMapIf currentWorldMap;
 
@@ -41,6 +38,11 @@ public class GameplayService
         return player;
     }
 
+    public Warehouse getWarehouse()
+    {
+        return warehouse;
+    }
+    
     public boolean simulateStep(long currentSimulationTimeInMillis)
     {
         return simulation.simulateStep(currentSimulationTimeInMillis);
