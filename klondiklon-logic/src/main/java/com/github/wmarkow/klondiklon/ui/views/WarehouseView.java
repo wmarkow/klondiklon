@@ -15,6 +15,7 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
+import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.ui.widgets.WarehouseItemWidget;
 import com.github.wmarkow.klondiklon.warehouse.WarehouseItemQuantity;
 
@@ -70,7 +71,11 @@ public class WarehouseView extends Container<Table>
             {
                 itemsTable.row();
             }
-            WarehouseItemWidget warehouseItemWidget = new WarehouseItemWidget(itemQuantity);
+
+            StorageItemDescriptor storageItemDescriptor = Klondiklon.storageItemDescriptorsManager
+                    .getByType(itemQuantity.getStorageItemType());
+            WarehouseItemWidget warehouseItemWidget = new WarehouseItemWidget(storageItemDescriptor,
+                    itemQuantity.getQuantity());
             itemsTable.add(warehouseItemWidget).pad(5.0f);
 
             index++;

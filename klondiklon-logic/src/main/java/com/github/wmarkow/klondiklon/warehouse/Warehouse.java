@@ -9,13 +9,15 @@ import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 
 public class Warehouse
 {
-    private Map<StorageItemDescriptor, Integer> warehouse = new HashMap<StorageItemDescriptor, Integer>();
+    private Map<String, Integer> warehouse = new HashMap<String, Integer>();
 
     public synchronized int getItemQuantity(StorageItemDescriptor descriptor)
     {
-        if (warehouse.containsKey(descriptor))
+        String storageItemType = descriptor.getStorageItemType();
+
+        if (warehouse.containsKey(storageItemType))
         {
-            return warehouse.get(descriptor);
+            return warehouse.get(storageItemType);
         }
 
         return 0;
@@ -24,10 +26,10 @@ public class Warehouse
     public synchronized List<WarehouseItemQuantity> getWarehouseItemQuantities()
     {
         List<WarehouseItemQuantity> result = new ArrayList<WarehouseItemQuantity>();
-        for (StorageItemDescriptor descriptor : warehouse.keySet())
+        for (String storageItemType : warehouse.keySet())
         {
-            int quantity = warehouse.get(descriptor);
-            result.add(new WarehouseItemQuantity(descriptor, quantity));
+            int quantity = warehouse.get(storageItemType);
+            result.add(new WarehouseItemQuantity(storageItemType, quantity));
         }
 
         return result;
@@ -40,15 +42,17 @@ public class Warehouse
             throw new IllegalArgumentException("Quantity may not be negative");
         }
 
-        if (warehouse.containsKey(descriptor))
-        {
-            int current = warehouse.get(descriptor);
+        String storageItemType = descriptor.getStorageItemType();
 
-            warehouse.put(descriptor, current + deltaQuantity);
+        if (warehouse.containsKey(storageItemType))
+        {
+            int current = warehouse.get(storageItemType);
+
+            warehouse.put(storageItemType, current + deltaQuantity);
 
             return;
         }
 
-        warehouse.put(descriptor, deltaQuantity);
+        warehouse.put(storageItemType, deltaQuantity);
     }
 }

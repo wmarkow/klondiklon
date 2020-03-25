@@ -1,24 +1,22 @@
 package com.github.wmarkow.klondiklon.warehouse;
 
-import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
-
 public class WarehouseItemQuantity
 {
-    private StorageItemDescriptor storageItemDescriptor;
+    private String storageItemType;
     private int quantity;
 
-    public WarehouseItemQuantity(StorageItemDescriptor storageItemDescriptor, int quantity) {
-        if (storageItemDescriptor == null)
+    public WarehouseItemQuantity(String storageItemType, int quantity) {
+        if (storageItemType == null)
         {
-            throw new IllegalArgumentException("StorageItemDescriptor must not be null.");
+            throw new IllegalArgumentException("StorageItemType must not be null.");
         }
-        this.storageItemDescriptor = storageItemDescriptor;
+        this.storageItemType = storageItemType;
         this.quantity = quantity;
     }
 
-    public StorageItemDescriptor getStorageItemDescriptor()
+    public String getStorageItemType()
     {
-        return storageItemDescriptor;
+        return storageItemType;
     }
 
     public int getQuantity()
