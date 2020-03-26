@@ -79,6 +79,7 @@ public class GameplayService
 
         // load simulation
         simulation = loadSimulation();
+        simulation.catchUp(Instant.now().toEpochMilli());
     }
 
     public void saveGameContext()

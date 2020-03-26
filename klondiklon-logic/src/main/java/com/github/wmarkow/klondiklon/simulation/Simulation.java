@@ -21,7 +21,7 @@ public class Simulation
     Simulation() {
         // default package protected constructor for deserialisation
     }
-    
+
     public Simulation(long lastSimulationTimeInMillis) {
         this.lastSimulationTimeInMillis = lastSimulationTimeInMillis;
     }
@@ -76,4 +76,21 @@ public class Simulation
         {});
     }
 
+    /***
+     * Catch up with the simulation until currentSimulationTimeInMillis is met.
+     * 
+     * @param currentSimulationTimeInMillis
+     */
+    public void catchUp(long currentSimulationTimeInMillis)
+    {
+        LOGGER.info(String.format("Catch up with the simulation starting with %s ms until %s ms is met", lastSimulationTimeInMillis,
+                currentSimulationTimeInMillis));
+        while (lastSimulationTimeInMillis < currentSimulationTimeInMillis)
+        {
+            lastSimulationTimeInMillis += 1000;
+            simulateStep(lastSimulationTimeInMillis);
+        }
+        
+        LOGGER.info(String.format("Catch up with the simulation finished."));
+    }
 }
