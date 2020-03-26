@@ -2,7 +2,7 @@ package com.github.wmarkow.klondiklon.player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.wmarkow.klondiklon.event.EventBus;
-import com.github.wmarkow.klondiklon.events.PlayerEnergyChangedEvent;
+import com.github.wmarkow.klondiklon.event.events.PlayerEnergyChangedEvent;
 
 public class Player
 {

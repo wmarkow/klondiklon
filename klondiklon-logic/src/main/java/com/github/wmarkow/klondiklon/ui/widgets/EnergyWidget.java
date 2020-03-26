@@ -13,7 +13,7 @@ import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.event.EventSubscriber;
-import com.github.wmarkow.klondiklon.events.PlayerEnergyChangedEvent;
+import com.github.wmarkow.klondiklon.event.events.PlayerEnergyChangedEvent;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 
 public class EnergyWidget extends Stack

@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.events;
+package com.github.wmarkow.klondiklon.event.events;
 
 import com.github.wmarkow.klondiklon.event.Event;
 
