@@ -15,13 +15,13 @@ public class GrowGardenPlantSimulationProcess implements Simulable
 
     private int secondsCounter;
     private int gardenObjectId;
-    private StorageItemDescriptor seedItemDescriptor;
+    private String storageItemType;
     private KKMapIf map;
 
-    public GrowGardenPlantSimulationProcess(int gardenObjectId, StorageItemDescriptor seedItemDescriptor, KKMapIf map) {
+    public GrowGardenPlantSimulationProcess(int gardenObjectId, String storageItemType, KKMapIf map) {
         this.gardenObjectId = gardenObjectId;
         this.secondsCounter = 0;
-        this.seedItemDescriptor = seedItemDescriptor;
+        this.storageItemType = storageItemType;
         this.map = map;
     }
 
@@ -36,19 +36,19 @@ public class GrowGardenPlantSimulationProcess implements Simulable
     {
         secondsCounter++;
 
-        if (StorageItemTypes.BEAN.equals(seedItemDescriptor.getStorageItemType()))
+        if (StorageItemTypes.BEAN.equals(storageItemType))
         {
             stepEverySecondForBean();
-        } else if (StorageItemTypes.WHEAT.equals(seedItemDescriptor.getStorageItemType()))
+        } else if (StorageItemTypes.WHEAT.equals(storageItemType))
         {
             stepEverySecondForWheat();
-        } else if (StorageItemTypes.GRASS.equals(seedItemDescriptor.getStorageItemType()))
+        } else if (StorageItemTypes.GRASS.equals(storageItemType))
         {
             stepEverySecondForGrass();
-        } else if (StorageItemTypes.CORN.equals(seedItemDescriptor.getStorageItemType()))
+        } else if (StorageItemTypes.CORN.equals(storageItemType))
         {
             stepEverySecondForCorn();
-        } else if (StorageItemTypes.STRAWBERRY.equals(seedItemDescriptor.getStorageItemType()))
+        } else if (StorageItemTypes.STRAWBERRY.equals(storageItemType))
         {
             stepEverySecondForStrawberry();
         }

@@ -104,7 +104,8 @@ public class GameplayService
 
     public void addGardenSimulation(int gardenId, StorageItemDescriptor seedItemDescriptor)
     {
-        simulation.addSimulable(new GrowGardenPlantSimulationProcess(gardenId, seedItemDescriptor, currentWorldMap));
+        simulation.addSimulable(new GrowGardenPlantSimulationProcess(gardenId, seedItemDescriptor.getStorageItemType(),
+                currentWorldMap));
     }
 
     public void stopGardenSimulation(int gardenId)
@@ -197,13 +198,13 @@ public class GameplayService
             throw new RuntimeException(e);
         }
     }
-    
+
     private Simulation loadSimulation()
     {
-//        long epochMilli = Instant.now().toEpochMilli();
-//        simulation = new Simulation(epochMilli);
-//        simulation.addSimulable(new RestoreEnergySimulationProcess(player));
-        
+        // long epochMilli = Instant.now().toEpochMilli();
+        // simulation = new Simulation(epochMilli);
+        // simulation.addSimulable(new RestoreEnergySimulationProcess(player));
+
         ObjectMapper mapper = createObjectMapper();
 
         String filePath = Gdx.files.getLocalStoragePath() + "/simulation.json";
@@ -216,7 +217,7 @@ public class GameplayService
             throw new RuntimeException(e);
         }
     }
-    
+
     private ObjectMapper createObjectMapper()
     {
         ObjectMapper mapper = new CustomObjectMapper();
@@ -247,7 +248,7 @@ public class GameplayService
             {
                 ((Player) result).setEventBus(ServiceRegistry.getInstance().getEventBus());
             }
-            if(result instanceof RestoreEnergySimulationProcess)
+            if (result instanceof RestoreEnergySimulationProcess)
             {
                 ((RestoreEnergySimulationProcess) result).setPlayer(player);
             }
@@ -255,7 +256,7 @@ public class GameplayService
             return result;
         }
     }
-    
+
     private class CustomObjectMapper extends ObjectMapper
     {
         private static final long serialVersionUID = 7862801075351651020L;
