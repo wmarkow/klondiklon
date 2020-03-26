@@ -83,14 +83,16 @@ public class Simulation
      */
     public void catchUp(long currentSimulationTimeInMillis)
     {
-        LOGGER.info(String.format("Catch up with the simulation starting with %s ms until %s ms is met", lastSimulationTimeInMillis,
-                currentSimulationTimeInMillis));
-        while (lastSimulationTimeInMillis < currentSimulationTimeInMillis)
+        LOGGER.info(String.format("Catch up with the simulation starting with %s ms until %s ms is met",
+                lastSimulationTimeInMillis, currentSimulationTimeInMillis));
+
+        long simulationCatchUpTimeInMillis = lastSimulationTimeInMillis;
+        while (simulationCatchUpTimeInMillis < currentSimulationTimeInMillis)
         {
-            lastSimulationTimeInMillis += 1000;
-            simulateStep(lastSimulationTimeInMillis);
+            simulationCatchUpTimeInMillis += 1000;
+            simulateStep(simulationCatchUpTimeInMillis);
         }
-        
+
         LOGGER.info(String.format("Catch up with the simulation finished."));
     }
 }
