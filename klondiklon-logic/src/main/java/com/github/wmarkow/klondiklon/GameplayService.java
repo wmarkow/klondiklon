@@ -253,6 +253,10 @@ public class GameplayService
             {
                 ((RestoreEnergySimulationProcess) result).setPlayer(player);
             }
+            if (result instanceof GrowGardenPlantSimulationProcess)
+            {
+                ((GrowGardenPlantSimulationProcess) result).setMap(currentWorldMap);
+            }
 
             return result;
         }
