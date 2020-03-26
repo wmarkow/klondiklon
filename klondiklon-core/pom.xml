@@ -12,6 +12,11 @@
 	</parent>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.github.wmarkow.klondiklon</groupId>
+			<artifactId>klondiklon-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
@@ -24,7 +29,7 @@
 			<artifactId>gdx-box2d</artifactId>
 			<version>${gdxVersion}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-freetype</artifactId>
