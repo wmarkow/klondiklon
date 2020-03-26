@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>klondiklon-domain</module>
 		<module>klondiklon-core</module>
 		<module>klondiklon-desktop</module>
 		<module>klondiklon-logic</module>
