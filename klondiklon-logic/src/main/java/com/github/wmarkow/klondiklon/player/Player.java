@@ -1,12 +1,9 @@
 package com.github.wmarkow.klondiklon.player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.wmarkow.klondiklon.PlayerConverter;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.events.PlayerEnergyChangedEvent;
 
-//@JsonDeserialize(converter = PlayerConverter.class)
 public class Player
 {
     private final static int MAX_RESTORABLE_ENERGY = 1000;
@@ -16,7 +13,6 @@ public class Player
 
     Player() {
         // default package protected constructor for deserialisation
-        System.out.println("player ctor");
     }
 
     public Player(EventBus eventBus) {
@@ -27,7 +23,7 @@ public class Player
     {
         this.eventBus = eventBus;
     }
-    
+
     public int getEnergy()
     {
         return energy;

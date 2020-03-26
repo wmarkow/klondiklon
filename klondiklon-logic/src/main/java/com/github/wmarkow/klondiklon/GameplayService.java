@@ -13,9 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.BeanDescription;
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -24,18 +22,13 @@ import com.fasterxml.jackson.databind.PropertyMetadata;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.cfg.DeserializerFactoryConfig;
 import com.fasterxml.jackson.databind.deser.BeanDeserializer;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerBase;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerBuilder;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.deser.DefaultDeserializationContext;
 import com.fasterxml.jackson.databind.deser.SettableBeanProperty;
 import com.fasterxml.jackson.databind.deser.impl.BeanPropertyMap;
 import com.fasterxml.jackson.databind.deser.impl.ObjectIdValueProperty;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
-import com.fasterxml.jackson.databind.util.StdConverter;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
@@ -157,16 +150,6 @@ public class GameplayService
     private Player loadPlayer()
     {
         ObjectMapper mapper = createObjectMapper();
-        // SimpleModule module = new SimpleModule("PlayerDeserializer", new Version(1,
-        // 0, 0, null, null, null));
-        // module.setDeserializerModifier(new KKBeanDeserializerModifier());
-
-        // module.addDeserializer(Player.class, new PlayerDeserializer());
-        // module.setDeserializerModifier(mod)
-        // mapper.registerModule(module)
-        // module.addValueInstantiator(Player.class, inst)
-        // mapper.registerModule(module);
-
         String filePath = Gdx.files.getLocalStoragePath() + "/player.json";
 
         try
@@ -218,6 +201,31 @@ public class GameplayService
         return mapper;
     }
 
+    private class KKBeanDeserializer extends BeanDeserializer
+    {
+        private static final long serialVersionUID = -3404540800090973705L;
+
+        public KKBeanDeserializer(BeanDeserializerBuilder builder, BeanDescription beanDesc, BeanPropertyMap properties,
+                Map<String, SettableBeanProperty> backRefs, HashSet<String> ignorableProps, boolean ignoreAllUnknown,
+                boolean hasViews) {
+            super(builder, beanDesc, properties, backRefs, ignorableProps, ignoreAllUnknown, hasViews);
+        }
+
+        @Override
+        public java.lang.Object deserialize(JsonParser p, DeserializationContext ctxt)
+                throws IOException, JsonProcessingException
+        {
+            Object result = super.deserialize(p, ctxt);
+
+            if (result instanceof Player)
+            {
+                ((Player) result).setEventBus(ServiceRegistry.getInstance().getEventBus());
+            }
+
+            return result;
+        }
+    }
+    
     private class CustomObjectMapper extends ObjectMapper
     {
         private static final long serialVersionUID = 7862801075351651020L;
@@ -296,42 +304,4 @@ public class GameplayService
                     _ignoreAllUnknown, anyViews);
         }
     }
-
-    private class KKBeanDeserializer extends BeanDeserializer
-    {
-        private static final long serialVersionUID = -3404540800090973705L;
-
-        public KKBeanDeserializer(BeanDeserializerBuilder builder, BeanDescription beanDesc, BeanPropertyMap properties,
-                Map<String, SettableBeanProperty> backRefs, HashSet<String> ignorableProps, boolean ignoreAllUnknown,
-                boolean hasViews) {
-            super(builder, beanDesc, properties, backRefs, ignorableProps, ignoreAllUnknown, hasViews);
-        }
-
-        @Override
-        public java.lang.Object deserialize(JsonParser p, DeserializationContext ctxt)
-                throws IOException, JsonProcessingException
-        {
-            Object result = super.deserialize(p, ctxt);
-
-            if (result instanceof Player)
-            {
-                ((Player) result).setEventBus(ServiceRegistry.getInstance().getEventBus());
-            }
-
-            return result;
-        }
-
-    }
-
-    // private class KKBeanDeserializerModifier extends BeanDeserializerModifier
-    // {
-    // @Override
-    // public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config,
-    // BeanDescription beanDesc,
-    // JsonDeserializer<?> deserializer)
-    // {
-    // return new KKBeanDeserializer(deserializer);
-    // }
-    // }
-
 }
