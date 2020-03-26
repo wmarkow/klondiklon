@@ -78,7 +78,7 @@ public class GameplayService
         warehouse = loadWarehouse();
 
         // load simulation
-        loadSimulation();
+        simulation = loadSimulation();
     }
 
     public void saveGameContext()
@@ -99,8 +99,7 @@ public class GameplayService
 
         savePlayer(player);
         saveWarehouse(warehouse);
-
-        // save simulation
+        saveSimulation(simulation);
     }
 
     public void addGardenSimulation(int gardenId, StorageItemDescriptor seedItemDescriptor)
@@ -125,13 +124,6 @@ public class GameplayService
                 return;
             }
         }
-    }
-
-    private void loadSimulation()
-    {
-        long epochMilli = Instant.now().toEpochMilli();
-        simulation = new Simulation(epochMilli);
-        simulation.addSimulable(new RestoreEnergySimulationProcess(player));
     }
 
     private void savePlayer(Player player)
@@ -191,6 +183,40 @@ public class GameplayService
         }
     }
 
+    private void saveSimulation(Simulation simulation)
+    {
+        ObjectMapper mapper = createObjectMapper();
+
+        String filePath = Gdx.files.getLocalStoragePath() + "/simulation.json";
+
+        try
+        {
+            mapper.writeValue(new File(filePath), simulation);
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    private Simulation loadSimulation()
+    {
+//        long epochMilli = Instant.now().toEpochMilli();
+//        simulation = new Simulation(epochMilli);
+//        simulation.addSimulable(new RestoreEnergySimulationProcess(player));
+        
+        ObjectMapper mapper = createObjectMapper();
+
+        String filePath = Gdx.files.getLocalStoragePath() + "/simulation.json";
+
+        try
+        {
+            return mapper.readValue(new File(filePath), Simulation.class);
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+    
     private ObjectMapper createObjectMapper()
     {
         ObjectMapper mapper = new CustomObjectMapper();
@@ -220,6 +246,10 @@ public class GameplayService
             if (result instanceof Player)
             {
                 ((Player) result).setEventBus(ServiceRegistry.getInstance().getEventBus());
+            }
+            if(result instanceof RestoreEnergySimulationProcess)
+            {
+                ((RestoreEnergySimulationProcess) result).setPlayer(player);
             }
 
             return result;

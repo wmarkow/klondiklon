@@ -16,7 +16,16 @@ public class RestoreEnergySimulationProcess implements Simulable
     private Player player;
     private int secondsCounter = 0;
 
+    RestoreEnergySimulationProcess() {
+        // default package protected constructor for deserialisation
+    }
+    
     public RestoreEnergySimulationProcess(Player player) {
+        this.player = player;
+    }
+    
+    public void setPlayer(Player player)
+    {
         this.player = player;
     }
 
