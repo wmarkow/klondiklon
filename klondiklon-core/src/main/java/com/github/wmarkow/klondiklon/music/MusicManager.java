@@ -1,23 +1,24 @@
 package com.github.wmarkow.klondiklon.music;
 
-import com.badlogic.gdx.Gdx;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.audio.Music;
 
 public class MusicManager
 {
-    private Music mainTheme;
+    private Map<String, Music> musics = new HashMap<String, Music>();
 
     public MusicManager() {
     }
 
-    public void init()
+    public void registerMusic(String name, Music music)
     {
-        mainTheme = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.ogg"));
+        musics.put(name, music);
     }
 
-    public void playMainTheme()
+    public Music getMusic(String name)
     {
-        mainTheme.play();
-        mainTheme.setLooping(true);
+        return musics.get(name);
     }
 }

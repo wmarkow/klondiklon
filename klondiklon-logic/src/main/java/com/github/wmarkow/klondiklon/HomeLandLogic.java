@@ -4,6 +4,8 @@ import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
+import com.github.wmarkow.klondiklon.music.MusicManager;
+import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
@@ -72,6 +74,12 @@ public class HomeLandLogic
     {
         TexturesRegistrar registrar = new TexturesRegistrar();
         registrar.register(texturesManager);
+    }
+
+    public void initMusics(MusicManager musicManager)
+    {
+        MusicsRegistrar registrar = new MusicsRegistrar();
+        registrar.register(musicManager);
     }
 
     private ObjectTypeDescriptor createFir()

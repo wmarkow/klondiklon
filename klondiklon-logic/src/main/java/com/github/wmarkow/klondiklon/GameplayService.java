@@ -10,6 +10,7 @@ import java.util.Map;
 import org.mapeditor.io.TMXMapWriter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,6 +35,7 @@ import com.github.wmarkow.klondiklon.jackson.KKBeanDeserializerBuilder;
 import com.github.wmarkow.klondiklon.jackson.KKBeanDeserializerFactory;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
+import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulable;
@@ -127,6 +129,13 @@ public class GameplayService
                 return;
             }
         }
+    }
+
+    public void playMainTheme()
+    {
+        Music mainTheme = ServiceRegistry.getInstance().getMusicManager().getMusic(MusicsRegistrar.MAIN_THEME);
+        mainTheme.play();
+        mainTheme.setLooping(true);
     }
 
     private void savePlayer(Player player)
