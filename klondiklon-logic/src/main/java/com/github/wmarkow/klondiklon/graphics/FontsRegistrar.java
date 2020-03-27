@@ -21,6 +21,6 @@ public class FontsRegistrar
         parameter.color = Color.WHITE;
         BitmapFont font = generator.generateFont(parameter);
 
-        fontsManager.registerFont(GRUBBING_FONT_NAME, font);
+        fontsManager.registerResource(GRUBBING_FONT_NAME, font);
     }
 }

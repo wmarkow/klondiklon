@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
@@ -74,7 +75,7 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic.initSounds(soundManager);
 
         Klondiklon.gameplayService.loadGameContext();
-//        Klondiklon.gameplayService.playMainTheme();
+        // Klondiklon.gameplayService.playMainTheme();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();
@@ -105,7 +106,9 @@ public class HomeLand extends ApplicationAdapter
         renderer.setView(camera);
         renderer.render();
         batch.begin();
-        fontsManager.DEFAULT_FONT.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+
+        BitmapFont font = fontsManager.getResource(FontsManager.DEFAULT_FONT);
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
 
         GdxTouchCoordinates touch = new GdxTouchCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxScreenCoordinates screen = coordinateCalculator.touch2Screen(touch);
@@ -117,18 +120,17 @@ public class HomeLand extends ApplicationAdapter
         TmxIsoCoordinates tmxIso = coordinateCalculator.tmxOrthogonal2TmxIso(currentMap.getHeightInTiles(),
                 currentMap.getTileHeightInPixels(), tmxOrthogonal);
 
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("     Touch (x,y): %s, %s", touch.getX(), touch.getY()), 0,
+        font.draw(batch, String.format("     Touch (x,y): %s, %s", touch.getX(), touch.getY()), 0,
                 Gdx.graphics.getHeight() - 0);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("    Screen (x,y): %s, %s", screen.getX(), screen.getY()),
-                0, Gdx.graphics.getHeight() - 20);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
+        font.draw(batch, String.format("    Screen (x,y): %s, %s", screen.getX(), screen.getY()), 0,
+                Gdx.graphics.getHeight() - 20);
+        font.draw(batch, String.format("       World (x,y): %s, %s", world.x, world.y), 0,
                 Gdx.graphics.getHeight() - 40);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
+        font.draw(batch, String.format(" World iso (x,y): %s, %s", worldIso.x, worldIso.y), 0,
                 Gdx.graphics.getHeight() - 60);
-        fontsManager.DEFAULT_FONT.draw(batch,
-                String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
+        font.draw(batch, String.format("TMX ortho (x,y): %s, %s", tmxOrthogonal.x, tmxOrthogonal.y), 0,
                 Gdx.graphics.getHeight() - 80);
-        fontsManager.DEFAULT_FONT.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
+        font.draw(batch, String.format("    TMX iso (x,y): %s, %s", tmxIso.x, tmxIso.y), 0,
                 Gdx.graphics.getHeight() - 100);
 
         batch.end();

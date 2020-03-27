@@ -1,21 +1,17 @@
 package com.github.wmarkow.klondiklon.resources.graphics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.github.wmarkow.klondiklon.resources.ResourcesManager;
 
-public class ShadersManager
+public class ShadersManager extends ResourcesManager<ShaderProgram>
 {
     public final static String SHADER_OUTLINE = "SHADER_OUTLINE";
     public final static String SHADER_OUTLINE_GREEN = "SHADER_OUTLINE_GREEN";
     public final static String SHADER_OUTLINE_RED = "SHADER_OUTLINE_RED";
-
-    private Map<String, ShaderProgram> shaders = new HashMap<String, ShaderProgram>();
 
     public void init()
     {
@@ -26,25 +22,15 @@ public class ShadersManager
 
         ShaderProgram shaderOutline = new ShaderProgram(vertexShader, fragmentShader);
         configureShader(shaderOutline, new Vector3(0.0f, 1.0f, 1.0f));
-        registerShader(SHADER_OUTLINE, shaderOutline);
+        registerResource(SHADER_OUTLINE, shaderOutline);
 
         ShaderProgram shaderOutlineGreen = new ShaderProgram(vertexShader, fragmentShader);
         configureShader(shaderOutlineGreen, new Vector3(0.0f, 1.0f, 0.0f));
-        registerShader(SHADER_OUTLINE_GREEN, shaderOutlineGreen);
+        registerResource(SHADER_OUTLINE_GREEN, shaderOutlineGreen);
 
         ShaderProgram shaderOutlineRed = new ShaderProgram(vertexShader, fragmentShader);
         configureShader(shaderOutlineRed, new Vector3(1.0f, 0.0f, 0.0f));
-        registerShader(SHADER_OUTLINE_RED, shaderOutlineRed);
-    }
-
-    public void registerShader(String name, ShaderProgram shader)
-    {
-        shaders.put(name, shader);
-    }
-
-    public ShaderProgram getShadere(String name)
-    {
-        return shaders.get(name);
+        registerResource(SHADER_OUTLINE_RED, shaderOutlineRed);
     }
 
     private void configureShader(ShaderProgram shader, Vector3 color)

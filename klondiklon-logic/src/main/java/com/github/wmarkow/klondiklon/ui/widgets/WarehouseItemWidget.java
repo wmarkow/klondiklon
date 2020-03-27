@@ -41,7 +41,7 @@ public class WarehouseItemWidget extends Table
         row();
 
         LabelStyle style = new LabelStyle();
-        style.font = ServiceRegistry.getInstance().getFontsManager().getFont(FontsRegistrar.GRUBBING_FONT_NAME);
+        style.font = ServiceRegistry.getInstance().getFontsManager().getResource(FontsRegistrar.GRUBBING_FONT_NAME);
         style.fontColor = Color.WHITE;
         Label label = new Label(String.valueOf(itemQuantity), style);
         add(label).align(Align.center);

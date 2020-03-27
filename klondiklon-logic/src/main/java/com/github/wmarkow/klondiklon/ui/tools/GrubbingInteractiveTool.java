@@ -246,16 +246,16 @@ public class GrubbingInteractiveTool implements EventSubscriber
         switch (descriptor.getGrubbingType())
         {
             case DIGGING:
-                Sound sound0 = soundManager.getSound(SoundsRegistrar.GRUBBING_DIGGING);
+                Sound sound0 = soundManager.getResource(SoundsRegistrar.GRUBBING_DIGGING);
                 soundPlayer.play(sound0, 1.0f, 1, new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
-                Sound sound1 = soundManager.getSound(SoundsRegistrar.GRUBBING_CHOPPING);
+                Sound sound1 = soundManager.getResource(SoundsRegistrar.GRUBBING_CHOPPING);
                 soundPlayer.play(sound1, 1.0f, 3, new GrubbingSoundPlayerListener());
                 break;
             case MINING:
-                Sound sound2 = soundManager.getSound(SoundsRegistrar.GRUBBING_MINING);
+                Sound sound2 = soundManager.getResource(SoundsRegistrar.GRUBBING_MINING);
                 soundPlayer.play(sound2, 2.5f, 1, new GrubbingSoundPlayerListener());
                 break;
             default:

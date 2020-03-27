@@ -97,13 +97,13 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         if (isSelected())
         {
             ShaderProgram currentShader = batch.getShader();
-            batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE));
+            batch.setShader(shadersManager.getResource(ShadersManager.SHADER_OUTLINE));
             if (selectedGreen)
             {
-                batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE_GREEN));
+                batch.setShader(shadersManager.getResource(ShadersManager.SHADER_OUTLINE_GREEN));
             } else if (selectedRed)
             {
-                batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE_RED));
+                batch.setShader(shadersManager.getResource(ShadersManager.SHADER_OUTLINE_RED));
             }
             drawTextures(batch, layerOpacity, unitScale);
             batch.setShader(currentShader);
@@ -115,7 +115,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         {
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"
-            BitmapFont font = ServiceRegistry.getInstance().getFontsManager().getFont("GRUBBING_FONT");
+            BitmapFont font = ServiceRegistry.getInstance().getFontsManager().getResource("GRUBBING_FONT");
 
             // TODO: not a nice idea to use this font name. It is better to create something
             // like "tooltip provider"

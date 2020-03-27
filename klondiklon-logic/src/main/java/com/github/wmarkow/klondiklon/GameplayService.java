@@ -133,7 +133,7 @@ public class GameplayService
 
     public void playMainTheme()
     {
-        Music mainTheme = ServiceRegistry.getInstance().getMusicManager().getMusic(MusicsRegistrar.MAIN_THEME);
+        Music mainTheme = ServiceRegistry.getInstance().getMusicManager().getResource(MusicsRegistrar.MAIN_THEME);
         mainTheme.play();
         mainTheme.setLooping(true);
     }

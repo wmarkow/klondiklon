@@ -48,7 +48,7 @@ public class WarehouseView extends Container<Table>
 
         table.row();
         LabelStyle style = new LabelStyle();
-        style.font = ServiceRegistry.getInstance().getFontsManager().getFont(FontsRegistrar.GRUBBING_FONT_NAME);
+        style.font = ServiceRegistry.getInstance().getFontsManager().getResource(FontsRegistrar.GRUBBING_FONT_NAME);
         style.fontColor = Color.WHITE;
         Label label = new Label("MAGAZYN", style);
         table.add(label).align(Align.top | Align.center);

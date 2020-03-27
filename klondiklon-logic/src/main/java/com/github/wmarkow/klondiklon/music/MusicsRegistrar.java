@@ -9,6 +9,6 @@ public class MusicsRegistrar
 
     public void register(MusicManager musicManager)
     {
-        musicManager.registerMusic(MAIN_THEME, Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.ogg")));
+        musicManager.registerResource(MAIN_THEME, Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.ogg")));
     }
 }

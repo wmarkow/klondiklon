@@ -55,7 +55,7 @@ public class MainView extends Table
         {
             SkinsManager skinsManager = ServiceRegistry.getInstance().getSkinsManager();
 
-            Skin skin = skinsManager.getSkin(SkinsManager.GLASSY);
+            Skin skin = skinsManager.getResource(SkinsManager.GLASSY);
             EventBus eventBus = ServiceRegistry.getInstance().getEventBus();
             Player player = Klondiklon.gameplayService.getPlayer();
 

@@ -1,22 +1,18 @@
 package com.github.wmarkow.klondiklon.resources.graphics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.github.wmarkow.klondiklon.graphics.Dimension;
+import com.github.wmarkow.klondiklon.resources.ResourcesManager;
 
-public class FontsManager
+public class FontsManager extends ResourcesManager<BitmapFont>
 {
-    public BitmapFont DEFAULT_FONT;
+    public final static String DEFAULT_FONT = "DEFAULT_FONT";
     public final static String POLISH_CHARACTERS = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŻŹaąbcćdeęfghijklłmnńoópqrsśtuvwxyzżź0123456789:";
     private GlyphLayout layout = new GlyphLayout();
-
-    private Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
 
     public void init()
     {
@@ -24,17 +20,9 @@ public class FontsManager
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.characters = POLISH_CHARACTERS;
         parameter.size = 12;
-        DEFAULT_FONT = generator.generateFont(parameter);
-    }
+        BitmapFont font = generator.generateFont(parameter);
 
-    public void registerFont(String name, BitmapFont font)
-    {
-        fonts.put(name, font);
-    }
-
-    public BitmapFont getFont(String name)
-    {
-        return fonts.get(name);
+        this.registerResource(DEFAULT_FONT, font);
     }
 
     public Dimension meassureText(BitmapFont font, String text)

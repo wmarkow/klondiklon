@@ -144,7 +144,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         addSickleProfit(Klondiklon.gameplayService.getWarehouse(), profit);
 
         Klondiklon.ui.showProfitView(profit, screenCoordinates);
-        ServiceRegistry.getInstance().getSoundManager().getSound(SoundsRegistrar.GARDEN_HARVEST).play();
+        ServiceRegistry.getInstance().getSoundManager().getResource(SoundsRegistrar.GARDEN_HARVEST).play();
     }
 
     private GardenCellObject findGardenReadyToSickle(GdxWorldOrthoCoordinates gdxWorldCoordinates)

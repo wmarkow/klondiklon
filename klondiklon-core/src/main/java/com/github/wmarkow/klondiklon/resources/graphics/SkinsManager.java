@@ -1,29 +1,15 @@
 package com.github.wmarkow.klondiklon.resources.graphics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.github.wmarkow.klondiklon.resources.ResourcesManager;
 
-public class SkinsManager
+public class SkinsManager extends ResourcesManager<Skin>
 {
     public final static String GLASSY = "GLASSY";
 
-    private Map<String, Skin> skins = new HashMap<String, Skin>();
-
     public void init()
     {
-        registerSkin(GLASSY, new Skin(Gdx.files.classpath("skins/glassy/skin/glassy-ui.json")));
-    }
-
-    public void registerSkin(String name, Skin skin)
-    {
-        skins.put(name, skin);
-    }
-
-    public Skin getSkin(String name)
-    {
-        return skins.get(name);
+        registerResource(GLASSY, new Skin(Gdx.files.classpath("skins/glassy/skin/glassy-ui.json")));
     }
 }
