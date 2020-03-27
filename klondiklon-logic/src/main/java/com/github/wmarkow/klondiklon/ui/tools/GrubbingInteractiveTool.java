@@ -26,6 +26,7 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.sound.SoundPlayer;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
@@ -45,6 +46,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
     private Long lastGrubbingTimestamp = null;
     private Player player;
     private ObjectTypeDescriptorsManager objectTypesManager;
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
     public GrubbingInteractiveTool(EventBus eventBus, KKMapIf map, Camera camera, Player player,
             ObjectTypeDescriptorsManager objectTypesManager) {
@@ -245,16 +247,16 @@ public class GrubbingInteractiveTool implements EventSubscriber
         {
             case DIGGING:
                 Sound sound0 = soundManager.getSound(SoundsRegistrar.GRUBBING_DIGGING);
-                soundManager.play(sound0, 1.0f, 1, new GrubbingSoundPlayerListener());
+                soundPlayer.play(sound0, 1.0f, 1, new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
                 Sound sound1 = soundManager.getSound(SoundsRegistrar.GRUBBING_CHOPPING);
-                soundManager.play(sound1, 1.0f, 3, new GrubbingSoundPlayerListener());
+                soundPlayer.play(sound1, 1.0f, 3, new GrubbingSoundPlayerListener());
                 break;
             case MINING:
                 Sound sound2 = soundManager.getSound(SoundsRegistrar.GRUBBING_MINING);
-                soundManager.play(sound2, 2.5f, 1, new GrubbingSoundPlayerListener());
+                soundPlayer.play(sound2, 2.5f, 1, new GrubbingSoundPlayerListener());
                 break;
             default:
                 break;

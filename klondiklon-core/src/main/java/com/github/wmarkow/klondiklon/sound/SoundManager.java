@@ -18,17 +18,4 @@ public class SoundManager
     {
         return sounds.get(name);
     }
-
-    // FIXME: this is not wanted here
-    public void play(Sound sound, float soundDurationInSeconds, int playCount)
-    {
-        SoundPlayer soundPlayer = new SoundPlayer();
-        soundPlayer.play(sound, soundDurationInSeconds, playCount);
-    }
-
-    public void play(Sound sound, float soundDurationInSeconds, int playCount, SoundPlayerListener listener)
-    {
-        SoundPlayer soundPlayer = new SoundPlayer();
-        soundPlayer.play(sound, soundDurationInSeconds, playCount, listener);
-    }
 }
