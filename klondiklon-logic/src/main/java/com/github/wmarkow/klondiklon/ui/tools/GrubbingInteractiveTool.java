@@ -7,6 +7,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
@@ -26,6 +27,7 @@ import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
+import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class GrubbingInteractiveTool implements EventSubscriber
@@ -242,14 +244,17 @@ public class GrubbingInteractiveTool implements EventSubscriber
         switch (descriptor.getGrubbingType())
         {
             case DIGGING:
-                soundManager.play(soundManager.GRUBBING_DIGGING, 1.0f, 1, new GrubbingSoundPlayerListener());
+                Sound sound0 = soundManager.getSound(SoundsRegistrar.GRUBBING_DIGGING);
+                soundManager.play(sound0, 1.0f, 1, new GrubbingSoundPlayerListener());
                 break;
             case CHOPPING:
                 // must be played three times
-                soundManager.play(soundManager.GRUBBING_CHOPPING, 1.0f, 3, new GrubbingSoundPlayerListener());
+                Sound sound1 = soundManager.getSound(SoundsRegistrar.GRUBBING_CHOPPING);
+                soundManager.play(sound1, 1.0f, 3, new GrubbingSoundPlayerListener());
                 break;
             case MINING:
-                soundManager.play(soundManager.GRUBBING_MINING, 2.5f, 1, new GrubbingSoundPlayerListener());
+                Sound sound2 = soundManager.getSound(SoundsRegistrar.GRUBBING_MINING);
+                soundManager.play(sound2, 2.5f, 1, new GrubbingSoundPlayerListener());
                 break;
             default:
                 break;

@@ -14,6 +14,8 @@ import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
+import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 
 public class HomeLandLogic
 {
@@ -80,6 +82,12 @@ public class HomeLandLogic
     {
         MusicsRegistrar registrar = new MusicsRegistrar();
         registrar.register(musicManager);
+    }
+    
+    public void initSounds(SoundManager soundManager)
+    {
+        SoundsRegistrar registrar = new SoundsRegistrar();
+        registrar.register(soundManager);
     }
 
     private ObjectTypeDescriptor createFir()

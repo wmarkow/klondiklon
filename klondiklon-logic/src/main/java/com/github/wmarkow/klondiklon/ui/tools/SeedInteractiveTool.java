@@ -20,6 +20,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
+import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.ui.views.SeedView;
 
 public class SeedInteractiveTool implements EventSubscriber
@@ -94,7 +95,7 @@ public class SeedInteractiveTool implements EventSubscriber
         {
             return;
         }
-        
+
         ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
         Klondiklon.ui.hideSeedView();
         seedView = null;
@@ -143,7 +144,7 @@ public class SeedInteractiveTool implements EventSubscriber
         // seed the plant
         int gardenId = gardenToSeed.getId();
         Klondiklon.gameplayService.addGardenSimulation(gardenId, seedItemDescriptor);
-        ServiceRegistry.getInstance().getSoundManager().GARDEN_SEED.play();
+        ServiceRegistry.getInstance().getSoundManager().getSound(SoundsRegistrar.GARDEN_SEED).play();
     }
 
     private GardenCellObject findGardenToSeed(GdxWorldOrthoCoordinates gdxWorldCoordinates)

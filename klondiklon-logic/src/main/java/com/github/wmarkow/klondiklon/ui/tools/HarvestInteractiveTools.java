@@ -5,6 +5,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
@@ -21,6 +22,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.map.objects.GardenCellObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
+import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.ui.views.HarvestView;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
@@ -142,7 +144,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         addSickleProfit(Klondiklon.gameplayService.getWarehouse(), profit);
 
         Klondiklon.ui.showProfitView(profit, screenCoordinates);
-        ServiceRegistry.getInstance().getSoundManager().GARDEN_HARVEST.play();
+        ServiceRegistry.getInstance().getSoundManager().getSound(SoundsRegistrar.GARDEN_HARVEST).play();
     }
 
     private GardenCellObject findGardenReadyToSickle(GdxWorldOrthoCoordinates gdxWorldCoordinates)

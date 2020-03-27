@@ -1,25 +1,25 @@
 package com.github.wmarkow.klondiklon.sound;
 
-import com.badlogic.gdx.Gdx;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager
 {
-    public Sound GRUBBING_CHOPPING;
-    public Sound GRUBBING_DIGGING;
-    public Sound GRUBBING_MINING;
-    public Sound GARDEN_SEED;
-    public Sound GARDEN_HARVEST;
+    private Map<String, Sound> sounds = new HashMap<String, Sound>();
 
-    public void init()
+    public void registerSound(String name, Sound sound)
     {
-        GRUBBING_CHOPPING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_chopping.ogg"));
-        GRUBBING_DIGGING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_digging.ogg"));
-        GRUBBING_MINING = Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_mining.ogg"));
-        GARDEN_SEED = Gdx.audio.newSound(Gdx.files.classpath("sounds/garden_seed.ogg"));
-        GARDEN_HARVEST = Gdx.audio.newSound(Gdx.files.classpath("sounds/garden_harvest.ogg"));
+        sounds.put(name, sound);
     }
 
+    public Sound getSound(String name)
+    {
+        return sounds.get(name);
+    }
+
+    // FIXME: this is not wanted here
     public void play(Sound sound, float soundDurationInSeconds, int playCount)
     {
         SoundPlayer soundPlayer = new SoundPlayer();

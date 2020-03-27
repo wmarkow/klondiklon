@@ -26,6 +26,7 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinate
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.music.MusicManager;
+import com.github.wmarkow.klondiklon.sound.SoundManager;
 import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
@@ -53,6 +54,7 @@ public class HomeLand extends ApplicationAdapter
     private FontsManager fontsManager;
     private TexturesManager texturesManager;
     private MusicManager musicManager;
+    private SoundManager soundManager;
 
     @Override
     public void create()
@@ -61,6 +63,7 @@ public class HomeLand extends ApplicationAdapter
         fontsManager = ServiceRegistry.getInstance().getFontsManager();
         texturesManager = ServiceRegistry.getInstance().getTexturesManager();
         musicManager = ServiceRegistry.getInstance().getMusicManager();
+        soundManager = ServiceRegistry.getInstance().getSoundManager();
 
         homeLandLogic = new HomeLandLogic();
         homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
@@ -68,9 +71,10 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic.initFonts(fontsManager);
         homeLandLogic.initTextures(texturesManager);
         homeLandLogic.initMusics(musicManager);
+        homeLandLogic.initSounds(soundManager);
 
         Klondiklon.gameplayService.loadGameContext();
-        Klondiklon.gameplayService.playMainTheme();
+//        Klondiklon.gameplayService.playMainTheme();
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();

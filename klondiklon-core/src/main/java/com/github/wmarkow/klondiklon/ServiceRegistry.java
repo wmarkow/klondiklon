@@ -69,7 +69,6 @@ public class ServiceRegistry
     private void init()
     {
         texturesManager.init();
-        soundManager.init();
         shadersManager.init();
         fontsManager.init();
         skinsManager.init();
