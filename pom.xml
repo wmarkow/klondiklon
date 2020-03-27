@@ -9,7 +9,7 @@
 
 	<modules>
 		<module>klondiklon-domain</module>
-		<module>klondiklon-core</module>
+		<module>klondiklon-libgdx</module>
 		<module>klondiklon-desktop</module>
 		<module>klondiklon-logic</module>
 		<module>klondiklon-test</module>
