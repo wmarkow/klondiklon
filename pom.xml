@@ -11,7 +11,7 @@
 		<module>klondiklon-domain</module>
 		<module>klondiklon-libgdx</module>
 		<module>klondiklon-desktop</module>
-		<module>klondiklon-logic</module>
+		<module>klondiklon-gameplay</module>
 		<module>klondiklon-test</module>
 	</modules>
 
