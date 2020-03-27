@@ -2,6 +2,7 @@ package com.github.wmarkow.klondiklon.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
 
 public class TexturesRegistrar
 {

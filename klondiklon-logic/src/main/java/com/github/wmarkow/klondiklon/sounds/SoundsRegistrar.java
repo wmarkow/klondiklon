@@ -1,7 +1,7 @@
 package com.github.wmarkow.klondiklon.sounds;
 
 import com.badlogic.gdx.Gdx;
-import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
 
 public class SoundsRegistrar
 {

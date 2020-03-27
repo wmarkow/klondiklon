@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.graphics;
+package com.github.wmarkow.klondiklon.resources.graphics;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.github.wmarkow.klondiklon.graphics.Dimension;
 
 public class FontsManager
 {

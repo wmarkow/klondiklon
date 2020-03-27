@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.sound;
+package com.github.wmarkow.klondiklon.resources.sound;
 
 import java.util.HashMap;
 import java.util.Map;

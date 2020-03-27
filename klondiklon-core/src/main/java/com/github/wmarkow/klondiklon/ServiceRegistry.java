@@ -1,13 +1,13 @@
 package com.github.wmarkow.klondiklon;
 
 import com.github.wmarkow.klondiklon.event.EventBus;
-import com.github.wmarkow.klondiklon.graphics.FontsManager;
-import com.github.wmarkow.klondiklon.graphics.ShadersManager;
-import com.github.wmarkow.klondiklon.graphics.SkinsManager;
-import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
-import com.github.wmarkow.klondiklon.music.MusicManager;
-import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
+import com.github.wmarkow.klondiklon.resources.graphics.ShadersManager;
+import com.github.wmarkow.klondiklon.resources.graphics.SkinsManager;
+import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
+import com.github.wmarkow.klondiklon.resources.music.MusicManager;
+import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
 
 public class ServiceRegistry
 {

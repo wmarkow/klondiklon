@@ -25,7 +25,7 @@ import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.player.Player;
-import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sound.SoundPlayer;
 import com.github.wmarkow.klondiklon.sound.SoundPlayerListener;
 import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;

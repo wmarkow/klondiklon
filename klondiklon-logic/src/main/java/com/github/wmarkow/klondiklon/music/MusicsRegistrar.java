@@ -1,6 +1,7 @@
 package com.github.wmarkow.klondiklon.music;
 
 import com.badlogic.gdx.Gdx;
+import com.github.wmarkow.klondiklon.resources.music.MusicManager;
 
 public class MusicsRegistrar
 {

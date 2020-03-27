@@ -14,9 +14,9 @@ import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
-import com.github.wmarkow.klondiklon.graphics.SkinsManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.player.Player;
+import com.github.wmarkow.klondiklon.resources.graphics.SkinsManager;
 import com.github.wmarkow.klondiklon.ui.widgets.EnergyWidget;
 
 public class MainView extends Table

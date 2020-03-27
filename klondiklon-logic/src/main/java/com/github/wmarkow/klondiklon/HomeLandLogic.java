@@ -1,10 +1,7 @@
 package com.github.wmarkow.klondiklon;
 
-import com.github.wmarkow.klondiklon.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
-import com.github.wmarkow.klondiklon.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
-import com.github.wmarkow.klondiklon.music.MusicManager;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.GrubbingType;
@@ -14,7 +11,10 @@ import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
-import com.github.wmarkow.klondiklon.sound.SoundManager;
+import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
+import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
+import com.github.wmarkow.klondiklon.resources.music.MusicManager;
+import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 
 public class HomeLandLogic

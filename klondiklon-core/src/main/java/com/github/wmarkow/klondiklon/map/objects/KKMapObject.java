@@ -12,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
-import com.github.wmarkow.klondiklon.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.map.VerticesCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
+import com.github.wmarkow.klondiklon.resources.graphics.ShadersManager;
 
 public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
 {

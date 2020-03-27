@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.graphics;
+package com.github.wmarkow.klondiklon.resources.graphics;
 
 import java.util.HashMap;
 import java.util.Map;
