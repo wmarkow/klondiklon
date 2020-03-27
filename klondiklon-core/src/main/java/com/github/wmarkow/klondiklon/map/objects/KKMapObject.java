@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
+import com.github.wmarkow.klondiklon.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.map.VerticesCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 
@@ -92,16 +93,17 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
     @Override
     public void draw(Batch batch, float layerOpacity, float unitScale)
     {
+        ShadersManager shadersManager = ServiceRegistry.getInstance().getShadersManager();
         if (isSelected())
         {
             ShaderProgram currentShader = batch.getShader();
-            batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE);
+            batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE));
             if (selectedGreen)
             {
-                batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_GREEN);
+                batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE_GREEN));
             } else if (selectedRed)
             {
-                batch.setShader(ServiceRegistry.getInstance().getShadersManager().SHADER_OUTLINE_RED);
+                batch.setShader(shadersManager.getShadere(ShadersManager.SHADER_OUTLINE_RED));
             }
             drawTextures(batch, layerOpacity, unitScale);
             batch.setShader(currentShader);
@@ -186,7 +188,7 @@ public class KKMapObject extends TiledMapTileMapObject implements KKMapObjectIf
         return id;
     }
 
-    protected void drawTextures(Batch batch,  float layerOpacity, float unitScale)
+    protected void drawTextures(Batch batch, float layerOpacity, float unitScale)
     {
         drawTexture(batch, getTextureRegion(), layerOpacity, unitScale);
     }
