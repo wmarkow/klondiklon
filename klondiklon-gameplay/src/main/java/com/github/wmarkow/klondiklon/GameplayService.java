@@ -154,11 +154,16 @@ public class GameplayService
     private Player loadPlayer()
     {
         ObjectMapper mapper = new KKObjectMapper();
-        String filePath = Gdx.files.getLocalStoragePath() + "/player.json";
+        File file = new File(Gdx.files.getLocalStoragePath() + "/player.json");
+
+        if (!file.exists())
+        {
+            return new Player(ServiceRegistry.getInstance().getEventBus());
+        }
 
         try
         {
-            return mapper.readValue(new File(filePath), Player.class);
+            return mapper.readValue(file, Player.class);
         } catch (IOException e)
         {
             throw new RuntimeException(e);
@@ -168,7 +173,6 @@ public class GameplayService
     private void saveWarehouse(Warehouse warehouse)
     {
         ObjectMapper mapper = new KKObjectMapper();
-
         String filePath = Gdx.files.getLocalStoragePath() + "/warehouse.json";
 
         try
@@ -183,12 +187,16 @@ public class GameplayService
     private Warehouse loadWarehouse()
     {
         ObjectMapper mapper = new KKObjectMapper();
+        File file = new File(Gdx.files.getLocalStoragePath() + "/warehouse.json");
 
-        String filePath = Gdx.files.getLocalStoragePath() + "/warehouse.json";
+        if (!file.exists())
+        {
+            return new Warehouse();
+        }
 
         try
         {
-            return mapper.readValue(new File(filePath), Warehouse.class);
+            return mapper.readValue(file, Warehouse.class);
         } catch (IOException e)
         {
             throw new RuntimeException(e);
@@ -213,12 +221,19 @@ public class GameplayService
     private Simulation loadSimulation()
     {
         ObjectMapper mapper = new KKObjectMapper();
+        File file = new File(Gdx.files.getLocalStoragePath() + "/simulation.json");
 
-        String filePath = Gdx.files.getLocalStoragePath() + "/simulation.json";
+        if (!file.exists())
+        {
+            Simulation simulation = new Simulation(Instant.now().toEpochMilli());
+            simulation.addSimulable(new RestoreEnergySimulationProcess(player));
+
+            return simulation;
+        }
 
         try
         {
-            return mapper.readValue(new File(filePath), Simulation.class);
+            return mapper.readValue(file, Simulation.class);
         } catch (IOException e)
         {
             throw new RuntimeException(e);
