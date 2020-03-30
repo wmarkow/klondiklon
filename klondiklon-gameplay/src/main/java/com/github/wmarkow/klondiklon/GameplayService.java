@@ -3,36 +3,12 @@ package com.github.wmarkow.klondiklon;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
 
 import org.mapeditor.io.TMXMapWriter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.BeanDescription;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyMetadata;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.cfg.DeserializerFactoryConfig;
-import com.fasterxml.jackson.databind.deser.BeanDeserializer;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerBuilder;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
-import com.fasterxml.jackson.databind.deser.DefaultDeserializationContext;
-import com.fasterxml.jackson.databind.deser.SettableBeanProperty;
-import com.fasterxml.jackson.databind.deser.impl.BeanPropertyMap;
-import com.fasterxml.jackson.databind.deser.impl.ObjectIdValueProperty;
-import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
-import com.github.wmarkow.klondiklon.jackson.KKBeanDeserializer;
-import com.github.wmarkow.klondiklon.jackson.KKBeanDeserializerBuilder;
-import com.github.wmarkow.klondiklon.jackson.KKBeanDeserializerFactory;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
@@ -75,10 +51,7 @@ public class GameplayService
 
     public void loadGameContext()
     {
-        // load world
-        worldsManager.copyHomeWorldFromClasspathToInternal(false);
-        currentWorldMap = worldsManager.readHomeWorld();
-
+        currentWorldMap = worldsManager.loadWorld();
         player = loadPlayer();
         warehouse = loadWarehouse();
         simulation = loadSimulation();

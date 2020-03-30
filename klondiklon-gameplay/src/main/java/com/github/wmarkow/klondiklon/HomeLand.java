@@ -67,8 +67,6 @@ public class HomeLand extends ApplicationAdapter
         soundManager = ServiceRegistry.getInstance().getSoundManager();
 
         homeLandLogic = new HomeLandLogic();
-        homeLandLogic.initStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
-        homeLandLogic.initObjectTypeDescriptors(Klondiklon.objectTypeDescriptorsManager);
         homeLandLogic.initFonts(fontsManager);
         homeLandLogic.initTextures(texturesManager);
         homeLandLogic.initMusics(musicManager);

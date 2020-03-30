@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
-import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
@@ -43,57 +43,59 @@ public class GardenCellObject extends KKMapObject
         super(tile, id, objectType);
 
         // TODO: add cache for texture region
+        // FIXME: the texture name should not be accessed directly from
+        // HomeWorldRegistrar class
         Texture textureWheat1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_1);
+                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_1);
         wheatPhase1 = new TextureRegion(textureWheat1);
         Texture textureWheat2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_2);
+                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_2);
         wheatPhase2 = new TextureRegion(textureWheat2);
         Texture textureWheat3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_3);
+                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_3);
         wheatPhase3 = new TextureRegion(textureWheat3);
         Texture textureWheat4 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_WHEAT_GARDEN_4);
+                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_4);
         wheatPhase4 = new TextureRegion(textureWheat4);
 
         Texture textureBean1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_1);
+                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_1);
         beanPhase1 = new TextureRegion(textureBean1);
         Texture textureBean2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_2);
+                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_2);
         beanPhase2 = new TextureRegion(textureBean2);
         Texture textureBean3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_BEAN_GARDEN_3);
+                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_3);
         beanPhase3 = new TextureRegion(textureBean3);
 
         Texture textureGrass1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_GRASS_GARDEN_1);
+                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_1);
         grassPhase1 = new TextureRegion(textureGrass1);
         Texture textureGrass2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_GRASS_GARDEN_2);
+                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_2);
         grassPhase2 = new TextureRegion(textureGrass2);
         Texture textureGrass3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_GRASS_GARDEN_3);
+                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_3);
         grassPhase3 = new TextureRegion(textureGrass3);
 
         Texture textureCorn1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_CORN_GARDEN_1);
+                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_1);
         cornPhase1 = new TextureRegion(textureCorn1);
         Texture textureCorn2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_CORN_GARDEN_2);
+                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_2);
         cornPhase2 = new TextureRegion(textureCorn2);
         Texture textureCorn3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_CORN_GARDEN_3);
+                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_3);
         cornPhase3 = new TextureRegion(textureCorn3);
 
         Texture textureStrawberry1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_1);
+                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_1);
         strawberryPhase1 = new TextureRegion(textureStrawberry1);
         Texture textureStrawberry2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_2);
+                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_2);
         strawberryPhase2 = new TextureRegion(textureStrawberry2);
         Texture textureCStrawberry3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.OBJECT_STRAWBERRY_GARDEN_3);
+                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_3);
         strawberryPhase3 = new TextureRegion(textureCStrawberry3);
     }
 

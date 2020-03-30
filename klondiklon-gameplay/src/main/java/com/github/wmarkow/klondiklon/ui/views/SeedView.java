@@ -2,6 +2,7 @@ package com.github.wmarkow.klondiklon.ui.views;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
 import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
@@ -67,7 +68,7 @@ public class SeedView extends Group
         {
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.CORN);
         }
-        
+
         if (getBounds(strawberryImage).containsPoint(screenPoint))
         {
             return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STRAWBERRY);
@@ -110,8 +111,10 @@ public class SeedView extends Group
 
     private void createWheatImage()
     {
+        // FIXME: the texture name should not be accessed directly from
+        // HomeWorldRegistrar class
         wheatImage = new Image(
-                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_WHEAT));
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(HomeWorldRegistrar.STORAGE_ITEM_WHEAT));
         wheatImage.setX(0);
         wheatImage.setY(0);
 
@@ -121,7 +124,7 @@ public class SeedView extends Group
     private void createBeanImage()
     {
         beanImage = new Image(
-                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_BEAN));
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(HomeWorldRegistrar.STORAGE_ITEM_BEAN));
         beanImage.setX(0);
         beanImage.setY(0);
 
@@ -131,7 +134,7 @@ public class SeedView extends Group
     private void createGrassImage()
     {
         grassImage = new Image(
-                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_GRASS));
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(HomeWorldRegistrar.STORAGE_ITEM_GRASS));
         grassImage.setX(0);
         grassImage.setY(0);
 
@@ -141,7 +144,7 @@ public class SeedView extends Group
     private void createCornImage()
     {
         cornImage = new Image(
-                ServiceRegistry.getInstance().getTexturesManager().getTexture(TexturesRegistrar.STORAGE_ITEM_CORN));
+                ServiceRegistry.getInstance().getTexturesManager().getTexture(HomeWorldRegistrar.STORAGE_ITEM_CORN));
         cornImage.setX(0);
         cornImage.setY(0);
 
@@ -151,7 +154,7 @@ public class SeedView extends Group
     private void createStrawberryImage()
     {
         strawberryImage = new Image(ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(TexturesRegistrar.STORAGE_ITEM_STRAWBERRY));
+                .getTexture(HomeWorldRegistrar.STORAGE_ITEM_STRAWBERRY));
         strawberryImage.setX(0);
         strawberryImage.setY(0);
 
