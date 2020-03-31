@@ -65,7 +65,8 @@ public class HomeLand extends ApplicationAdapter
         texturesManager = ServiceRegistry.getInstance().getTexturesManager();
         musicManager = ServiceRegistry.getInstance().getMusicManager();
         soundManager = ServiceRegistry.getInstance().getSoundManager();
-
+        camera = ServiceRegistry.getInstance().getCamera();
+        cameraController = ServiceRegistry.getInstance().getCameraController();
         homeLandLogic = new HomeLandLogic();
         homeLandLogic.initFonts(fontsManager);
         homeLandLogic.initTextures(texturesManager);
@@ -77,18 +78,6 @@ public class HomeLand extends ApplicationAdapter
         renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();
-
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, (w / h) * 10, 10);
-        camera.zoom = 2;
-        camera.update();
-
-        cameraController = new KKCameraController(camera, eventBus);
-        ServiceRegistry.getInstance().cameraController = cameraController;
-
         batch = new SpriteBatch();
 
         initUi();

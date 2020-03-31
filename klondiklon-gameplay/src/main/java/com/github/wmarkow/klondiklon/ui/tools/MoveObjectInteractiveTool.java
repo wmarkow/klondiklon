@@ -66,7 +66,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         if (event instanceof TouchUpEvent)
         {
             objectTochedDown = false;
-            ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+            ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
 
             return;
         }
@@ -97,7 +97,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         {
             // already moving this object
             objectTochedDown = true;
-            ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+            ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
             return;
         }
 
@@ -124,7 +124,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
                 objectToMove.setSelectedTrueGreenColor();
                 Klondiklon.ui.showMoveObjectView();
 
-                ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+                ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
                 return;
             }
         }
@@ -158,7 +158,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectToMoveOriginalCoordinates = null;
 
         Klondiklon.ui.hideMoveObjectView();
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 
     private void cancelMoving()
@@ -170,6 +170,6 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectToMoveOriginalCoordinates = null;
 
         Klondiklon.ui.hideMoveObjectView();
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 }

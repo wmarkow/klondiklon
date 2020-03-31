@@ -95,7 +95,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         // we can use harvest tool on this object
         harvestView = Klondiklon.ui.showHarvestView();
         harvestView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
     }
 
     private void processTouchDownEvent(TouchDownEvent event)
@@ -184,7 +184,7 @@ public class HarvestInteractiveTools implements EventSubscriber
 
     private void reset()
     {
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
 
         Klondiklon.ui.hideHarvestView();
         gardenCell = null;

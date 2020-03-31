@@ -96,7 +96,7 @@ public class SeedInteractiveTool implements EventSubscriber
             return;
         }
 
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(false);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
         Klondiklon.ui.hideSeedView();
         seedView = null;
         seedItemDescriptor = null;
@@ -119,7 +119,7 @@ public class SeedInteractiveTool implements EventSubscriber
             return;
         }
 
-        ServiceRegistry.getInstance().cameraController.setLockCameraWhileDragging(true);
+        ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
     }
 
     private void processTouchDraggedEvent(TouchDraggedEvent event)
