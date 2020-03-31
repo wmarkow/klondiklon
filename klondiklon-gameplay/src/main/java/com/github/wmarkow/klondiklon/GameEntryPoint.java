@@ -38,7 +38,6 @@ public class GameEntryPoint extends ApplicationAdapter
     private static Logger LOGGER = LoggerFactory.getLogger(GameEntryPoint.class);
 
     private SpriteBatch batch;
-    private KKMapRenderer renderer;
     private CoordinateCalculator coordinateCalculator;
 
     private FontsManager fontsManager;
@@ -51,8 +50,6 @@ public class GameEntryPoint extends ApplicationAdapter
 
         GameplayService.getInstance().loadGameContext();
         // Klondiklon.gameplayService.playMainTheme();
-        renderer = new KKMapRenderer((KKMap) GameplayService.getInstance().getCurrentWorldMap());
-
         coordinateCalculator = new CoordinateCalculator();
         batch = new SpriteBatch();
 
@@ -67,6 +64,8 @@ public class GameEntryPoint extends ApplicationAdapter
         Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
+
+        KKMapRenderer renderer = ServiceRegistry.getInstance().getRenderer();
         renderer.setView(camera);
         renderer.render();
         batch.begin();

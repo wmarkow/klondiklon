@@ -31,6 +31,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -44,6 +45,10 @@ import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 
 public class KKMapRenderer extends BatchTiledMapRenderer
 {
+    public KKMapRenderer() {
+        super(null, 1.0f);
+    }
+
     public KKMapRenderer(KKMap map) {
         super(map, 1.0f);
     }
@@ -51,6 +56,23 @@ public class KKMapRenderer extends BatchTiledMapRenderer
     private KKMap getKKTiledMap()
     {
         return (KKMap) getMap();
+    }
+
+    public void setMap(KKMapIf map)
+    {
+        // not very nice casting
+        super.setMap((TiledMap) map);
+    }
+
+    @Override
+    public void render()
+    {
+        if (map == null)
+        {
+            return;
+        }
+
+        super.render();
     }
 
     @Override

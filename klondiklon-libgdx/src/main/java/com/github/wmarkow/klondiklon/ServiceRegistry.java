@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
+import com.github.wmarkow.klondiklon.map.KKMap;
+import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.resources.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.resources.graphics.SkinsManager;
@@ -23,6 +25,7 @@ public class ServiceRegistry
     private EventBus eventBus = new EventBus();
     private OrthographicCamera camera;
     private KKCameraController cameraController;
+    private KKMapRenderer renderer = new KKMapRenderer();
 
     private static ServiceRegistry instance = new ServiceRegistry();
 
@@ -78,6 +81,11 @@ public class ServiceRegistry
     public KKCameraController getCameraController()
     {
         return cameraController;
+    }
+
+    public KKMapRenderer getRenderer()
+    {
+        return renderer;
     }
 
     private void init()
