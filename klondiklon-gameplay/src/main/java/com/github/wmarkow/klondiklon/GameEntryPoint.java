@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
+import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
+import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
@@ -23,10 +25,12 @@ import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
+import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.resources.music.MusicManager;
 import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
+import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
@@ -43,7 +47,6 @@ public class GameEntryPoint extends ApplicationAdapter
     private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
 
-    private HomeLandLogic homeLandLogic;
     private GrubbingInteractiveTool grubbingInteractiveTool;
     private MoveObjectInteractiveTool moveObjectInteractiveTool;
     private HarvestInteractiveTools sickleInteractiveTools;
@@ -65,11 +68,7 @@ public class GameEntryPoint extends ApplicationAdapter
         soundManager = ServiceRegistry.getInstance().getSoundManager();
         camera = ServiceRegistry.getInstance().getCamera();
         cameraController = ServiceRegistry.getInstance().getCameraController();
-        homeLandLogic = new HomeLandLogic();
-        homeLandLogic.initFonts(fontsManager);
-        homeLandLogic.initTextures(texturesManager);
-        homeLandLogic.initMusics(musicManager);
-        homeLandLogic.initSounds(soundManager);
+        initDefaultResources();
 
         GameplayService.getInstance().loadGameContext();
         // Klondiklon.gameplayService.playMainTheme();
@@ -146,5 +145,20 @@ public class GameEntryPoint extends ApplicationAdapter
                 GameplayService.getInstance().getObjectTypeDescriptorsManager());
         sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
         sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
+    }
+
+    private void initDefaultResources()
+    {
+        FontsRegistrar fontsRegistrar = new FontsRegistrar();
+        fontsRegistrar.register(fontsManager);
+
+        TexturesRegistrar texturesRegistrar = new TexturesRegistrar();
+        texturesRegistrar.register(texturesManager);
+
+        MusicsRegistrar musicsRegistrar = new MusicsRegistrar();
+        musicsRegistrar.register(musicManager);
+
+        SoundsRegistrar soundsRegistrar = new SoundsRegistrar();
+        soundsRegistrar.register(soundManager);
     }
 }
