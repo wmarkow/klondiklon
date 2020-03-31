@@ -9,6 +9,7 @@ package com.github.wmarkow.klondiklon.objects;
  * Storage items types should be unique.
  * </p>
  */
+// FIXME: this should not be here. It is a part of main Home World
 public class StorageItemTypes
 {
     public final static String ICE = "ICE";
