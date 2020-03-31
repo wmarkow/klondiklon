@@ -8,7 +8,6 @@ import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 
 public class Klondiklon
 {
-    public final static StorageItemDescriptorsManager storageItemDescriptorsManager = new StorageItemDescriptorsManager();
     public final static GameplayService gameplayService = new GameplayService();
 
     public static KKUi ui;

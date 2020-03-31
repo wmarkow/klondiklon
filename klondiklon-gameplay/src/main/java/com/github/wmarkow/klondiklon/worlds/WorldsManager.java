@@ -26,7 +26,7 @@ public class WorldsManager
         hwr.registerMusics(ServiceRegistry.getInstance().getMusicManager());
         hwr.registerSounds(ServiceRegistry.getInstance().getSoundManager());
         hwr.registerTextures(ServiceRegistry.getInstance().getTexturesManager());
-        hwr.registerStorageItemDescriptors(Klondiklon.storageItemDescriptorsManager);
+        hwr.registerStorageItemDescriptors(Klondiklon.gameplayService.getStorageItemDescriptorsManager());
         hwr.registerObjectTypeDescriptors(Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
 
         File file = new File(Gdx.files.getLocalStoragePath() + WorldRegistrar.WORLDS_DIR_NAME + "\\home\\home.tmx");

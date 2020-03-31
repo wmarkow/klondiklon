@@ -51,27 +51,27 @@ public class SeedView extends Group
     {
         if (getBounds(beanImage).containsPoint(screenPoint))
         {
-            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.BEAN);
+            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.BEAN);
         }
 
         if (getBounds(wheatImage).containsPoint(screenPoint))
         {
-            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.WHEAT);
+            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.WHEAT);
         }
 
         if (getBounds(grassImage).containsPoint(screenPoint))
         {
-            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.GRASS);
+            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS);
         }
 
         if (getBounds(cornImage).containsPoint(screenPoint))
         {
-            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.CORN);
+            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.CORN);
         }
 
         if (getBounds(strawberryImage).containsPoint(screenPoint))
         {
-            return Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STRAWBERRY);
+            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STRAWBERRY);
         }
 
         return null;

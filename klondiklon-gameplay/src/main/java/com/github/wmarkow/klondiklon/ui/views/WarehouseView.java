@@ -72,7 +72,7 @@ public class WarehouseView extends Container<Table>
                 itemsTable.row();
             }
 
-            StorageItemDescriptor storageItemDescriptor = Klondiklon.storageItemDescriptorsManager
+            StorageItemDescriptor storageItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager()
                     .getByType(itemQuantity.getStorageItemType());
             WarehouseItemWidget warehouseItemWidget = new WarehouseItemWidget(storageItemDescriptor,
                     itemQuantity.getQuantity());

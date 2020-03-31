@@ -246,8 +246,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FIR, "Jodła");
         obj.setGrubbingType(GrubbingType.CHOPPING);
         obj.setEnergyToGrubb(30);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.FIR_WOOD), 8));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.FIR_WOOD), 8));
 
         return obj;
     }
@@ -257,8 +257,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_LARGE, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(40);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 8));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 8));
 
         return obj;
     }
@@ -268,8 +268,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_MEDIUM, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(30);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 6));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 6));
 
         return obj;
     }
@@ -279,8 +279,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.COAL_SMALL, "Hałda węgla");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.COAL), 4));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 4));
 
         return obj;
     }
@@ -290,8 +290,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ICE_COLUMN, "Kolumna lodowa");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(35);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.ICE), 10));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 10));
 
         return obj;
     }
@@ -301,8 +301,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_LARGE, "Skała");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(55);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STONE), 8));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 8));
 
         return obj;
     }
@@ -312,8 +312,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.ROCK_MEDIUM, "Skała");
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.STONE), 6));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 6));
 
         return obj;
     }
@@ -323,8 +323,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.GRASS_SMALL, "Trawa");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(4);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.GRASS), 3));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS), 3));
 
         return obj;
     }
@@ -334,10 +334,11 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.SNOWY_BUSH_MEDIUM, "Ośnieżony krzak");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(20);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.BUSH_WOOD), 4));
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.ICE), 1));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.BUSH_WOOD),
+                4));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 1));
 
         return obj;
     }
@@ -347,8 +348,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.FRAGARIA, "Poziomka");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.FRAGARIA), 4));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.FRAGARIA), 4));
 
         return obj;
     }
@@ -358,8 +359,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         ObjectTypeDescriptor obj = new ObjectTypeDescriptor(ObjectTypes.RUBUS, "Jeżyna");
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
-        obj.addGrubbingProfit(
-                new GrubbingProfit(Klondiklon.storageItemDescriptorsManager.getByType(StorageItemTypes.RUBUS), 4));
+        obj.addGrubbingProfit(new GrubbingProfit(
+                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.RUBUS), 4));
 
         return obj;
     }
