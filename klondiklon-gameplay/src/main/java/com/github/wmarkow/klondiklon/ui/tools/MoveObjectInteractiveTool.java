@@ -122,7 +122,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
                 objectToMoveOriginalCoordinates = new GdxWorldOrthoCoordinates(objectToMove.getX(), objectToMove.getY(),
                         0.0f);
                 objectToMove.setSelectedTrueGreenColor();
-                Klondiklon.ui.showMoveObjectView();
+                Klondiklon.gameplayService.getUi().showMoveObjectView();
 
                 ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
                 return;
@@ -157,7 +157,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectTochedDown = false;
         objectToMoveOriginalCoordinates = null;
 
-        Klondiklon.ui.hideMoveObjectView();
+        Klondiklon.gameplayService.getUi().hideMoveObjectView();
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 
@@ -169,7 +169,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectTochedDown = false;
         objectToMoveOriginalCoordinates = null;
 
-        Klondiklon.ui.hideMoveObjectView();
+        Klondiklon.gameplayService.getUi().hideMoveObjectView();
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 }

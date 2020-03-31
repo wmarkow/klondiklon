@@ -86,7 +86,8 @@ public class SeedInteractiveTool implements EventSubscriber
             return;
         }
 
-        seedView = Klondiklon.ui.showSeedView(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
+        seedView = Klondiklon.gameplayService.getUi()
+                .showSeedView(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
     }
 
     private void processTouchUpEvent(TouchUpEvent event)
@@ -97,7 +98,7 @@ public class SeedInteractiveTool implements EventSubscriber
         }
 
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
-        Klondiklon.ui.hideSeedView();
+        Klondiklon.gameplayService.getUi().hideSeedView();
         seedView = null;
         seedItemDescriptor = null;
     }
@@ -113,7 +114,7 @@ public class SeedInteractiveTool implements EventSubscriber
         seedItemDescriptor = seedView.getSeedItemDescriptor(screenCoordinates);
         if (seedItemDescriptor == null)
         {
-            Klondiklon.ui.hideSeedView();
+            Klondiklon.gameplayService.getUi().hideSeedView();
             seedView = null;
             seedItemDescriptor = null;
             return;

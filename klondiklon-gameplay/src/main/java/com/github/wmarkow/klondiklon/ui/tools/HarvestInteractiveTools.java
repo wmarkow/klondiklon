@@ -93,7 +93,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         }
 
         // we can use harvest tool on this object
-        harvestView = Klondiklon.ui.showHarvestView();
+        harvestView = Klondiklon.gameplayService.getUi().showHarvestView();
         harvestView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
     }
@@ -143,7 +143,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         Klondiklon.gameplayService.stopGardenSimulation(gardenToSickle.getId());
         addSickleProfit(Klondiklon.gameplayService.getWarehouse(), profit);
 
-        Klondiklon.ui.showProfitView(profit, screenCoordinates);
+        Klondiklon.gameplayService.getUi().showProfitView(profit, screenCoordinates);
         ServiceRegistry.getInstance().getSoundManager().getResource(SoundsRegistrar.GARDEN_HARVEST).play();
     }
 
@@ -186,7 +186,7 @@ public class HarvestInteractiveTools implements EventSubscriber
     {
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
 
-        Klondiklon.ui.hideHarvestView();
+        Klondiklon.gameplayService.getUi().hideHarvestView();
         gardenCell = null;
         harvestView = null;
         sickleTouchedDown = false;

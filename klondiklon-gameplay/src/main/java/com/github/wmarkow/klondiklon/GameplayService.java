@@ -7,6 +7,7 @@ import java.time.Instant;
 import org.mapeditor.io.TMXMapWriter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
@@ -20,19 +21,35 @@ import com.github.wmarkow.klondiklon.simulation.Simulable;
 import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.GrowGardenPlantSimulationProcess;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
+import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class GameplayService
 {
-    private WorldsManager worldsManager = new WorldsManager();
-    private ObjectTypeDescriptorsManager objectTypeDescriptorsManager = new ObjectTypeDescriptorsManager();
-    private StorageItemDescriptorsManager storageItemDescriptorsManager = new StorageItemDescriptorsManager();
+    private WorldsManager worldsManager;
+    private ObjectTypeDescriptorsManager objectTypeDescriptorsManager;
+    private StorageItemDescriptorsManager storageItemDescriptorsManager;
+    private KKUi ui;
 
     private Player player;
     private Warehouse warehouse;
     private Simulation simulation;
     private KKMapIf currentWorldMap;
+
+    public GameplayService() {
+        init();
+    }
+
+    public void initUi()
+    {
+        ui = new KKUi();
+
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(ui.getStage());
+        multiplexer.addProcessor(ServiceRegistry.getInstance().getCameraController());
+        Gdx.input.setInputProcessor(multiplexer);
+    }
 
     public KKMapIf getCurrentWorldMap()
     {
@@ -57,6 +74,11 @@ public class GameplayService
     public StorageItemDescriptorsManager getStorageItemDescriptorsManager()
     {
         return storageItemDescriptorsManager;
+    }
+
+    public KKUi getUi()
+    {
+        return ui;
     }
 
     public boolean simulateStep(long currentSimulationTimeInMillis)
@@ -226,5 +248,12 @@ public class GameplayService
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private void init()
+    {
+        worldsManager = new WorldsManager();
+        objectTypeDescriptorsManager = new ObjectTypeDescriptorsManager();
+        storageItemDescriptorsManager = new StorageItemDescriptorsManager();
     }
 }

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,10 +27,9 @@ import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
 import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
 import com.github.wmarkow.klondiklon.resources.music.MusicManager;
 import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
-import com.github.wmarkow.klondiklon.ui.KKUi;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
-import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
+import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.SeedInteractiveTool;
 
 public class HomeLand extends ApplicationAdapter
@@ -80,7 +78,7 @@ public class HomeLand extends ApplicationAdapter
         coordinateCalculator = new CoordinateCalculator();
         batch = new SpriteBatch();
 
-        initUi();
+        Klondiklon.gameplayService.initUi();
         initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
     }
 
@@ -122,31 +120,21 @@ public class HomeLand extends ApplicationAdapter
 
         batch.end();
 
-        Klondiklon.ui.getStage().act();
-        Klondiklon.ui.getStage().draw();
+        Klondiklon.gameplayService.getUi().getStage().act();
+        Klondiklon.gameplayService.getUi().getStage().draw();
         Klondiklon.gameplayService.simulateStep(Instant.now().toEpochMilli());
     }
 
     @Override
     public void resize(int width, int height)
     {
-        Klondiklon.ui.getStage().getViewport().update(width, height, true);
+        Klondiklon.gameplayService.getUi().getStage().getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose()
     {
         Klondiklon.gameplayService.saveGameContext();
-    }
-
-    private void initUi()
-    {
-        Klondiklon.ui = new KKUi();
-
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(Klondiklon.ui.getStage());
-        multiplexer.addProcessor(cameraController);
-        Gdx.input.setInputProcessor(multiplexer);
     }
 
     private void initInteractiveTools(KKMapIf kkMap)

@@ -281,7 +281,7 @@ public class GrubbingInteractiveTool implements EventSubscriber
             GdxScreenCoordinates start = cc.world2Screen(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            Klondiklon.ui.showProfitView(descriptor.getGrubbingProfits(), start);
+            Klondiklon.gameplayService.getUi().showProfitView(descriptor.getGrubbingProfits(), start);
         }
 
         resetGrubbing();
