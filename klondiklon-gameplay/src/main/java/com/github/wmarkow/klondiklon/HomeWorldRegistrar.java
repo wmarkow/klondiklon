@@ -13,7 +13,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.GrubbingType;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
@@ -247,7 +246,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.CHOPPING);
         obj.setEnergyToGrubb(30);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.FIR_WOOD), 8));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.FIR_WOOD),
+                8));
 
         return obj;
     }
@@ -258,7 +258,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(40);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 8));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 8));
 
         return obj;
     }
@@ -269,7 +269,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(30);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 6));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 6));
 
         return obj;
     }
@@ -280,7 +280,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 4));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.COAL), 4));
 
         return obj;
     }
@@ -291,7 +291,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(35);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 10));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 10));
 
         return obj;
     }
@@ -302,7 +302,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(55);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 8));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 8));
 
         return obj;
     }
@@ -313,7 +313,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.MINING);
         obj.setEnergyToGrubb(20);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 6));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.STONE), 6));
 
         return obj;
     }
@@ -324,7 +324,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(4);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS), 3));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS), 3));
 
         return obj;
     }
@@ -335,10 +335,10 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(20);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.BUSH_WOOD),
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.BUSH_WOOD),
                 4));
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 1));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.ICE), 1));
 
         return obj;
     }
@@ -349,7 +349,8 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.FRAGARIA), 4));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.FRAGARIA),
+                4));
 
         return obj;
     }
@@ -360,7 +361,7 @@ public class HomeWorldRegistrar implements WorldRegistrar
         obj.setGrubbingType(GrubbingType.DIGGING);
         obj.setEnergyToGrubb(10);
         obj.addGrubbingProfit(new GrubbingProfit(
-                Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.RUBUS), 4));
+                GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.RUBUS), 4));
 
         return obj;
     }

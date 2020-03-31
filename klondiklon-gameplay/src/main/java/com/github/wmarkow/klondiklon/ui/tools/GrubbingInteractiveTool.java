@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
@@ -275,13 +275,13 @@ public class GrubbingInteractiveTool implements EventSubscriber
             map.removeObject(objectToGrubb);
 
             ObjectTypeDescriptor descriptor = objectTypesManager.getByObjectType(objectToGrubb.getObjectType());
-            addGrubbingProfit(Klondiklon.gameplayService.getWarehouse(), descriptor.getGrubbingProfits());
+            addGrubbingProfit(GameplayService.getInstance().getWarehouse(), descriptor.getGrubbingProfits());
 
             CoordinateCalculator cc = new CoordinateCalculator();
             GdxScreenCoordinates start = cc.world2Screen(camera,
                     new GdxWorldOrthoCoordinates(objectToGrubb.getX(), objectToGrubb.getY(), 0));
 
-            Klondiklon.gameplayService.getUi().showProfitView(descriptor.getGrubbingProfits(), start);
+            GameplayService.getInstance().getUi().showProfitView(descriptor.getGrubbingProfits(), start);
         }
 
         resetGrubbing();

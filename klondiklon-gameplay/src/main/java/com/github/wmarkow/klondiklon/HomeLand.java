@@ -71,15 +71,15 @@ public class HomeLand extends ApplicationAdapter
         homeLandLogic.initMusics(musicManager);
         homeLandLogic.initSounds(soundManager);
 
-        Klondiklon.gameplayService.loadGameContext();
+        GameplayService.getInstance().loadGameContext();
         // Klondiklon.gameplayService.playMainTheme();
-        renderer = new KKMapRenderer((KKMap) Klondiklon.gameplayService.getCurrentWorldMap());
+        renderer = new KKMapRenderer((KKMap) GameplayService.getInstance().getCurrentWorldMap());
 
         coordinateCalculator = new CoordinateCalculator();
         batch = new SpriteBatch();
 
-        Klondiklon.gameplayService.initUi();
-        initInteractiveTools(Klondiklon.gameplayService.getCurrentWorldMap());
+        GameplayService.getInstance().initUi();
+        initInteractiveTools(GameplayService.getInstance().getCurrentWorldMap());
     }
 
     @Override
@@ -98,7 +98,7 @@ public class HomeLand extends ApplicationAdapter
         GdxTouchCoordinates touch = new GdxTouchCoordinates(Gdx.input.getX(), Gdx.input.getY());
         GdxScreenCoordinates screen = coordinateCalculator.touch2Screen(touch);
         GdxWorldOrthoCoordinates world = coordinateCalculator.touch2World(camera, touch);
-        KKMapIf currentMap = Klondiklon.gameplayService.getCurrentWorldMap();
+        KKMapIf currentMap = GameplayService.getInstance().getCurrentWorldMap();
         TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.world2TmxOrthogonal(currentMap.getHeightInTiles(),
                 currentMap.getTileHeightInPixels(), world);
         GdxWorldIsoCoordinates worldIso = coordinateCalculator.world2iso(world);
@@ -120,29 +120,30 @@ public class HomeLand extends ApplicationAdapter
 
         batch.end();
 
-        Klondiklon.gameplayService.getUi().getStage().act();
-        Klondiklon.gameplayService.getUi().getStage().draw();
-        Klondiklon.gameplayService.simulateStep(Instant.now().toEpochMilli());
+        GameplayService.getInstance().getUi().getStage().act();
+        GameplayService.getInstance().getUi().getStage().draw();
+        GameplayService.getInstance().simulateStep(Instant.now().toEpochMilli());
     }
 
     @Override
     public void resize(int width, int height)
     {
-        Klondiklon.gameplayService.getUi().getStage().getViewport().update(width, height, true);
+        GameplayService.getInstance().getUi().getStage().getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose()
     {
-        Klondiklon.gameplayService.saveGameContext();
+        GameplayService.getInstance().saveGameContext();
     }
 
     private void initInteractiveTools(KKMapIf kkMap)
     {
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
-                Klondiklon.gameplayService.getPlayer(), Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
+                GameplayService.getInstance().getPlayer(),
+                GameplayService.getInstance().getObjectTypeDescriptorsManager());
         moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
-                Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
+                GameplayService.getInstance().getObjectTypeDescriptorsManager());
         sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
         sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }

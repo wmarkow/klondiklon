@@ -2,10 +2,9 @@ package com.github.wmarkow.klondiklon.ui.views;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
-import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
-import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenBounds;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -51,27 +50,28 @@ public class SeedView extends Group
     {
         if (getBounds(beanImage).containsPoint(screenPoint))
         {
-            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.BEAN);
+            return GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.BEAN);
         }
 
         if (getBounds(wheatImage).containsPoint(screenPoint))
         {
-            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.WHEAT);
+            return GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.WHEAT);
         }
 
         if (getBounds(grassImage).containsPoint(screenPoint))
         {
-            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS);
+            return GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS);
         }
 
         if (getBounds(cornImage).containsPoint(screenPoint))
         {
-            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.CORN);
+            return GameplayService.getInstance().getStorageItemDescriptorsManager().getByType(StorageItemTypes.CORN);
         }
 
         if (getBounds(strawberryImage).containsPoint(screenPoint))
         {
-            return Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STRAWBERRY);
+            return GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.STRAWBERRY);
         }
 
         return null;

@@ -27,6 +27,8 @@ import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class GameplayService
 {
+    private static GameplayService instance = new GameplayService();
+
     private WorldsManager worldsManager;
     private ObjectTypeDescriptorsManager objectTypeDescriptorsManager;
     private StorageItemDescriptorsManager storageItemDescriptorsManager;
@@ -39,6 +41,11 @@ public class GameplayService
 
     public GameplayService() {
         init();
+    }
+
+    public static GameplayService getInstance()
+    {
+        return instance;
     }
 
     public void initUi()

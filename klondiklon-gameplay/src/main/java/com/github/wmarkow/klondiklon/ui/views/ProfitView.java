@@ -10,9 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
-import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxScreenCoordinates;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -96,7 +95,7 @@ public class ProfitView extends Group
             actor.setX(newX);
             actor.setY(newY);
 
-            Actor backpackButton = Klondiklon.gameplayService.getUi().getMainView().getBackpackWidget();
+            Actor backpackButton = GameplayService.getInstance().getUi().getMainView().getBackpackWidget();
 
             paths.add(new Bezier<Vector2>(new Vector2(start.getX(), start.getY()), new Vector2(newX, newY),
                     new Vector2(newX, newY), new Vector2(backpackButton.getX(), backpackButton.getY())));

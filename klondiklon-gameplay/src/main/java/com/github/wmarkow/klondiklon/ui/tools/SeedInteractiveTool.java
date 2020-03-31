@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
@@ -86,7 +86,7 @@ public class SeedInteractiveTool implements EventSubscriber
             return;
         }
 
-        seedView = Klondiklon.gameplayService.getUi()
+        seedView = GameplayService.getInstance().getUi()
                 .showSeedView(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
     }
 
@@ -98,7 +98,7 @@ public class SeedInteractiveTool implements EventSubscriber
         }
 
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
-        Klondiklon.gameplayService.getUi().hideSeedView();
+        GameplayService.getInstance().getUi().hideSeedView();
         seedView = null;
         seedItemDescriptor = null;
     }
@@ -114,7 +114,7 @@ public class SeedInteractiveTool implements EventSubscriber
         seedItemDescriptor = seedView.getSeedItemDescriptor(screenCoordinates);
         if (seedItemDescriptor == null)
         {
-            Klondiklon.gameplayService.getUi().hideSeedView();
+            GameplayService.getInstance().getUi().hideSeedView();
             seedView = null;
             seedItemDescriptor = null;
             return;
@@ -144,7 +144,7 @@ public class SeedInteractiveTool implements EventSubscriber
 
         // seed the plant
         int gardenId = gardenToSeed.getId();
-        Klondiklon.gameplayService.addGardenSimulation(gardenId, seedItemDescriptor);
+        GameplayService.getInstance().addGardenSimulation(gardenId, seedItemDescriptor);
         ServiceRegistry.getInstance().getSoundManager().getResource(SoundsRegistrar.GARDEN_SEED).play();
     }
 

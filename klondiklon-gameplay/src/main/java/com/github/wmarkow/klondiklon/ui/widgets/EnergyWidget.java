@@ -1,6 +1,5 @@
 package com.github.wmarkow.klondiklon.ui.widgets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
@@ -64,7 +64,7 @@ public class WarehouseView extends Container<Table>
         itemsTable.setFillParent(false);
 
         int index = 0;
-        for (WarehouseItemQuantity itemQuantity : Klondiklon.gameplayService.getWarehouse()
+        for (WarehouseItemQuantity itemQuantity : GameplayService.getInstance().getWarehouse()
                 .getWarehouseItemQuantities())
         {
             if (index % 5 == 0)
@@ -72,8 +72,8 @@ public class WarehouseView extends Container<Table>
                 itemsTable.row();
             }
 
-            StorageItemDescriptor storageItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager()
-                    .getByType(itemQuantity.getStorageItemType());
+            StorageItemDescriptor storageItemDescriptor = GameplayService.getInstance()
+                    .getStorageItemDescriptorsManager().getByType(itemQuantity.getStorageItemType());
             WarehouseItemWidget warehouseItemWidget = new WarehouseItemWidget(storageItemDescriptor,
                     itemQuantity.getQuantity());
             itemsTable.add(warehouseItemWidget).pad(5.0f);

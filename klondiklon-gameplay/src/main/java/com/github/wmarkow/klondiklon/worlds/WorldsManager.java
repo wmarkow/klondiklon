@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.Gdx;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
-import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.objects.MapObjectsFactory;
@@ -26,8 +26,8 @@ public class WorldsManager
         hwr.registerMusics(ServiceRegistry.getInstance().getMusicManager());
         hwr.registerSounds(ServiceRegistry.getInstance().getSoundManager());
         hwr.registerTextures(ServiceRegistry.getInstance().getTexturesManager());
-        hwr.registerStorageItemDescriptors(Klondiklon.gameplayService.getStorageItemDescriptorsManager());
-        hwr.registerObjectTypeDescriptors(Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
+        hwr.registerStorageItemDescriptors(GameplayService.getInstance().getStorageItemDescriptorsManager());
+        hwr.registerObjectTypeDescriptors(GameplayService.getInstance().getObjectTypeDescriptorsManager());
 
         File file = new File(Gdx.files.getLocalStoragePath() + WorldRegistrar.WORLDS_DIR_NAME + "\\home\\home.tmx");
         TMXMapReader tmxMapReader = new TMXMapReader();

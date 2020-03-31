@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.deser.BeanDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerBuilder;
 import com.fasterxml.jackson.databind.deser.SettableBeanProperty;
 import com.fasterxml.jackson.databind.deser.impl.BeanPropertyMap;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.processes.GrowGardenPlantSimulationProcess;
@@ -40,11 +40,11 @@ public class KKBeanDeserializer extends BeanDeserializer
         }
         if (result instanceof RestoreEnergySimulationProcess)
         {
-            ((RestoreEnergySimulationProcess) result).setPlayer(Klondiklon.gameplayService.getPlayer());
+            ((RestoreEnergySimulationProcess) result).setPlayer(GameplayService.getInstance().getPlayer());
         }
         if (result instanceof GrowGardenPlantSimulationProcess)
         {
-            ((GrowGardenPlantSimulationProcess) result).setMap(Klondiklon.gameplayService.getCurrentWorldMap());
+            ((GrowGardenPlantSimulationProcess) result).setMap(GameplayService.getInstance().getCurrentWorldMap());
         }
 
         return result;

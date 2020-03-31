@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.events.WarehouseButtonBackpackClickedEvent;
@@ -57,7 +57,7 @@ public class MainView extends Table
 
             Skin skin = skinsManager.getResource(SkinsManager.GLASSY);
             EventBus eventBus = ServiceRegistry.getInstance().getEventBus();
-            Player player = Klondiklon.gameplayService.getPlayer();
+            Player player = GameplayService.getInstance().getPlayer();
 
             energyWidget = new EnergyWidget(skin, eventBus);
             energyWidget.setEnergy(player.getEnergy(), player.getMaxRestorableEnergy());

@@ -5,9 +5,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
@@ -93,7 +92,7 @@ public class HarvestInteractiveTools implements EventSubscriber
         }
 
         // we can use harvest tool on this object
-        harvestView = Klondiklon.gameplayService.getUi().showHarvestView();
+        harvestView = GameplayService.getInstance().getUi().showHarvestView();
         harvestView.setSickleCoordinates(coordinateCalculator.touch2Screen(event.getGdxTouchCoordinates()));
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
     }
@@ -140,10 +139,10 @@ public class HarvestInteractiveTools implements EventSubscriber
         }
 
         Set<GrubbingProfit> profit = gardenToSickle.sickleIt();
-        Klondiklon.gameplayService.stopGardenSimulation(gardenToSickle.getId());
-        addSickleProfit(Klondiklon.gameplayService.getWarehouse(), profit);
+        GameplayService.getInstance().stopGardenSimulation(gardenToSickle.getId());
+        addSickleProfit(GameplayService.getInstance().getWarehouse(), profit);
 
-        Klondiklon.gameplayService.getUi().showProfitView(profit, screenCoordinates);
+        GameplayService.getInstance().getUi().showProfitView(profit, screenCoordinates);
         ServiceRegistry.getInstance().getSoundManager().getResource(SoundsRegistrar.GARDEN_HARVEST).play();
     }
 
@@ -186,7 +185,7 @@ public class HarvestInteractiveTools implements EventSubscriber
     {
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
 
-        Klondiklon.gameplayService.getUi().hideHarvestView();
+        GameplayService.getInstance().getUi().hideHarvestView();
         gardenCell = null;
         harvestView = null;
         sickleTouchedDown = false;

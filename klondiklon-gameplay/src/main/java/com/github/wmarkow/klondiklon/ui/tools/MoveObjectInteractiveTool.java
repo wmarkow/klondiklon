@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.github.wmarkow.klondiklon.Klondiklon;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.event.Event;
 import com.github.wmarkow.klondiklon.event.EventBus;
@@ -16,7 +16,6 @@ import com.github.wmarkow.klondiklon.events.MoveObjectButtonCancelClickedEvent;
 import com.github.wmarkow.klondiklon.events.MoveObjectButtonOkClickedEvent;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
-import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptor;
@@ -122,7 +121,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
                 objectToMoveOriginalCoordinates = new GdxWorldOrthoCoordinates(objectToMove.getX(), objectToMove.getY(),
                         0.0f);
                 objectToMove.setSelectedTrueGreenColor();
-                Klondiklon.gameplayService.getUi().showMoveObjectView();
+                GameplayService.getInstance().getUi().showMoveObjectView();
 
                 ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(true);
                 return;
@@ -157,7 +156,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectTochedDown = false;
         objectToMoveOriginalCoordinates = null;
 
-        Klondiklon.gameplayService.getUi().hideMoveObjectView();
+        GameplayService.getInstance().getUi().hideMoveObjectView();
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 
@@ -169,7 +168,7 @@ public class MoveObjectInteractiveTool implements EventSubscriber
         objectTochedDown = false;
         objectToMoveOriginalCoordinates = null;
 
-        Klondiklon.gameplayService.getUi().hideMoveObjectView();
+        GameplayService.getInstance().getUi().hideMoveObjectView();
         ServiceRegistry.getInstance().getCameraController().setLockCameraWhileDragging(false);
     }
 }

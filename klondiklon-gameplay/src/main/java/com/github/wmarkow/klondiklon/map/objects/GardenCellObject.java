@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.github.wmarkow.klondiklon.GameplayService;
 import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
-import com.github.wmarkow.klondiklon.Klondiklon;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -230,19 +230,24 @@ public class GardenCellObject extends KKMapObject
 
         if (growingObjectTextureRegion == wheatPhase4)
         {
-            wheatItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.WHEAT);
+            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.WHEAT);
         } else if (growingObjectTextureRegion == beanPhase3)
         {
-            wheatItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.BEAN);
+            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.BEAN);
         } else if (growingObjectTextureRegion == grassPhase3)
         {
-            wheatItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.GRASS);
+            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.GRASS);
         } else if (growingObjectTextureRegion == cornPhase3)
         {
-            wheatItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.CORN);
+            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.CORN);
         } else if (growingObjectTextureRegion == strawberryPhase3)
         {
-            wheatItemDescriptor = Klondiklon.gameplayService.getStorageItemDescriptorsManager().getByType(StorageItemTypes.STRAWBERRY);
+            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                    .getByType(StorageItemTypes.STRAWBERRY);
         }
 
         growingObjectTextureRegion = null;
