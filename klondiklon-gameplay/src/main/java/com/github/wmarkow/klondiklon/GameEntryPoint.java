@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,7 +15,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.graphics.FontsRegistrar;
 import com.github.wmarkow.klondiklon.graphics.TexturesRegistrar;
-import com.github.wmarkow.klondiklon.map.KKCameraController;
 import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.map.KKMapRenderer;
@@ -27,9 +27,6 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
-import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
-import com.github.wmarkow.klondiklon.resources.music.MusicManager;
-import com.github.wmarkow.klondiklon.resources.sound.SoundManager;
 import com.github.wmarkow.klondiklon.sounds.SoundsRegistrar;
 import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
@@ -40,11 +37,8 @@ public class GameEntryPoint extends ApplicationAdapter
 {
     private static Logger LOGGER = LoggerFactory.getLogger(GameEntryPoint.class);
 
-    private OrthographicCamera camera;
     private SpriteBatch batch;
-
     private KKMapRenderer renderer;
-    private KKCameraController cameraController;
     private CoordinateCalculator coordinateCalculator;
 
     private GrubbingInteractiveTool grubbingInteractiveTool;
@@ -52,22 +46,12 @@ public class GameEntryPoint extends ApplicationAdapter
     private HarvestInteractiveTools sickleInteractiveTools;
     private SeedInteractiveTool sowInteractiveTools;
 
-    private EventBus eventBus;
     private FontsManager fontsManager;
-    private TexturesManager texturesManager;
-    private MusicManager musicManager;
-    private SoundManager soundManager;
 
     @Override
     public void create()
     {
-        eventBus = ServiceRegistry.getInstance().getEventBus();
         fontsManager = ServiceRegistry.getInstance().getFontsManager();
-        texturesManager = ServiceRegistry.getInstance().getTexturesManager();
-        musicManager = ServiceRegistry.getInstance().getMusicManager();
-        soundManager = ServiceRegistry.getInstance().getSoundManager();
-        camera = ServiceRegistry.getInstance().getCamera();
-        cameraController = ServiceRegistry.getInstance().getCameraController();
         initDefaultResources();
 
         GameplayService.getInstance().loadGameContext();
@@ -84,6 +68,8 @@ public class GameEntryPoint extends ApplicationAdapter
     @Override
     public void render()
     {
+        final OrthographicCamera camera = ServiceRegistry.getInstance().getCamera();
+
         Gdx.gl.glClearColor(100f / 255f, 100f / 255f, 250f / 255f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
@@ -138,6 +124,9 @@ public class GameEntryPoint extends ApplicationAdapter
 
     private void initInteractiveTools(KKMapIf kkMap)
     {
+        Camera camera = ServiceRegistry.getInstance().getCamera();
+        EventBus eventBus = ServiceRegistry.getInstance().getEventBus();
+
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
                 GameplayService.getInstance().getPlayer(),
                 GameplayService.getInstance().getObjectTypeDescriptorsManager());
@@ -153,12 +142,12 @@ public class GameEntryPoint extends ApplicationAdapter
         fontsRegistrar.register(fontsManager);
 
         TexturesRegistrar texturesRegistrar = new TexturesRegistrar();
-        texturesRegistrar.register(texturesManager);
+        texturesRegistrar.register(ServiceRegistry.getInstance().getTexturesManager());
 
         MusicsRegistrar musicsRegistrar = new MusicsRegistrar();
-        musicsRegistrar.register(musicManager);
+        musicsRegistrar.register(ServiceRegistry.getInstance().getMusicManager());
 
         SoundsRegistrar soundsRegistrar = new SoundsRegistrar();
-        soundsRegistrar.register(soundManager);
+        soundsRegistrar.register(ServiceRegistry.getInstance().getSoundManager());
     }
 }
