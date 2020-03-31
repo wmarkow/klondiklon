@@ -32,9 +32,9 @@ import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
 import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
 import com.github.wmarkow.klondiklon.ui.tools.SeedInteractiveTool;
 
-public class HomeLand extends ApplicationAdapter
+public class GameEntryPoint extends ApplicationAdapter
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(HomeLand.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(GameEntryPoint.class);
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
