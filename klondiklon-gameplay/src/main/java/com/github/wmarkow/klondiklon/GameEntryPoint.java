@@ -41,11 +41,6 @@ public class GameEntryPoint extends ApplicationAdapter
     private KKMapRenderer renderer;
     private CoordinateCalculator coordinateCalculator;
 
-    private GrubbingInteractiveTool grubbingInteractiveTool;
-    private MoveObjectInteractiveTool moveObjectInteractiveTool;
-    private HarvestInteractiveTools sickleInteractiveTools;
-    private SeedInteractiveTool sowInteractiveTools;
-
     private FontsManager fontsManager;
 
     @Override
@@ -62,7 +57,6 @@ public class GameEntryPoint extends ApplicationAdapter
         batch = new SpriteBatch();
 
         GameplayService.getInstance().initUi();
-        initInteractiveTools(GameplayService.getInstance().getCurrentWorldMap());
     }
 
     @Override
@@ -120,20 +114,6 @@ public class GameEntryPoint extends ApplicationAdapter
     public void dispose()
     {
         GameplayService.getInstance().saveGameContext();
-    }
-
-    private void initInteractiveTools(KKMapIf kkMap)
-    {
-        Camera camera = ServiceRegistry.getInstance().getCamera();
-        EventBus eventBus = ServiceRegistry.getInstance().getEventBus();
-
-        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
-                GameplayService.getInstance().getPlayer(),
-                GameplayService.getInstance().getObjectTypeDescriptorsManager());
-        moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
-                GameplayService.getInstance().getObjectTypeDescriptorsManager());
-        sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
-        sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }
 
     private void initDefaultResources()

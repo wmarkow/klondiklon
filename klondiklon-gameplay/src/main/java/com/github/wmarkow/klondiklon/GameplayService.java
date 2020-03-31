@@ -9,7 +9,9 @@ import org.mapeditor.io.TMXMapWriter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
@@ -22,6 +24,10 @@ import com.github.wmarkow.klondiklon.simulation.Simulation;
 import com.github.wmarkow.klondiklon.simulation.processes.GrowGardenPlantSimulationProcess;
 import com.github.wmarkow.klondiklon.simulation.processes.RestoreEnergySimulationProcess;
 import com.github.wmarkow.klondiklon.ui.KKUi;
+import com.github.wmarkow.klondiklon.ui.tools.GrubbingInteractiveTool;
+import com.github.wmarkow.klondiklon.ui.tools.HarvestInteractiveTools;
+import com.github.wmarkow.klondiklon.ui.tools.MoveObjectInteractiveTool;
+import com.github.wmarkow.klondiklon.ui.tools.SeedInteractiveTool;
 import com.github.wmarkow.klondiklon.warehouse.Warehouse;
 import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
@@ -38,6 +44,11 @@ public class GameplayService
     private Warehouse warehouse;
     private Simulation simulation;
     private KKMapIf currentWorldMap;
+
+    private GrubbingInteractiveTool grubbingInteractiveTool;
+    private MoveObjectInteractiveTool moveObjectInteractiveTool;
+    private HarvestInteractiveTools sickleInteractiveTools;
+    private SeedInteractiveTool sowInteractiveTools;
 
     public GameplayService() {
         init();
@@ -100,6 +111,8 @@ public class GameplayService
         warehouse = loadWarehouse();
         simulation = loadSimulation();
         simulation.catchUp(Instant.now().toEpochMilli());
+
+        initInteractiveTools(currentWorldMap);
     }
 
     public void saveGameContext()
@@ -262,5 +275,19 @@ public class GameplayService
         worldsManager = new WorldsManager();
         objectTypeDescriptorsManager = new ObjectTypeDescriptorsManager();
         storageItemDescriptorsManager = new StorageItemDescriptorsManager();
+    }
+
+    private void initInteractiveTools(KKMapIf kkMap)
+    {
+        Camera camera = ServiceRegistry.getInstance().getCamera();
+        EventBus eventBus = ServiceRegistry.getInstance().getEventBus();
+
+        grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
+                GameplayService.getInstance().getPlayer(),
+                GameplayService.getInstance().getObjectTypeDescriptorsManager());
+        moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
+                GameplayService.getInstance().getObjectTypeDescriptorsManager());
+        sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
+        sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }
 }
