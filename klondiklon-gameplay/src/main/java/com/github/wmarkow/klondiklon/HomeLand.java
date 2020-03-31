@@ -152,9 +152,9 @@ public class HomeLand extends ApplicationAdapter
     private void initInteractiveTools(KKMapIf kkMap)
     {
         grubbingInteractiveTool = new GrubbingInteractiveTool(eventBus, kkMap, camera,
-                Klondiklon.gameplayService.getPlayer(), Klondiklon.objectTypeDescriptorsManager);
+                Klondiklon.gameplayService.getPlayer(), Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
         moveObjectInteractiveTool = new MoveObjectInteractiveTool(eventBus, kkMap, camera,
-                Klondiklon.objectTypeDescriptorsManager);
+                Klondiklon.gameplayService.getObjectTypeDescriptorsManager());
         sickleInteractiveTools = new HarvestInteractiveTools(eventBus, kkMap, camera);
         sowInteractiveTools = new SeedInteractiveTool(eventBus, kkMap, camera);
     }

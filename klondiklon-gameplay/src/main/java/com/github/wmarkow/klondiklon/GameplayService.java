@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
+import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
 import com.github.wmarkow.klondiklon.player.Player;
 import com.github.wmarkow.klondiklon.simulation.Simulable;
@@ -24,11 +25,12 @@ import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 public class GameplayService
 {
     private WorldsManager worldsManager = new WorldsManager();
+    private ObjectTypeDescriptorsManager objectTypeDescriptorsManager = new ObjectTypeDescriptorsManager();
     private Player player;
     private Warehouse warehouse;
     private Simulation simulation;
     private KKMapIf currentWorldMap;
-
+    
     public KKMapIf getCurrentWorldMap()
     {
         return currentWorldMap;
@@ -42,6 +44,11 @@ public class GameplayService
     public Warehouse getWarehouse()
     {
         return warehouse;
+    }
+
+    public ObjectTypeDescriptorsManager getObjectTypeDescriptorsManager()
+    {
+        return objectTypeDescriptorsManager;
     }
 
     public boolean simulateStep(long currentSimulationTimeInMillis)
