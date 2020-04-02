@@ -8,200 +8,66 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.github.wmarkow.klondiklon.GameplayService;
-import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.objects.GrubbingProfit;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
-import com.github.wmarkow.klondiklon.objects.StorageItemTypes;
 
 public class GardenCellObject extends KKMapObject
 {
-    private TextureRegion wheatPhase1;
-    private TextureRegion wheatPhase2;
-    private TextureRegion wheatPhase3;
-    private TextureRegion wheatPhase4;
-
-    private TextureRegion beanPhase1;
-    private TextureRegion beanPhase2;
-    private TextureRegion beanPhase3;
-
-    private TextureRegion grassPhase1;
-    private TextureRegion grassPhase2;
-    private TextureRegion grassPhase3;
-
-    private TextureRegion cornPhase1;
-    private TextureRegion cornPhase2;
-    private TextureRegion cornPhase3;
-
-    private TextureRegion strawberryPhase1;
-    private TextureRegion strawberryPhase2;
-    private TextureRegion strawberryPhase3;
-
     private TextureRegion growingObjectTextureRegion = null;
+
+    private GrowPlantInfo growPlantInfo = null;
+    private int growPhase = -1;
 
     public GardenCellObject(TiledMapTile tile, int id, String objectType) {
         super(tile, id, objectType);
-
-        // TODO: add cache for texture region
-        // FIXME: the texture name should not be accessed directly from
-        // HomeWorldRegistrar class
-        Texture textureWheat1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_1);
-        wheatPhase1 = new TextureRegion(textureWheat1);
-        Texture textureWheat2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_2);
-        wheatPhase2 = new TextureRegion(textureWheat2);
-        Texture textureWheat3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_3);
-        wheatPhase3 = new TextureRegion(textureWheat3);
-        Texture textureWheat4 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_WHEAT_GARDEN_4);
-        wheatPhase4 = new TextureRegion(textureWheat4);
-
-        Texture textureBean1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_1);
-        beanPhase1 = new TextureRegion(textureBean1);
-        Texture textureBean2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_2);
-        beanPhase2 = new TextureRegion(textureBean2);
-        Texture textureBean3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_BEAN_GARDEN_3);
-        beanPhase3 = new TextureRegion(textureBean3);
-
-        Texture textureGrass1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_1);
-        grassPhase1 = new TextureRegion(textureGrass1);
-        Texture textureGrass2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_2);
-        grassPhase2 = new TextureRegion(textureGrass2);
-        Texture textureGrass3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_GRASS_GARDEN_3);
-        grassPhase3 = new TextureRegion(textureGrass3);
-
-        Texture textureCorn1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_1);
-        cornPhase1 = new TextureRegion(textureCorn1);
-        Texture textureCorn2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_2);
-        cornPhase2 = new TextureRegion(textureCorn2);
-        Texture textureCorn3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_CORN_GARDEN_3);
-        cornPhase3 = new TextureRegion(textureCorn3);
-
-        Texture textureStrawberry1 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_1);
-        strawberryPhase1 = new TextureRegion(textureStrawberry1);
-        Texture textureStrawberry2 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_2);
-        strawberryPhase2 = new TextureRegion(textureStrawberry2);
-        Texture textureCStrawberry3 = ServiceRegistry.getInstance().getTexturesManager()
-                .getTexture(HomeWorldRegistrar.OBJECT_STRAWBERRY_GARDEN_3);
-        strawberryPhase3 = new TextureRegion(textureCStrawberry3);
     }
 
-    public void setWheatPhase1()
+    public void setGrowPlantPhase(GrowPlantInfo growPlantInfo, int growPhaseIndex)
     {
-        growingObjectTextureRegion = wheatPhase1;
-    }
+        if (growPlantInfo == null)
+        {
+            throw new IllegalArgumentException("GrowPlantInfo must not be null");
+        }
+        if (growPhaseIndex < 0)
+        {
+            throw new IllegalArgumentException("GrowPlantInfo must not be negative");
+        }
+        if (growPhaseIndex >= growPlantInfo.getGrowPhasesTextures().size())
+        {
+            throw new IllegalArgumentException("GrowPhaseIndex to hight");
+        }
 
-    public void setWheatPhase2()
-    {
-        growingObjectTextureRegion = wheatPhase2;
-    }
+        boolean changeTexture = false;
+        if (this.growPlantInfo == null)
+        {
+            changeTexture = true;
+        } else if (this.growPhase != growPhaseIndex)
+        {
+            changeTexture = true;
+        } else if (this.growPlantInfo != growPlantInfo)
+        {
+            changeTexture = true;
+        }
 
-    public void setWheatPhase3()
-    {
-        growingObjectTextureRegion = wheatPhase3;
-    }
+        this.growPlantInfo = growPlantInfo;
+        this.growPhase = growPhaseIndex;
 
-    public void setWheatPhase4()
-    {
-        growingObjectTextureRegion = wheatPhase4;
-    }
-
-    public void setBeanPhase1()
-    {
-        growingObjectTextureRegion = beanPhase1;
-    }
-
-    public void setBeanPhase2()
-    {
-        growingObjectTextureRegion = beanPhase2;
-    }
-
-    public void setBeanPhase3()
-    {
-        growingObjectTextureRegion = beanPhase3;
-    }
-
-    public void setGrassPhase1()
-    {
-        growingObjectTextureRegion = grassPhase1;
-    }
-
-    public void setGrassPhase2()
-    {
-        growingObjectTextureRegion = grassPhase2;
-    }
-
-    public void setGrassPhase3()
-    {
-        growingObjectTextureRegion = grassPhase3;
-    }
-
-    public void setCornPhase1()
-    {
-        growingObjectTextureRegion = cornPhase1;
-    }
-
-    public void setCornPhase2()
-    {
-        growingObjectTextureRegion = cornPhase2;
-    }
-
-    public void setCornPhase3()
-    {
-        growingObjectTextureRegion = cornPhase3;
-    }
-
-    public void setStrawberryPhase1()
-    {
-        growingObjectTextureRegion = strawberryPhase1;
-    }
-
-    public void setStrawberryPhase2()
-    {
-        growingObjectTextureRegion = strawberryPhase2;
-    }
-
-    public void setStrawberryPhase3()
-    {
-        growingObjectTextureRegion = strawberryPhase3;
+        if (changeTexture)
+        {
+            String textureName = growPlantInfo.getGrowPhasesTextures().get(growPhaseIndex);
+            Texture texture = ServiceRegistry.getInstance().getTexturesManager().getTexture(textureName);
+            growingObjectTextureRegion = new TextureRegion(texture);
+        }
     }
 
     public boolean isReadyForSickle()
     {
-        if (growingObjectTextureRegion == wheatPhase4)
+        if (growPlantInfo == null)
         {
-            return true;
+            return false;
         }
-
-        if (growingObjectTextureRegion == beanPhase3)
-        {
-            return true;
-        }
-
-        if (growingObjectTextureRegion == grassPhase3)
-        {
-            return true;
-        }
-
-        if (growingObjectTextureRegion == cornPhase3)
-        {
-            return true;
-        }
-
-        if (growingObjectTextureRegion == strawberryPhase3)
+        if (growPlantInfo.getGrowPhasesTextures().size() - 1 == growPhase)
         {
             return true;
         }
@@ -226,39 +92,20 @@ public class GardenCellObject extends KKMapObject
             return new HashSet<GrubbingProfit>();
         }
 
-        StorageItemDescriptor wheatItemDescriptor = null;
-
-        if (growingObjectTextureRegion == wheatPhase4)
-        {
-            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
-                    .getByType(StorageItemTypes.WHEAT);
-        } else if (growingObjectTextureRegion == beanPhase3)
-        {
-            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
-                    .getByType(StorageItemTypes.BEAN);
-        } else if (growingObjectTextureRegion == grassPhase3)
-        {
-            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
-                    .getByType(StorageItemTypes.GRASS);
-        } else if (growingObjectTextureRegion == cornPhase3)
-        {
-            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
-                    .getByType(StorageItemTypes.CORN);
-        } else if (growingObjectTextureRegion == strawberryPhase3)
-        {
-            wheatItemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
-                    .getByType(StorageItemTypes.STRAWBERRY);
-        }
+        StorageItemDescriptor itemDescriptor = GameplayService.getInstance().getStorageItemDescriptorsManager()
+                .getByType(growPlantInfo.getStorageItemType());
 
         growingObjectTextureRegion = null;
+        growPlantInfo = null;
+        growPhase = -1;
 
-        if (wheatItemDescriptor == null)
+        if (itemDescriptor == null)
         {
             return new HashSet<GrubbingProfit>();
         }
 
         Set<GrubbingProfit> result = new HashSet<GrubbingProfit>();
-        result.add(new GrubbingProfit(wheatItemDescriptor, 1));
+        result.add(new GrubbingProfit(itemDescriptor, 1));
 
         return result;
     }
