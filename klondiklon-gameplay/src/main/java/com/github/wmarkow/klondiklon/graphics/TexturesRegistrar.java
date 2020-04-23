@@ -18,16 +18,16 @@ public class TexturesRegistrar
 
     public void register(TexturesManager texturesManager)
     {
-        texturesManager.registerTexture(LIGHTNING, new Texture(Gdx.files.classpath("ui/lightning.png")));
-        texturesManager.registerTexture(BALLOON, new Texture(Gdx.files.classpath("ui/balloon.png")));
-        texturesManager.registerTexture(BALLOON_BLUE, new Texture(Gdx.files.classpath("ui/balloon_blue.png")));
-        texturesManager.registerTexture(BACKPACK, new Texture(Gdx.files.classpath("ui/backpack.png")));
+        texturesManager.registerTexture(LIGHTNING, new Texture(Gdx.files.internal("ui/lightning.png")));
+        texturesManager.registerTexture(BALLOON, new Texture(Gdx.files.internal("ui/balloon.png")));
+        texturesManager.registerTexture(BALLOON_BLUE, new Texture(Gdx.files.internal("ui/balloon_blue.png")));
+        texturesManager.registerTexture(BACKPACK, new Texture(Gdx.files.internal("ui/backpack.png")));
         texturesManager.registerTexture(WAREHOUSE_BACKGROUND,
-                new Texture(Gdx.files.classpath("ui/warehouse_background.png")));
+                new Texture(Gdx.files.internal("ui/warehouse_background.png")));
         texturesManager.registerTexture(WAREHOUSE_ITEM_BACKGROUND,
-                new Texture(Gdx.files.classpath("ui/warehouse_item_background.png")));
-        texturesManager.registerTexture(BUTTON_OK, new Texture(Gdx.files.classpath("ui/button_ok.png")));
-        texturesManager.registerTexture(BUTTON_CANCEL, new Texture(Gdx.files.classpath("ui/button_cancel.png")));
-        texturesManager.registerTexture(SICKLE, new Texture(Gdx.files.classpath("ui/sickle.png")));
+                new Texture(Gdx.files.internal("ui/warehouse_item_background.png")));
+        texturesManager.registerTexture(BUTTON_OK, new Texture(Gdx.files.internal("ui/button_ok.png")));
+        texturesManager.registerTexture(BUTTON_CANCEL, new Texture(Gdx.files.internal("ui/button_cancel.png")));
+        texturesManager.registerTexture(SICKLE, new Texture(Gdx.files.internal("ui/sickle.png")));
     }
 }

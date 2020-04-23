@@ -14,13 +14,13 @@ public class SoundsRegistrar
     public void register(SoundManager soundManager)
     {
         soundManager.registerResource(GRUBBING_CHOPPING,
-                Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_chopping.ogg")));
+                Gdx.audio.newSound(Gdx.files.internal("sounds/grubbing_chopping.ogg")));
         soundManager.registerResource(GRUBBING_DIGGING,
-                Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_digging.ogg")));
+                Gdx.audio.newSound(Gdx.files.internal("sounds/grubbing_digging.ogg")));
         soundManager.registerResource(GRUBBING_MINING,
-                Gdx.audio.newSound(Gdx.files.classpath("sounds/grubbing_mining.ogg")));
-        soundManager.registerResource(GARDEN_SEED, Gdx.audio.newSound(Gdx.files.classpath("sounds/garden_seed.ogg")));
+                Gdx.audio.newSound(Gdx.files.internal("sounds/grubbing_mining.ogg")));
+        soundManager.registerResource(GARDEN_SEED, Gdx.audio.newSound(Gdx.files.internal("sounds/garden_seed.ogg")));
         soundManager.registerResource(GARDEN_HARVEST,
-                Gdx.audio.newSound(Gdx.files.classpath("sounds/garden_harvest.ogg")));
+                Gdx.audio.newSound(Gdx.files.internal("sounds/garden_harvest.ogg")));
     }
 }

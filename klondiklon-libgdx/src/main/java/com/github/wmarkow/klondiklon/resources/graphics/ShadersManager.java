@@ -17,8 +17,8 @@ public class ShadersManager extends ResourcesManager<ShaderProgram>
     {
         String vertexShader;
         String fragmentShader;
-        vertexShader = Gdx.files.classpath("shaders/outline_vertex.glsl").readString();
-        fragmentShader = Gdx.files.classpath("shaders/outline_fragment.glsl").readString();
+        vertexShader = Gdx.files.internal("shaders/outline_vertex.glsl").readString();
+        fragmentShader = Gdx.files.internal("shaders/outline_fragment.glsl").readString();
 
         ShaderProgram shaderOutline = new ShaderProgram(vertexShader, fragmentShader);
         configureShader(shaderOutline, new Vector3(0.0f, 1.0f, 1.0f));

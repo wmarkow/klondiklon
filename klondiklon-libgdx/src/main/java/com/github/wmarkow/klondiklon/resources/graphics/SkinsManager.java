@@ -10,6 +10,6 @@ public class SkinsManager extends ResourcesManager<Skin>
 
     public void init()
     {
-        registerResource(GLASSY, new Skin(Gdx.files.classpath("skins/glassy/skin/glassy-ui.json")));
+        registerResource(GLASSY, new Skin(Gdx.files.internal("skins/glassy/skin/glassy-ui.json")));
     }
 }
