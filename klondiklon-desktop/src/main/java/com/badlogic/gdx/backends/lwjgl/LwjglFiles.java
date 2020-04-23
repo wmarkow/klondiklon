@@ -49,6 +49,9 @@ public final class LwjglFiles implements Files
     @Override
     public FileHandle internal(String path)
     {
+        // PATCH begin
+        path = "assets/" + path;
+        // PATCH end
         return new LwjglFileHandle(path, FileType.Internal);
     }
 
