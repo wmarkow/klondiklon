@@ -13,7 +13,7 @@ public class FontsRegistrar
 
     public void register(FontsManager fontsManager)
     {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.classpath("fonts/arialbd.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/arialbd.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.characters = FontsManager.POLISH_CHARACTERS;
 
