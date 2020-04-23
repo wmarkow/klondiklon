@@ -2,5 +2,6 @@ local.properties
 gradle/*
 gradlew
 gradlew.bat
+build/*
 android/build/*
 android/libs/*
