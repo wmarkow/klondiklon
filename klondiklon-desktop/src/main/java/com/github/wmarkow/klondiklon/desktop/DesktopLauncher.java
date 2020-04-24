@@ -21,7 +21,7 @@ public class DesktopLauncher
         // config.width = 1024;
         // config.height = 768;
 
-        GameplayService.getInstance().resourcesToLocalCopier = new ResourcesFromClasspatchToLocalCopier();
+        GameplayService.getInstance().assetsCopyService = new DesktopAssetsCopyService();
 
         new LwjglApplication(new GameEntryPoint(), config);
     }

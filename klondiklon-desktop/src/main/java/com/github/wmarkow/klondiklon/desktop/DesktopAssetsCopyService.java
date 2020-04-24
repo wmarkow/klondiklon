@@ -12,16 +12,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.badlogic.gdx.Gdx;
-import com.github.wmarkow.klondiklon.ResourcesToLocalCopierIf;
+import com.github.wmarkow.klondiklon.AssetsCopyServiceIf;
 import com.github.wmarkow.klondiklon.worlds.WorldRegistrar;
-import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
-public class ResourcesFromClasspatchToLocalCopier implements ResourcesToLocalCopierIf
+public class DesktopAssetsCopyService implements AssetsCopyServiceIf
 {
-    private static Logger LOGGER = LoggerFactory.getLogger(ResourcesFromClasspatchToLocalCopier.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(DesktopAssetsCopyService.class);
 
     @Override
-    public void copyResourcesToLocal()
+    public void copyAssetsToLocalStorage()
     {
         boolean overrrideTmx = false;
 

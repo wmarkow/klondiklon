@@ -39,7 +39,7 @@ public class GameplayService
     private ObjectTypeDescriptorsManager objectTypeDescriptorsManager;
     private StorageItemDescriptorsManager storageItemDescriptorsManager;
     private KKUi ui;
-    public ResourcesToLocalCopierIf resourcesToLocalCopier;
+    public AssetsCopyServiceIf assetsCopyService;
 
     private Player player;
     private Warehouse warehouse;

@@ -190,11 +190,9 @@ public class HomeWorldRegistrar implements WorldRegistrar
     }
 
     @Override
-    public void copyResourcesToLocal()
+    public void copyAssetsToLocalStorage()
     {
-        GameplayService.getInstance().resourcesToLocalCopier.copyResourcesToLocal();
-        FileHandle fileHandle = Gdx.files.internal("worlds/home");
-        fileHandle.list();
+        GameplayService.getInstance().assetsCopyService.copyAssetsToLocalStorage();
     }
 
     private ObjectTypeDescriptor createFir()

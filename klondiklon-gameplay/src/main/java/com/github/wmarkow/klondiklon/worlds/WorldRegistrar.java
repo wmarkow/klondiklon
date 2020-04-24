@@ -23,5 +23,5 @@ public interface WorldRegistrar
     
     void registerObjectTypeDescriptors(ObjectTypeDescriptorsManager manager);
     
-    void copyResourcesToLocal();
+    void copyAssetsToLocalStorage();
 }

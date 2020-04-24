@@ -21,7 +21,7 @@ public class WorldsManager
     public KKMap loadWorld()
     {
         HomeWorldRegistrar hwr = new HomeWorldRegistrar();
-        hwr.copyResourcesToLocal();
+        hwr.copyAssetsToLocalStorage();
         hwr.registerFonts(ServiceRegistry.getInstance().getFontsManager());
         hwr.registerMusics(ServiceRegistry.getInstance().getMusicManager());
         hwr.registerSounds(ServiceRegistry.getInstance().getSoundManager());
