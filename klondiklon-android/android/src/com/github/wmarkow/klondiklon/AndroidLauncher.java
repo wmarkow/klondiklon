@@ -9,6 +9,9 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		GameplayService.getInstance().assetsCopyService = new AndroidAssetsCopyService();
+
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new GameEntryPoint(), config);
 	}
