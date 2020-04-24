@@ -29,7 +29,8 @@ public class WorldsManager
         hwr.registerStorageItemDescriptors(GameplayService.getInstance().getStorageItemDescriptorsManager());
         hwr.registerObjectTypeDescriptors(GameplayService.getInstance().getObjectTypeDescriptorsManager());
 
-        File file = new File(Gdx.files.getLocalStoragePath() + WorldRegistrar.WORLDS_DIR_NAME + "\\home\\home.tmx");
+        File file = new File(Gdx.files.getLocalStoragePath() + WorldRegistrar.WORLDS_DIR_NAME + File.separator + "home"
+                + File.separator + "home.tmx");
         TMXMapReader tmxMapReader = new TMXMapReader();
         Map tmxMap = null;
         try
