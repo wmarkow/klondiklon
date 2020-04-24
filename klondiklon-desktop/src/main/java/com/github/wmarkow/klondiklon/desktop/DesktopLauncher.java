@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
 import com.github.wmarkow.klondiklon.GameEntryPoint;
+import com.github.wmarkow.klondiklon.GameplayService;
 
 public class DesktopLauncher
 {
@@ -19,6 +20,8 @@ public class DesktopLauncher
         config.height = LwjglApplicationConfiguration.getDesktopDisplayMode().height;
         // config.width = 1024;
         // config.height = 768;
+
+        GameplayService.getInstance().resourcesToLocalCopier = new ResourcesFromClasspatchToLocalCopier();
 
         new LwjglApplication(new GameEntryPoint(), config);
     }

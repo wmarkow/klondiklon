@@ -49,7 +49,7 @@ public class GameEntryPoint extends ApplicationAdapter
         initDefaultResources();
 
         GameplayService.getInstance().loadGameContext();
-        // Klondiklon.gameplayService.playMainTheme();
+        GameplayService.getInstance().playMainTheme();
         coordinateCalculator = new CoordinateCalculator();
         batch = new SpriteBatch();
 

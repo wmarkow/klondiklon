@@ -21,7 +21,7 @@ public class WorldsManager
     public KKMap loadWorld()
     {
         HomeWorldRegistrar hwr = new HomeWorldRegistrar();
-        hwr.copyResourcesToInternal();
+        hwr.copyResourcesToLocal();
         hwr.registerFonts(ServiceRegistry.getInstance().getFontsManager());
         hwr.registerMusics(ServiceRegistry.getInstance().getMusicManager());
         hwr.registerSounds(ServiceRegistry.getInstance().getSoundManager());
@@ -40,8 +40,7 @@ public class WorldsManager
             throw new RuntimeException(e);
         }
 
-        KKMap libGdxMap = new KKMap(tmxMap, new MapObjectsFactory());
-
-        return libGdxMap;
+        return new KKMap(tmxMap, new MapObjectsFactory());
+        // return new KKMap(new Map());
     }
 }

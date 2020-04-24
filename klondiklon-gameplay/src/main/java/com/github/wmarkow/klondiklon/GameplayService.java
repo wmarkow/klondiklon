@@ -10,12 +10,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
 import com.github.wmarkow.klondiklon.map.KKMapIf;
-import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.music.MusicsRegistrar;
 import com.github.wmarkow.klondiklon.objects.ObjectTypeDescriptorsManager;
 import com.github.wmarkow.klondiklon.objects.StorageItemDescriptor;
@@ -41,6 +39,7 @@ public class GameplayService
     private ObjectTypeDescriptorsManager objectTypeDescriptorsManager;
     private StorageItemDescriptorsManager storageItemDescriptorsManager;
     private KKUi ui;
+    public ResourcesToLocalCopierIf resourcesToLocalCopier;
 
     private Player player;
     private Warehouse warehouse;
