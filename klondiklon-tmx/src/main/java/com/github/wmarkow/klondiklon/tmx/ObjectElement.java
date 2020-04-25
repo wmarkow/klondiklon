@@ -7,20 +7,50 @@ import org.simpleframework.xml.Root;
 public class ObjectElement
 {
     @Attribute(name = "id")
-    int id;
+    private int id;
 
     @Attribute(name = "gid")
-    int gid;
+    private int gid;
 
     @Attribute(name = "x")
-    double x;
+    private double x;
 
     @Attribute(name = "y")
-    double y;
+    private double y;
 
     @Attribute(name = "width")
-    int width;
+    private double width;
 
     @Attribute(name = "height")
-    int height;
+    private double height;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public int getGid()
+    {
+        return gid;
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
+    }
+
+    public double getWidth()
+    {
+        return width;
+    }
+
+    public double getHeight()
+    {
+        return height;
+    }
 }

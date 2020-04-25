@@ -10,11 +10,26 @@ import org.simpleframework.xml.Root;
 public class ObjectGroupElement
 {
     @Attribute(name = "id")
-    int id;
+    private int id;
 
     @Attribute(name = "name")
-    String name;
+    private String name;
 
     @ElementList(inline = true, name = "object")
-    List<ObjectElement> objects;
+    private List<ObjectElement> objects;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public List<ObjectElement> getObjects()
+    {
+        return objects;
+    }
 }

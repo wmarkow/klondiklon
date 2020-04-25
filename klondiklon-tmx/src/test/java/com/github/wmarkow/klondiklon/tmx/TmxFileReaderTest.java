@@ -3,6 +3,8 @@ package com.github.wmarkow.klondiklon.tmx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class TmxFileReaderTest
@@ -71,5 +73,25 @@ public class TmxFileReaderTest
 
             assertEquals(40, columns.length);
         }
+    }
+
+    @Test
+    public void testReadForObjectGroup() throws Exception
+    {
+        MapElement mapElement = tmxReader.readTmx("src/test/resources/home.tmx");
+
+        assertEquals(2, mapElement.getObjectGroup().getId());
+        assertEquals("objects", mapElement.getObjectGroup().getName());
+
+        List<ObjectElement> objects = mapElement.getObjectGroup().getObjects();
+        assertEquals(202, objects.size());
+
+        ObjectElement firstObject = objects.get(0);
+        assertEquals(1, firstObject.getGid());
+        assertEquals(Double.doubleToLongBits(99.0), Double.doubleToLongBits(firstObject.getHeight()));
+        assertEquals(1, firstObject.getId());
+        assertEquals(Double.doubleToLongBits(152.0), Double.doubleToLongBits(firstObject.getWidth()));
+        assertEquals(Double.doubleToLongBits(2380), Double.doubleToLongBits(firstObject.getX()));
+        assertEquals(Double.doubleToLongBits(2460), Double.doubleToLongBits(firstObject.getY()));
     }
 }
