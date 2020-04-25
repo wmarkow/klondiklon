@@ -12,6 +12,7 @@
 		<module>klondiklon-libgdx</module>
 		<module>klondiklon-desktop</module>
 		<module>klondiklon-gameplay</module>
+		<module>klondiklon-tmx</module>
 		<module>klondiklon-test</module>
 	</modules>
 
