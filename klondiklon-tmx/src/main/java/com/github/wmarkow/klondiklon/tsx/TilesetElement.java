@@ -30,7 +30,10 @@ public class TilesetElement
 
     @Element(name = "image")
     private ImageElement image;
-    
+
+    @Element(name = "tile", required = false)
+    private TileElement tile;
+
     public String getVersion()
     {
         return version;
@@ -69,5 +72,10 @@ public class TilesetElement
     public ImageElement getImage()
     {
         return image;
+    }
+
+    public TileElement getTile()
+    {
+        return tile;
     }
 }
