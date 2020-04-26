@@ -9,19 +9,19 @@ import com.github.wmarkow.klondiklon.tiled.tmx.TmxFileReader;
 import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
 import com.github.wmarkow.klondiklon.tiled.tsx.TsxFileReader;
 
-public class TiledMap
+public class TmxTiledMap
 {
 
     private MapElement tmxMapElement;
     private List<Tileset> tsxTilesets = new ArrayList<Tileset>();
 
-    private TiledMap() {
+    private TmxTiledMap() {
 
     }
 
-    public static TiledMap readFromTmx(String tmxPath) throws Exception
+    public static TmxTiledMap readFromTmx(String tmxPath) throws Exception
     {
-        TiledMap result = new TiledMap();
+        TmxTiledMap result = new TmxTiledMap();
 
         // read TMX
         TmxFileReader tmxFileReader = new TmxFileReader();

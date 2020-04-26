@@ -2,12 +2,12 @@ package com.github.wmarkow.klondiklon.tiled;
 
 import org.junit.Test;
 
-public class TiledMapTest
+public class TmxTiledMapTest
 {
 
     @Test
     public void testReadForNoException() throws Exception
     {
-        TiledMap tiledMap = TiledMap.readFromTmx("src/test/resources/home.tmx");
+        TmxTiledMap tiledMap = TmxTiledMap.readFromTmx("src/test/resources/home.tmx");
     }
 }
