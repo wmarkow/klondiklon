@@ -29,6 +29,8 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.tiled.TmxLayer;
+import com.github.wmarkow.klondiklon.tiled.TmxTileLayer;
 import com.github.wmarkow.klondiklon.tiled.TmxTiledMap;
 
 public class KKMap extends TiledMap implements KKMapIf
@@ -189,7 +191,7 @@ public class KKMap extends TiledMap implements KKMapIf
         mapProperties.put("tilewidth", tiledMap.getTileWidth());
         mapProperties.put("tileheight", tiledMap.getTileHeight());
 
-        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        for (TmxLayer tiledLayer : tiledMap.getLayers())
         {
             MapLayer libGdxMapLayer = toLibGdxMapLayer(tiledLayer);
             if (libGdxMapLayer != null)
@@ -199,20 +201,21 @@ public class KKMap extends TiledMap implements KKMapIf
         }
     }
 
-    private MapLayer toLibGdxMapLayer(org.mapeditor.core.MapLayer tiledMapLayer)
+    private MapLayer toLibGdxMapLayer(TmxLayer tiledMapLayer)
     {
-        final int mapWidth = tiledMapLayer.getMap().getWidth();
-        final int mapHeight = tiledMapLayer.getMap().getHeight();
-        final int tileWidth = tiledMapLayer.getMap().getTileWidth();
-        final int tileHeight = tiledMapLayer.getMap().getTileHeight();
-
         MapLayer libGdxMapLayer = null;
 
-        if (tiledMapLayer instanceof org.mapeditor.core.TileLayer)
+        if (tiledMapLayer instanceof TmxTileLayer)
         {
-            libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
+            TmxTileLayer tmxTileLayer = (TmxTileLayer)tiledMapLayer;
+            int width = tmxTileLayer.getWidth();
+            int height = tmxTileLayer.getHeight();
+            int tileWidth = tmxTileLayer.getTileWidth();
+            int tileHeight = tmxTileLayer.getTileHeight();
+            
+            libGdxMapLayer = new TiledMapTileLayer(width, height, tileWidth, tileHeight);
 
-            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (org.mapeditor.core.TileLayer) tiledMapLayer);
+            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TmxTileLayer) tiledMapLayer);
         } else if (tiledMapLayer instanceof org.mapeditor.core.ObjectGroup)
         {
             libGdxMapLayer = new KKObjectsLayer();
@@ -227,42 +230,15 @@ public class KKMap extends TiledMap implements KKMapIf
         }
 
         libGdxMapLayer.setName(tiledMapLayer.getName());
-        if (tiledMapLayer.getOffsetX() != null)
-        {
-            libGdxMapLayer.setOffsetX(tiledMapLayer.getOffsetX());
-        }
-        if (tiledMapLayer.getOffsetY() != null)
-        {
-            libGdxMapLayer.setOffsetY(tiledMapLayer.getOffsetY());
-        }
-        if (tiledMapLayer.getOpacity() != null)
-        {
-            libGdxMapLayer.setOpacity(tiledMapLayer.getOpacity());
-        }
-        if (tiledMapLayer.isVisible() == null)
-        {
-            libGdxMapLayer.setVisible(true);
-        } else
-        {
-            libGdxMapLayer.setVisible(tiledMapLayer.isVisible());
-        }
-
-        org.mapeditor.core.Properties properties = tiledMapLayer.getProperties();
-        for (org.mapeditor.core.Property tiledProperty : properties.getProperties())
-        {
-            final String name = tiledProperty.getName();
-            final String value = tiledProperty.getValue();
-
-            libGdxMapLayer.getProperties().put(name, value);
-        }
+        libGdxMapLayer.setVisible(true);
 
         return libGdxMapLayer;
     }
 
-    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, org.mapeditor.core.TileLayer tiledMapLayer)
+    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, TmxTileLayer tiledMapLayer)
     {
-        final int mapWidth = tiledMapLayer.getMap().getWidth();
-        final int mapHeight = tiledMapLayer.getMap().getHeight();
+        final int mapWidth = tiledMapLayer.getWidth();
+        final int mapHeight = tiledMapLayer.getHeight();
 
         for (int y = 0; y < mapHeight; y++)
         {

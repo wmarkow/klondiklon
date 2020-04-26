@@ -42,6 +42,11 @@ public class TmxTiledMap
     {
         return tmxMapElement.getTileheight();
     }
+    
+    public List<TmxLayer> getLayers()
+    {
+        
+    }
 
     public static TmxTiledMap readFromTmx(String tmxPath) throws Exception
     {
