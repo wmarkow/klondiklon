@@ -54,4 +54,30 @@ public class TsxFileReaderTest
         assertEquals("TYPE", tileElement.getProperties().get(0).getName());
         assertEquals("BARN", tileElement.getProperties().get(0).getValue());
     }
+    
+    @Test
+    public void testReadForWindmill() throws Exception
+    {
+        TilesetElement tilesetElement = tsxReader.readTsx("src/test/resources/object_windmill.tsx");
+
+        assertEquals(3, tilesetElement.getColumns());
+        assertEquals("object_windmill", tilesetElement.getName());
+        assertEquals(3, tilesetElement.getTilecount());
+        assertEquals("1.3.1", tilesetElement.getTiledversion());
+        assertEquals(516, tilesetElement.getTileheight());
+        assertEquals(479, tilesetElement.getTilewidth());
+        assertEquals("1.2", tilesetElement.getVersion());
+
+        ImageElement imageElement = tilesetElement.getImage();
+        assertEquals(516, imageElement.getHeight());
+        assertEquals(1437, imageElement.getWidth());
+        assertEquals("windmill.png", imageElement.getSource());
+
+        TileElement tileElement = tilesetElement.getTile();
+        assertEquals(0, tileElement.getId());
+        assertEquals(0, tileElement.getProperties().size());
+        assertEquals(3, tileElement.getAnimationFrames().size());
+        assertEquals(0, tileElement.getAnimationFrames().get(0).getTileid());
+        assertEquals(150, tileElement.getAnimationFrames().get(0).getDuration());
+    }
 }
