@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.tsx;
+package com.github.wmarkow.klondiklon.tiled.tsx;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
