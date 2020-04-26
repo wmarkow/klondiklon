@@ -2,6 +2,7 @@ package com.github.wmarkow.klondiklon.map;
 
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.tiled.TmxTiledMap;
 
 public interface KKMapIf
 {
@@ -17,5 +18,5 @@ public interface KKMapIf
     
     void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates);
     
-    org.mapeditor.core.Map getTmxMap();
+    TmxTiledMap getTmxTiledMap();
 }

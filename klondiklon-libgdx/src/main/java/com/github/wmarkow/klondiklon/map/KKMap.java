@@ -154,7 +154,7 @@ public class KKMap extends TiledMap implements KKMapIf
     }
 
     @Override
-    public org.mapeditor.core.Map getTmxMap()
+    public TmxTiledMap getTmxTiledMap()
     {
         return tiledMap;
     }

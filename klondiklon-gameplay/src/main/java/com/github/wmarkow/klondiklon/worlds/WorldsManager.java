@@ -2,8 +2,6 @@ package com.github.wmarkow.klondiklon.worlds;
 
 import java.io.File;
 
-import org.mapeditor.core.Map;
-import org.mapeditor.io.TMXMapReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +11,7 @@ import com.github.wmarkow.klondiklon.HomeWorldRegistrar;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.objects.MapObjectsFactory;
+import com.github.wmarkow.klondiklon.tiled.TmxTiledMap;
 
 public class WorldsManager
 {
@@ -31,17 +30,16 @@ public class WorldsManager
 
         File file = new File(Gdx.files.getLocalStoragePath() + WorldRegistrar.WORLDS_DIR_NAME + File.separator + "home"
                 + File.separator + "home.tmx");
-        TMXMapReader tmxMapReader = new TMXMapReader();
-        Map tmxMap = null;
+
         try
         {
-            tmxMap = tmxMapReader.readMap(file.getAbsolutePath());
+            TmxTiledMap tmxTiledMap = TmxTiledMap.readFromTmx(file.getAbsolutePath());
+
+            return new KKMap(tmxTiledMap, new MapObjectsFactory());
+            // return new KKMap(new Map());
         } catch (Exception e)
         {
             throw new RuntimeException(e);
         }
-
-        return new KKMap(tmxMap, new MapObjectsFactory());
-        // return new KKMap(new Map());
     }
 }
