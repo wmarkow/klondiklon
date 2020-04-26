@@ -1,5 +1,6 @@
 package com.github.wmarkow.klondiklon.tiled;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,28 +15,30 @@ public class TiledMap
     private MapElement tmxMapElement;
     private List<Tileset> tsxTilesets = new ArrayList<Tileset>();
 
-    private TiledMap()
-    {
-        
+    private TiledMap() {
+
     }
-    
+
     public static TiledMap readFromTmx(String tmxPath) throws Exception
     {
         TiledMap result = new TiledMap();
-        
+
         // read TMX
         TmxFileReader tmxFileReader = new TmxFileReader();
         result.tmxMapElement = tmxFileReader.readTmx(tmxPath);
 
         // read TSXs
+        File tmxFile = new File(tmxPath);
+        File tmxDir = tmxFile.getParentFile();
         for (com.github.wmarkow.klondiklon.tiled.tmx.TilesetElement tmxTileset : result.tmxMapElement.getTilesets())
         {
             TsxFileReader tsxFileReader = new TsxFileReader();
-            TilesetElement tsxTileset = tsxFileReader.readTsx(tmxTileset.getSource());
+            File tsxFile = new File(tmxDir, tmxTileset.getSource());
+            TilesetElement tsxTileset = tsxFileReader.readTsx(tsxFile.getAbsolutePath());
 
             result.tsxTilesets.add(new Tileset(tmxTileset.getSource(), tmxTileset.getFirstgid(), tsxTileset));
         }
-        
+
         return result;
     }
 }

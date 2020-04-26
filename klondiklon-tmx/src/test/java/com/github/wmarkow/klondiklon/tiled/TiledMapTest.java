@@ -6,7 +6,7 @@ public class TiledMapTest
 {
 
     @Test
-    public void testRead() throws Exception
+    public void testReadForNoException() throws Exception
     {
         TiledMap tiledMap = TiledMap.readFromTmx("src/test/resources/home.tmx");
     }
