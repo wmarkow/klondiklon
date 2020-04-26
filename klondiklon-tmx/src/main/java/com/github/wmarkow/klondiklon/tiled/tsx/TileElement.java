@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.tsx;
+package com.github.wmarkow.klondiklon.tiled.tsx;
 
 import java.util.Collections;
 import java.util.List;

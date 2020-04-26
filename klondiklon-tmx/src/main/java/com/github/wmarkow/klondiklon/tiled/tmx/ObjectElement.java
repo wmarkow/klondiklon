@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.tmx;
+package com.github.wmarkow.klondiklon.tiled.tmx;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;

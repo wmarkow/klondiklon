@@ -1,17 +1,18 @@
-package com.github.wmarkow.klondiklon.tsx;
+package com.github.wmarkow.klondiklon.tiled.tmx;
 
 import java.io.File;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-public class TsxFileReader
+public class TmxFileReader
 {
-    public TilesetElement readTsx(String relativeFilePath) throws Exception
+
+    public MapElement readTmx(String relativeFilePath) throws Exception
     {
         Serializer serializer = new Persister();
         File source = new File(relativeFilePath);
 
-        return serializer.read(TilesetElement.class, source);
+        return serializer.read(MapElement.class, source);
     }
 }

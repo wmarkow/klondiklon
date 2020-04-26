@@ -5,6 +5,11 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+import com.github.wmarkow.klondiklon.tiled.tsx.ImageElement;
+import com.github.wmarkow.klondiklon.tiled.tsx.TileElement;
+import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
+import com.github.wmarkow.klondiklon.tiled.tsx.TsxFileReader;
+
 public class TsxFileReaderTest
 {
     private TsxFileReader tsxReader = new TsxFileReader();

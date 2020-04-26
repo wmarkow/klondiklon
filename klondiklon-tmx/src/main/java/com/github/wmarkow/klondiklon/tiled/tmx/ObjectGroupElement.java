@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.tmx;
+package com.github.wmarkow.klondiklon.tiled.tmx;
 
 import java.util.List;
 

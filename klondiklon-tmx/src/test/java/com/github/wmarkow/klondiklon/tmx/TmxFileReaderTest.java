@@ -7,6 +7,13 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.github.wmarkow.klondiklon.tiled.tmx.LayerDataElement;
+import com.github.wmarkow.klondiklon.tiled.tmx.LayerElement;
+import com.github.wmarkow.klondiklon.tiled.tmx.MapElement;
+import com.github.wmarkow.klondiklon.tiled.tmx.ObjectElement;
+import com.github.wmarkow.klondiklon.tiled.tmx.TilesetElement;
+import com.github.wmarkow.klondiklon.tiled.tmx.TmxFileReader;
+
 public class TmxFileReaderTest
 {
     private TmxFileReader tmxReader = new TmxFileReader();

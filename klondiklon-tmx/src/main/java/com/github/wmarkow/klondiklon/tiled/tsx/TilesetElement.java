@@ -1,4 +1,4 @@
-package com.github.wmarkow.klondiklon.tsx;
+package com.github.wmarkow.klondiklon.tiled.tsx;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
