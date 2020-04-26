@@ -29,23 +29,24 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.tiled.TmxTiledMap;
 
 public class KKMap extends TiledMap implements KKMapIf
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKMap.class);
 
-    private org.mapeditor.core.Map tiledMap;
+    private TmxTiledMap tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
     private KKMapObjectsFactoryIf objectsFactory = new KKMapObjectsFactory();
 
-    public KKMap(org.mapeditor.core.Map tiledMap) {
+    public KKMap(TmxTiledMap tiledMap) {
         this.tiledMap = tiledMap;
 
         wrap();
     }
 
-    public KKMap(org.mapeditor.core.Map tiledMap, KKMapObjectsFactoryIf objectsFactory) {
+    public KKMap(TmxTiledMap tiledMap, KKMapObjectsFactoryIf objectsFactory) {
         this.tiledMap = tiledMap;
         this.objectsFactory = objectsFactory;
 
@@ -187,19 +188,6 @@ public class KKMap extends TiledMap implements KKMapIf
         mapProperties.put("height", tiledMap.getHeight());
         mapProperties.put("tilewidth", tiledMap.getTileWidth());
         mapProperties.put("tileheight", tiledMap.getTileHeight());
-        mapProperties.put("hexsidelength", tiledMap.getHexSideLength());
-        if (tiledMap.getStaggerAxis() != null)
-        {
-            mapProperties.put("staggeraxis", tiledMap.getStaggerAxis().toString());
-        }
-        if (tiledMap.getStaggerIndex() != null)
-        {
-            mapProperties.put("staggerindex", tiledMap.getStaggerIndex().toString());
-        }
-        if (tiledMap.getBackgroundcolor() != null)
-        {
-            mapProperties.put("backgroundcolor", tiledMap.getBackgroundcolor());
-        }
 
         for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
         {

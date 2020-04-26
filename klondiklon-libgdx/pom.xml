@@ -17,6 +17,12 @@
 			<artifactId>klondiklon-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.wmarkow.klondiklon</groupId>
+			<artifactId>klondiklon-tmx</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>

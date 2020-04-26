@@ -11,12 +11,36 @@ import com.github.wmarkow.klondiklon.tiled.tsx.TsxFileReader;
 
 public class TmxTiledMap
 {
-
     private MapElement tmxMapElement;
     private List<Tileset> tsxTilesets = new ArrayList<Tileset>();
 
     private TmxTiledMap() {
 
+    }
+
+    public String getOrientation()
+    {
+        return tmxMapElement.getOrientation();
+    }
+
+    public int getWidth()
+    {
+        return tmxMapElement.getWidth();
+    }
+
+    public int getHeight()
+    {
+        return tmxMapElement.getHeight();
+    }
+
+    public int getTileWidth()
+    {
+        return tmxMapElement.getTilewidth();
+    }
+
+    public int getTileHeight()
+    {
+        return tmxMapElement.getTileheight();
     }
 
     public static TmxTiledMap readFromTmx(String tmxPath) throws Exception
