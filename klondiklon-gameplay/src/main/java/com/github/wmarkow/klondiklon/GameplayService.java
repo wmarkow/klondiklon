@@ -125,13 +125,15 @@ public class GameplayService
         tmxMapWriter.settings.layerEncodingMethod = TMXMapWriter.Settings.LAYER_ENCODING_METHOD_CSV;
 
         String tmxFilePath = Gdx.files.getLocalStoragePath() + "/worlds/home/home.tmx";
-        try
-        {
-            tmxMapWriter.writeMap(currentWorldMap.getTmxMap(), tmxFilePath);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        // TODO: for now not supported yet
+
+        // try
+        // {
+        // tmxMapWriter.writeMap(currentWorldMap.getTmxMap(), tmxFilePath);
+        // } catch (IOException e)
+        // {
+        // e.printStackTrace();
+        // }
 
         savePlayer(player);
         saveWarehouse(warehouse);
