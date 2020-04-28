@@ -4,7 +4,7 @@ public abstract class TmxLayer
 {
     private TmxTiledMap parentMap;
 
-    public TmxLayer(TmxTiledMap parentMap) {
+    TmxLayer(TmxTiledMap parentMap) {
         this.parentMap = parentMap;
     }
 
