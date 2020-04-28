@@ -1,13 +1,12 @@
 package com.github.wmarkow.klondiklon;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.map.KKCameraController;
-import com.github.wmarkow.klondiklon.map.KKMap;
 import com.github.wmarkow.klondiklon.map.KKMapRenderer;
 import com.github.wmarkow.klondiklon.resources.graphics.FontsManager;
+import com.github.wmarkow.klondiklon.resources.graphics.ImageReaderIf;
 import com.github.wmarkow.klondiklon.resources.graphics.ShadersManager;
 import com.github.wmarkow.klondiklon.resources.graphics.SkinsManager;
 import com.github.wmarkow.klondiklon.resources.graphics.TexturesManager;
@@ -25,12 +24,13 @@ public class ServiceRegistry
     private EventBus eventBus = new EventBus();
     private OrthographicCamera camera;
     private KKCameraController cameraController;
-    private KKMapRenderer renderer = new KKMapRenderer();
+    private KKMapRenderer renderer;
+    public ImageReaderIf imageReader;
 
     private static ServiceRegistry instance = new ServiceRegistry();
 
     private ServiceRegistry() {
-        init();
+        
     }
 
     public final static ServiceRegistry getInstance()
@@ -88,7 +88,7 @@ public class ServiceRegistry
         return renderer;
     }
 
-    private void init()
+    public void init()
     {
         texturesManager.init();
         shadersManager.init();
@@ -105,5 +105,7 @@ public class ServiceRegistry
 
         /* create camera controller */
         cameraController = new KKCameraController(camera, eventBus);
+        
+        renderer = new KKMapRenderer();
     }
 }

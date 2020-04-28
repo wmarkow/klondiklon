@@ -1,17 +1,12 @@
 package com.github.wmarkow.klondiklon.map;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
@@ -19,16 +14,11 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntArray;
-import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
-import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
-import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
-import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.resources.graphics.ImageReaderIf;
 import com.github.wmarkow.klondiklon.tiled.TileInfo;
 import com.github.wmarkow.klondiklon.tiled.TmxLayer;
 import com.github.wmarkow.klondiklon.tiled.TmxObjectGroupLayer;
@@ -194,7 +184,7 @@ public class KKMap extends TiledMap implements KKMapIf
         MapProperties mapProperties = getProperties();
         if (tiledMap.getOrientation() != null)
         {
-            mapProperties.put("orientation", tiledMap.getOrientation().toString());
+            mapProperties.put("orientation", tiledMap.getOrientation());
         }
         mapProperties.put("width", tiledMap.getWidth());
         mapProperties.put("height", tiledMap.getHeight());
@@ -207,7 +197,7 @@ public class KKMap extends TiledMap implements KKMapIf
             if (libGdxMapLayer != null)
             {
                 getLayers().add(libGdxMapLayer);
-            }
+            }          
         }
     }
 
@@ -259,15 +249,20 @@ public class KKMap extends TiledMap implements KKMapIf
                 {
                     continue;
                 }
-                final String sourceFilePath = tileInfo.getImagePath();
+                final String imageFileAbsolutePath = tileInfo.getAbsoluteImagePath();
                 final int tileId = tileInfo.getGid();
 
-                TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+                TextureKey textureKey = new TextureKey(imageFileAbsolutePath, tileId);
                 if (!texturesCache.containsKey(textureKey))
                 {
-                    // TODO: read image as Pixmap here
-                    // Pixmap pixmap = toPixmap(tile.getImage());
-                    // texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+                    int startX = tileInfo.getStartX();
+                    int startY = tileInfo.getStartY();
+                    int width = tileInfo.getWidth();
+                    int height = tileInfo.getHeight();
+
+                    ImageReaderIf imageReader = ServiceRegistry.getInstance().imageReader;
+                    Pixmap pixmap = imageReader.readImage(imageFileAbsolutePath, startX, startY, width, height);
+                    texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
                 }
 
                 TextureRegion textureRegion = texturesCache.get(textureKey);
@@ -358,56 +353,31 @@ public class KKMap extends TiledMap implements KKMapIf
         // }
     }
 
-    private void loadTexturesFromTileSet(org.mapeditor.core.TileSet tileSet)
-    {
-        if (tileSet == null)
-        {
-            throw new IllegalArgumentException("TileSet must not be null");
-        }
-        if (tileSet.getTilecount() == null)
-        {
-            throw new IllegalArgumentException("tilecount in TileSet must not be null");
-        }
-
-        final String sourceFilePath = tileSet.getTilebmpFile();
-        for (int q = 0; q < tileSet.getTilecount(); q++)
-        {
-            final org.mapeditor.core.Tile tile = tileSet.getTile(q);
-            final int tileId = tile.getId();
-
-            TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-            if (!texturesCache.containsKey(textureKey))
-            {
-                Pixmap pixmap = toPixmap(tile.getImage());
-                texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
-            }
-        }
-    }
-
-    private Pixmap toPixmap(BufferedImage bi)
-    {
-        final int imageWidth = bi.getWidth();
-        final int imageHeight = bi.getHeight();
-
-        Pixmap pixmap = new Pixmap(imageWidth, imageHeight, Format.RGBA8888);
-
-        for (int xx = 0; xx < imageWidth; xx++)
-        {
-            for (int yy = 0; yy < imageHeight; yy++)
-            {
-                final int rgb = bi.getRGB(xx, yy);
-                final float r = bi.getColorModel().getRed(rgb);
-                final float g = bi.getColorModel().getGreen(rgb);
-                final float b = bi.getColorModel().getBlue(rgb);
-                final float a = bi.getColorModel().getAlpha(rgb);
-                final int rgba = Color.rgba8888(r / 255f, g / 255f, b / 255f, a / 255f);
-
-                pixmap.drawPixel(xx, yy, rgba);
-            }
-        }
-
-        return pixmap;
-    }
+    // private void loadTexturesFromTileSet(org.mapeditor.core.TileSet tileSet)
+    // {
+    // if (tileSet == null)
+    // {
+    // throw new IllegalArgumentException("TileSet must not be null");
+    // }
+    // if (tileSet.getTilecount() == null)
+    // {
+    // throw new IllegalArgumentException("tilecount in TileSet must not be null");
+    // }
+    //
+    // final String sourceFilePath = tileSet.getTilebmpFile();
+    // for (int q = 0; q < tileSet.getTilecount(); q++)
+    // {
+    // final org.mapeditor.core.Tile tile = tileSet.getTile(q);
+    // final int tileId = tile.getId();
+    //
+    // TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+    // if (!texturesCache.containsKey(textureKey))
+    // {
+    // Pixmap pixmap = toPixmap(tile.getImage());
+    // texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+    // }
+    // }
+    // }
 
     private org.mapeditor.core.MapObject getTiledObjectById(org.mapeditor.core.Map tiledMap, int id)
     {

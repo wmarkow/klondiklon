@@ -45,6 +45,7 @@ public class GameEntryPoint extends ApplicationAdapter
     @Override
     public void create()
     {
+        ServiceRegistry.getInstance().init();
         fontsManager = ServiceRegistry.getInstance().getFontsManager();
         initDefaultResources();
 

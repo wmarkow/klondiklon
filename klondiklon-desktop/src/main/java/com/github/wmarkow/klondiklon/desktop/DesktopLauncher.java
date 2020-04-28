@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
 import com.github.wmarkow.klondiklon.GameEntryPoint;
 import com.github.wmarkow.klondiklon.GameplayService;
+import com.github.wmarkow.klondiklon.ServiceRegistry;
 
 public class DesktopLauncher
 {
@@ -21,6 +22,7 @@ public class DesktopLauncher
         // config.width = 1024;
         // config.height = 768;
 
+        ServiceRegistry.getInstance().imageReader = new DesktopImageReader();
         GameplayService.getInstance().assetsCopyService = new DesktopAssetsCopyService();
 
         new LwjglApplication(new GameEntryPoint(), config);
