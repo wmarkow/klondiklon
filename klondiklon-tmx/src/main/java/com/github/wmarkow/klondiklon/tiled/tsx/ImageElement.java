@@ -15,6 +15,11 @@ public class ImageElement
     @Attribute(name = "height")
     private int height;
 
+    /***
+     * Gets image path, relative to TSX file.
+     * 
+     * @return
+     */
     public String getSource()
     {
         return source;

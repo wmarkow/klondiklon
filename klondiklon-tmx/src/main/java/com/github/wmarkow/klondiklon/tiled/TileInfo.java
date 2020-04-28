@@ -6,16 +6,16 @@ package com.github.wmarkow.klondiklon.tiled;
  */
 public class TileInfo
 {
-    private String imagePath;
+    private String absoluteImagePath;
     private int gid;
     private int startX;
     private int startY;
     private int width;
     private int height;
 
-    public TileInfo(String imagePath, int gid, int startX, int startY, int width, int height) {
+    public TileInfo(String absoluteImagePath, int gid, int startX, int startY, int width, int height) {
         this.gid = gid;
-        this.imagePath = imagePath;
+        this.absoluteImagePath = absoluteImagePath;
         this.startX = startX;
         this.startY = startY;
         this.width = width;
@@ -23,14 +23,14 @@ public class TileInfo
     }
 
     /***
-     * Gets the path to the tile image. Path is relative to the TMX file. Remark: it
-     * is possible that the image contains many tiles inside.
+     * Gets the absolute path to the tile image. Remark: it is possible that the
+     * image contains many tiles inside.
      * 
      * @return
      */
-    public String getImagePath()
+    public String getAbsoluteImagePath()
     {
-        return imagePath;
+        return absoluteImagePath;
     }
 
     public int getGid()

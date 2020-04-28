@@ -1,5 +1,7 @@
 package com.github.wmarkow.klondiklon.tiled;
 
+import java.io.File;
+
 import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
 
 /***
@@ -10,20 +12,20 @@ import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
 public class Tileset
 {
     private int firstGid;
-    private String source;
+    private String tsxPath;
     private TilesetElement tilesetElement;
 
     /***
      * 
      * @param source
-     *            TSX file path, comes from TMX file
+     *            TSX file path
      * @param firstGid
      *            first gid in this tileset, comes from TMX file
      * @param tilesetElement
      *            comes from TSX file
      */
-    public Tileset(String source, int firstGid, TilesetElement tilesetElement) {
-        this.source = source;
+    public Tileset(String tsxPath, int firstGid, TilesetElement tilesetElement) {
+        this.tsxPath = tsxPath;
         this.firstGid = firstGid;
         this.tilesetElement = tilesetElement;
     }
@@ -46,12 +48,17 @@ public class Tileset
             return null;
         }
 
+        File tsxFile = new File(tsxPath);
+        File tsxDir = tsxFile.getParentFile();
+        File imageFile = new File(tsxDir, tilesetElement.getImage().getSource());
+
         if (tileGid == getFirstGid() && tileGid == getLastGid())
         {
             // only one tile in the tileset
             int width = tilesetElement.getImage().getWidth();
             int height = tilesetElement.getImage().getHeight();
-            return new TileInfo(tilesetElement.getImage().getSource(), tileGid, 0, 0, width, height);
+
+            return new TileInfo(imageFile.getAbsolutePath(), tileGid, 0, 0, width, height);
         }
 
         int tileNumber = tileGid - getFirstGid();
@@ -62,7 +69,7 @@ public class Tileset
         int startX = column * width;
         int startY = row * height;
 
-        return new TileInfo(tilesetElement.getImage().getSource(), tileGid, startX, startY, width, height);
+        return new TileInfo(imageFile.getAbsolutePath(), tileGid, startX, startY, width, height);
     }
 
     public int getFirstGid()

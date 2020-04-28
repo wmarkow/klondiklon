@@ -64,7 +64,7 @@ public class TmxTiledMap
 
         return layers;
     }
-    
+
     public List<Tileset> getTilests()
     {
         return tsxTilesets;
@@ -87,7 +87,7 @@ public class TmxTiledMap
             File tsxFile = new File(tmxDir, tmxTileset.getSource());
             TilesetElement tsxTileset = tsxFileReader.readTsx(tsxFile.getAbsolutePath());
 
-            result.tsxTilesets.add(new Tileset(tmxTileset.getSource(), tmxTileset.getFirstgid(), tsxTileset));
+            result.tsxTilesets.add(new Tileset(tsxFile.getAbsolutePath(), tmxTileset.getFirstgid(), tsxTileset));
         }
 
         return result;
