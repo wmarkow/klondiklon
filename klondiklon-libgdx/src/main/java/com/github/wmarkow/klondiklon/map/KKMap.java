@@ -29,23 +29,28 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxIsoCoordinates;
 import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
+import com.github.wmarkow.klondiklon.tiled.TileInfo;
+import com.github.wmarkow.klondiklon.tiled.TmxLayer;
+import com.github.wmarkow.klondiklon.tiled.TmxObjectGroupLayer;
+import com.github.wmarkow.klondiklon.tiled.TmxTileLayer;
+import com.github.wmarkow.klondiklon.tiled.TmxTiledMap;
 
 public class KKMap extends TiledMap implements KKMapIf
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKMap.class);
 
-    private org.mapeditor.core.Map tiledMap;
+    private TmxTiledMap tiledMap;
     private Map<TextureKey, TextureRegion> texturesCache = new HashMap<TextureKey, TextureRegion>();
     private boolean flipY = true;
     private KKMapObjectsFactoryIf objectsFactory = new KKMapObjectsFactory();
 
-    public KKMap(org.mapeditor.core.Map tiledMap) {
+    public KKMap(TmxTiledMap tiledMap) {
         this.tiledMap = tiledMap;
 
         wrap();
     }
 
-    public KKMap(org.mapeditor.core.Map tiledMap, KKMapObjectsFactoryIf objectsFactory) {
+    public KKMap(TmxTiledMap tiledMap, KKMapObjectsFactoryIf objectsFactory) {
         this.tiledMap = tiledMap;
         this.objectsFactory = objectsFactory;
 
@@ -95,65 +100,73 @@ public class KKMap extends TiledMap implements KKMapIf
     @Override
     public void removeObject(KKMapObjectIf object)
     {
-        KKObjectsLayer objectsLayer = getObjectsLayer();
+        // TODO: for now not supported yet
 
-        if (objectsLayer == null)
-        {
-            return;
-        }
-
-        objectsLayer.removeObject(object);
-
-        // delete the object also from TMX map
-        final int id = object.getId();
-        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
-        {
-            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
-            {
-                List<org.mapeditor.core.MapObject> objectsToRemove = new ArrayList<org.mapeditor.core.MapObject>();
-
-                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
-                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
-                {
-                    if (mapObject.getId().equals(id))
-                    {
-                        objectsToRemove.add(mapObject);
-                    }
-                }
-
-                for (org.mapeditor.core.MapObject objectToRemove : objectsToRemove)
-                {
-                    objectGroup.removeObject(objectToRemove);
-                }
-            }
-        }
+        // KKObjectsLayer objectsLayer = getObjectsLayer();
+        //
+        // if (objectsLayer == null)
+        // {
+        // return;
+        // }
+        //
+        // objectsLayer.removeObject(object);
+        //
+        // // delete the object also from TMX map
+        // final int id = object.getId();
+        // for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        // {
+        // if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
+        // {
+        // List<org.mapeditor.core.MapObject> objectsToRemove = new
+        // ArrayList<org.mapeditor.core.MapObject>();
+        //
+        // org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup)
+        // tiledLayer;
+        // for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
+        // {
+        // if (mapObject.getId().equals(id))
+        // {
+        // objectsToRemove.add(mapObject);
+        // }
+        // }
+        //
+        // for (org.mapeditor.core.MapObject objectToRemove : objectsToRemove)
+        // {
+        // objectGroup.removeObject(objectToRemove);
+        // }
+        // }
+        // }
     }
 
     @Override
     public void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates)
     {
-        KKMapObject gdxMapObject = (KKMapObject) object;
-        gdxMapObject.setX(newCoordinates.x);
-        gdxMapObject.setY(newCoordinates.y);
+        // TODO: for now not supported yet
 
-        // save the new coordinates also in TMX map
-        final int id = object.getId();
-
-        org.mapeditor.core.MapObject tiledMapObject = getTiledObjectById(tiledMap, id);
-        // in TMX objects coordinates are in TMX Isometric, need to convert
-        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-        final int tileMapHeightInTiles = tiledMap.getHeight();
-        final int tileHeightInPixels = tiledMap.getTileHeight();
-
-        TmxIsoCoordinates tmxIsoCoordinates = coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
-                tileHeightInPixels, newCoordinates);
-
-        tiledMapObject.setX(tmxIsoCoordinates.x);
-        tiledMapObject.setY(tmxIsoCoordinates.y);
+        // KKMapObject gdxMapObject = (KKMapObject) object;
+        // gdxMapObject.setX(newCoordinates.x);
+        // gdxMapObject.setY(newCoordinates.y);
+        //
+        // // save the new coordinates also in TMX map
+        // final int id = object.getId();
+        //
+        // org.mapeditor.core.MapObject tiledMapObject = getTiledObjectById(tiledMap,
+        // id);
+        // // in TMX objects coordinates are in TMX Isometric, need to convert
+        // CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        // final int tileMapHeightInTiles = tiledMap.getHeight();
+        // final int tileHeightInPixels = tiledMap.getTileHeight();
+        //
+        // TmxIsoCoordinates tmxIsoCoordinates =
+        // coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
+        // tileHeightInPixels, newCoordinates);
+        //
+        // tiledMapObject.setX(tmxIsoCoordinates.x);
+        // tiledMapObject.setY(tmxIsoCoordinates.y);
     }
 
     @Override
-    public org.mapeditor.core.Map getTmxMap()
+    public TmxTiledMap getTmxTiledMap()
     {
         return tiledMap;
     }
@@ -187,21 +200,8 @@ public class KKMap extends TiledMap implements KKMapIf
         mapProperties.put("height", tiledMap.getHeight());
         mapProperties.put("tilewidth", tiledMap.getTileWidth());
         mapProperties.put("tileheight", tiledMap.getTileHeight());
-        mapProperties.put("hexsidelength", tiledMap.getHexSideLength());
-        if (tiledMap.getStaggerAxis() != null)
-        {
-            mapProperties.put("staggeraxis", tiledMap.getStaggerAxis().toString());
-        }
-        if (tiledMap.getStaggerIndex() != null)
-        {
-            mapProperties.put("staggerindex", tiledMap.getStaggerIndex().toString());
-        }
-        if (tiledMap.getBackgroundcolor() != null)
-        {
-            mapProperties.put("backgroundcolor", tiledMap.getBackgroundcolor());
-        }
 
-        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        for (TmxLayer tiledLayer : tiledMap.getLayers())
         {
             MapLayer libGdxMapLayer = toLibGdxMapLayer(tiledLayer);
             if (libGdxMapLayer != null)
@@ -211,25 +211,26 @@ public class KKMap extends TiledMap implements KKMapIf
         }
     }
 
-    private MapLayer toLibGdxMapLayer(org.mapeditor.core.MapLayer tiledMapLayer)
+    private MapLayer toLibGdxMapLayer(TmxLayer tiledMapLayer)
     {
-        final int mapWidth = tiledMapLayer.getMap().getWidth();
-        final int mapHeight = tiledMapLayer.getMap().getHeight();
-        final int tileWidth = tiledMapLayer.getMap().getTileWidth();
-        final int tileHeight = tiledMapLayer.getMap().getTileHeight();
-
         MapLayer libGdxMapLayer = null;
 
-        if (tiledMapLayer instanceof org.mapeditor.core.TileLayer)
+        if (tiledMapLayer instanceof TmxTileLayer)
         {
-            libGdxMapLayer = new TiledMapTileLayer(mapWidth, mapHeight, tileWidth, tileHeight);
+            TmxTileLayer tmxTileLayer = (TmxTileLayer) tiledMapLayer;
+            int width = tmxTileLayer.getWidth();
+            int height = tmxTileLayer.getHeight();
+            int tileWidth = tmxTileLayer.getTileWidth();
+            int tileHeight = tmxTileLayer.getTileHeight();
 
-            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (org.mapeditor.core.TileLayer) tiledMapLayer);
-        } else if (tiledMapLayer instanceof org.mapeditor.core.ObjectGroup)
+            libGdxMapLayer = new TiledMapTileLayer(width, height, tileWidth, tileHeight);
+
+            handleTileLayer((TiledMapTileLayer) libGdxMapLayer, (TmxTileLayer) tiledMapLayer);
+        } else if (tiledMapLayer instanceof TmxObjectGroupLayer)
         {
             libGdxMapLayer = new KKObjectsLayer();
 
-            handleObjectGroupLayer((KKObjectsLayer) libGdxMapLayer, (org.mapeditor.core.ObjectGroup) tiledMapLayer);
+            handleObjectGroupLayer((KKObjectsLayer) libGdxMapLayer, (TmxObjectGroupLayer) tiledMapLayer);
         } else
         {
             // not supported map layer
@@ -239,60 +240,34 @@ public class KKMap extends TiledMap implements KKMapIf
         }
 
         libGdxMapLayer.setName(tiledMapLayer.getName());
-        if (tiledMapLayer.getOffsetX() != null)
-        {
-            libGdxMapLayer.setOffsetX(tiledMapLayer.getOffsetX());
-        }
-        if (tiledMapLayer.getOffsetY() != null)
-        {
-            libGdxMapLayer.setOffsetY(tiledMapLayer.getOffsetY());
-        }
-        if (tiledMapLayer.getOpacity() != null)
-        {
-            libGdxMapLayer.setOpacity(tiledMapLayer.getOpacity());
-        }
-        if (tiledMapLayer.isVisible() == null)
-        {
-            libGdxMapLayer.setVisible(true);
-        } else
-        {
-            libGdxMapLayer.setVisible(tiledMapLayer.isVisible());
-        }
-
-        org.mapeditor.core.Properties properties = tiledMapLayer.getProperties();
-        for (org.mapeditor.core.Property tiledProperty : properties.getProperties())
-        {
-            final String name = tiledProperty.getName();
-            final String value = tiledProperty.getValue();
-
-            libGdxMapLayer.getProperties().put(name, value);
-        }
+        libGdxMapLayer.setVisible(true);
 
         return libGdxMapLayer;
     }
 
-    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, org.mapeditor.core.TileLayer tiledMapLayer)
+    private void handleTileLayer(TiledMapTileLayer libGdxMapLayer, TmxTileLayer tiledMapLayer)
     {
-        final int mapWidth = tiledMapLayer.getMap().getWidth();
-        final int mapHeight = tiledMapLayer.getMap().getHeight();
+        final int mapWidth = tiledMapLayer.getWidth();
+        final int mapHeight = tiledMapLayer.getHeight();
 
         for (int y = 0; y < mapHeight; y++)
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                org.mapeditor.core.Tile tile = tiledMapLayer.getTileAt(x, y);
-                if (tile == null)
+                TileInfo tileInfo = tiledMapLayer.getTileInfoAt(x, y);
+                if (tileInfo == null)
                 {
                     continue;
                 }
-                final String sourceFilePath = tile.getTileSet().getTilebmpFile();
-                final int tileId = tile.getId();
+                final String sourceFilePath = tileInfo.getImagePath();
+                final int tileId = tileInfo.getGid();
 
                 TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
                 if (!texturesCache.containsKey(textureKey))
                 {
-                    Pixmap pixmap = toPixmap(tile.getImage());
-                    texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
+                    // TODO: read image as Pixmap here
+                    // Pixmap pixmap = toPixmap(tile.getImage());
+                    // texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
                 }
 
                 TextureRegion textureRegion = texturesCache.get(textureKey);
@@ -307,70 +282,80 @@ public class KKMap extends TiledMap implements KKMapIf
         }
     }
 
-    private void handleObjectGroupLayer(KKObjectsLayer objectsMapLayer, org.mapeditor.core.ObjectGroup tiledMapLayer)
+    private void handleObjectGroupLayer(KKObjectsLayer objectsMapLayer, TmxObjectGroupLayer tiledMapLayer)
     {
-        for (org.mapeditor.core.MapObject tiledMapObject : tiledMapLayer.getObjects())
-        {
-            final org.mapeditor.core.Tile tile = tiledMapObject.getTile();
-            // derive object type from TMX tile
-            final String objectType = tile.getProperties().getProperty(KKMapObjectIf.PROPERTY_TYPE_KEY);
-            loadTexturesFromTileSet(tile.getTileSet());
+        // TODO: for now not supported yet
 
-            final String sourceFilePath = tile.getTileSet().getTilebmpFile();
-            final int tileId = tile.getId();
-            final int objectId = tiledMapObject.getId();
-            TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-            TextureRegion textureRegion = texturesCache.get(textureKey);
-
-            KKMapObject libGdxMapObject = null;
-            if (tile.getAnimation() == null)
-            {
-                StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
-                libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
-            } else
-            {
-                IntArray intervals = new IntArray();
-                Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
-                for (org.mapeditor.core.Frame frame : tile.getAnimation().getFrame())
-                {
-                    intervals.add(frame.getDuration());
-                    TextureKey frameTextureKey = new TextureKey(sourceFilePath, frame.getTileid());
-                    TextureRegion frameTextureRegion = texturesCache.get(frameTextureKey);
-                    StaticTiledMapTile frameStaticTiledMapTile = new StaticTiledMapTile(frameTextureRegion);
-                    frameTiles.add(frameStaticTiledMapTile);
-                }
-
-                AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new IntArray(intervals), frameTiles);
-                libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
-            }
-
-            CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-            final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();
-            final int tileHeightInPixels = tiledMapLayer.getMap().getTileHeight();
-
-            // in TMX objects coordinates are in TMX Isometric
-            TmxIsoCoordinates tmxIsoCoordinates = new TmxIsoCoordinates((float) tiledMapObject.getX(),
-                    (float) tiledMapObject.getY(), 0.0f);
-            TmxOrthoCoordinates tmxOrthogonal = coordinateCalculator.tmxIso2tmxOrthogonal(tileMapHeightInTiles,
-                    tileHeightInPixels, tmxIsoCoordinates);
-            GdxWorldOrthoCoordinates world = coordinateCalculator.tmxOrthogonal2world(tileMapHeightInTiles,
-                    tileHeightInPixels, tmxOrthogonal);
-
-            // FIXME: I'm not sure but it would be good to handle an object anchor here
-            libGdxMapObject.setX(world.x);
-            libGdxMapObject.setY(world.y);
-
-            libGdxMapObject.setName(tiledMapObject.getName());
-            if (tiledMapObject.isVisible() == null)
-            {
-                libGdxMapObject.setVisible(true);
-            } else
-            {
-                libGdxMapObject.setVisible(tiledMapObject.isVisible());
-            }
-
-            objectsMapLayer.getObjects().add(libGdxMapObject);
-        }
+        // for (org.mapeditor.core.MapObject tiledMapObject :
+        // tiledMapLayer.getObjects())
+        // {
+        // final org.mapeditor.core.Tile tile = tiledMapObject.getTile();
+        // // derive object type from TMX tile
+        // final String objectType =
+        // tile.getProperties().getProperty(KKMapObjectIf.PROPERTY_TYPE_KEY);
+        // loadTexturesFromTileSet(tile.getTileSet());
+        //
+        // final String sourceFilePath = tile.getTileSet().getTilebmpFile();
+        // final int tileId = tile.getId();
+        // final int objectId = tiledMapObject.getId();
+        // TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
+        // TextureRegion textureRegion = texturesCache.get(textureKey);
+        //
+        // KKMapObject libGdxMapObject = null;
+        // if (tile.getAnimation() == null)
+        // {
+        // StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
+        // libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
+        // } else
+        // {
+        // IntArray intervals = new IntArray();
+        // Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
+        // for (org.mapeditor.core.Frame frame : tile.getAnimation().getFrame())
+        // {
+        // intervals.add(frame.getDuration());
+        // TextureKey frameTextureKey = new TextureKey(sourceFilePath,
+        // frame.getTileid());
+        // TextureRegion frameTextureRegion = texturesCache.get(frameTextureKey);
+        // StaticTiledMapTile frameStaticTiledMapTile = new
+        // StaticTiledMapTile(frameTextureRegion);
+        // frameTiles.add(frameStaticTiledMapTile);
+        // }
+        //
+        // AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new
+        // IntArray(intervals), frameTiles);
+        // libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
+        // }
+        //
+        // CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        // final int tileMapHeightInTiles = tiledMapLayer.getMap().getHeight();
+        // final int tileHeightInPixels = tiledMapLayer.getMap().getTileHeight();
+        //
+        // // in TMX objects coordinates are in TMX Isometric
+        // TmxIsoCoordinates tmxIsoCoordinates = new TmxIsoCoordinates((float)
+        // tiledMapObject.getX(),
+        // (float) tiledMapObject.getY(), 0.0f);
+        // TmxOrthoCoordinates tmxOrthogonal =
+        // coordinateCalculator.tmxIso2tmxOrthogonal(tileMapHeightInTiles,
+        // tileHeightInPixels, tmxIsoCoordinates);
+        // GdxWorldOrthoCoordinates world =
+        // coordinateCalculator.tmxOrthogonal2world(tileMapHeightInTiles,
+        // tileHeightInPixels, tmxOrthogonal);
+        //
+        // // FIXME: I'm not sure but it would be good to handle an object anchor here
+        // libGdxMapObject.setX(world.x);
+        // libGdxMapObject.setY(world.y);
+        //
+        // libGdxMapObject.setName(tiledMapObject.getName());
+        // if (tiledMapObject.isVisible() == null)
+        // {
+        // libGdxMapObject.setVisible(true);
+        // } else
+        // {
+        // libGdxMapObject.setVisible(tiledMapObject.isVisible());
+        // }
+        //
+        // objectsMapLayer.getObjects().add(libGdxMapObject);
+        // }
     }
 
     private void loadTexturesFromTileSet(org.mapeditor.core.TileSet tileSet)
