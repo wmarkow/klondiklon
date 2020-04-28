@@ -2,6 +2,7 @@ package com.github.wmarkow.klondiklon.tiled;
 
 import java.io.File;
 
+import com.github.wmarkow.klondiklon.tiled.tsx.PropertyElement;
 import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
 
 /***
@@ -58,7 +59,10 @@ public class Tileset
             int width = tilesetElement.getImage().getWidth();
             int height = tilesetElement.getImage().getHeight();
 
-            return new TileInfo(imageFile.getAbsolutePath(), tileGid, 0, 0, width, height);
+            TileInfo tileInfo = new TileInfo(imageFile.getAbsolutePath(), tileGid, 0, 0, width, height);
+            copyProperties(tilesetElement, tileInfo);
+
+            return tileInfo;
         }
 
         int tileNumber = tileGid - getFirstGid();
@@ -69,7 +73,10 @@ public class Tileset
         int startX = column * width;
         int startY = row * height;
 
-        return new TileInfo(imageFile.getAbsolutePath(), tileGid, startX, startY, width, height);
+        TileInfo tileInfo = new TileInfo(imageFile.getAbsolutePath(), tileGid, startX, startY, width, height);
+        copyProperties(tilesetElement, tileInfo);
+
+        return tileInfo;
     }
 
     public int getFirstGid()
@@ -80,5 +87,18 @@ public class Tileset
     public int getLastGid()
     {
         return firstGid + tilesetElement.getTilecount() - 1;
+    }
+    
+    private void copyProperties(TilesetElement tilesetElement, TileInfo tileInfo)
+    {
+        if(tilesetElement.getTile() == null)
+        {
+            return;
+        }
+        
+        for (PropertyElement propertyElement : tilesetElement.getTile().getProperties())
+        {
+            tileInfo.addProperty(propertyElement.getName(), propertyElement.getValue());
+        }
     }
 }

@@ -2,5 +2,16 @@ package com.github.wmarkow.klondiklon.tiled;
 
 public abstract class TmxLayer
 {
-    public abstract  String getName();
+    private TmxTiledMap parentMap;
+
+    public TmxLayer(TmxTiledMap parentMap) {
+        this.parentMap = parentMap;
+    }
+
+    public abstract String getName();
+
+    protected TmxTiledMap getParentMap()
+    {
+        return this.parentMap;
+    }
 }

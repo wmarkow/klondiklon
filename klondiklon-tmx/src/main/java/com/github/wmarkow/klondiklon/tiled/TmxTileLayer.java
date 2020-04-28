@@ -7,12 +7,12 @@ public class TmxTileLayer extends TmxLayer
     private int tileWidth;
     private int tileHeight;
     private LayerElement layerElement;
-    private TmxTiledMap parentMap;
 
     TmxTileLayer(int tileWidth, int tileHeight, TmxTiledMap parentMap, LayerElement layerElement) {
+        super(parentMap);
+        
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.parentMap = parentMap;
         this.layerElement = layerElement;
     }
 
@@ -46,7 +46,7 @@ public class TmxTileLayer extends TmxLayer
     {
         int tileGid = getTileGidAt(x, y);
 
-        for (Tileset tileset : parentMap.getTilests())
+        for (Tileset tileset : getParentMap().getTilests())
         {
             TileInfo tileInfo = tileset.getTileInfo(tileGid);
             if (tileInfo != null)
