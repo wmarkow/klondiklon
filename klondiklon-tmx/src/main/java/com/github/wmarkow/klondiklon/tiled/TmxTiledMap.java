@@ -60,7 +60,7 @@ public class TmxTiledMap
 
         // ...then add object group layer at the end
         ObjectGroupElement objectGroupElement = tmxMapElement.getObjectGroup();
-        layers.add(new TmxObjectGroupLayer(objectGroupElement));
+        layers.add(new TmxObjectGroupLayer(objectGroupElement, this));
 
         return layers;
     }

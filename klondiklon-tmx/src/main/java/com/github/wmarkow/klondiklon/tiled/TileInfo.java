@@ -1,5 +1,11 @@
 package com.github.wmarkow.klondiklon.tiled;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.github.wmarkow.klondiklon.tiled.tsx.PropertyElement;
+import com.github.wmarkow.klondiklon.tiled.tsx.TileElement;
+
 /***
  * All necessary information related to the tile.
  *
@@ -12,8 +18,9 @@ public class TileInfo
     private int startY;
     private int width;
     private int height;
+    private Map<String, String> properties = new HashMap<String, String>();
 
-    public TileInfo(String absoluteImagePath, int gid, int startX, int startY, int width, int height) {
+    TileInfo(String absoluteImagePath, int gid, int startX, int startY, int width, int height) {
         this.gid = gid;
         this.absoluteImagePath = absoluteImagePath;
         this.startX = startX;
@@ -76,5 +83,20 @@ public class TileInfo
     public int getHeight()
     {
         return height;
+    }
+
+    public Map<String, String> getProperties()
+    {
+        return properties;
+    }
+
+    public void addProperty(String name, String value)
+    {
+        properties.put(name, value);
+    }
+
+    public Object getAnimation()
+    {
+        return null;
     }
 }
