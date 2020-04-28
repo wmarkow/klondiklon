@@ -25,7 +25,7 @@ public class Tileset
      * @param tilesetElement
      *            comes from TSX file
      */
-    public Tileset(String tsxPath, int firstGid, TilesetElement tilesetElement) {
+    Tileset(String tsxPath, int firstGid, TilesetElement tilesetElement) {
         this.tsxPath = tsxPath;
         this.firstGid = firstGid;
         this.tilesetElement = tilesetElement;
