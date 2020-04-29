@@ -10,6 +10,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		ServiceRegistry.getInstance().imageReader = new AndroidImageReader();
 		GameplayService.getInstance().assetsCopyService = new AndroidAssetsCopyService();
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
