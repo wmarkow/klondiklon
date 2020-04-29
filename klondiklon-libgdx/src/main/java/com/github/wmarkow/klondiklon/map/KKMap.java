@@ -14,7 +14,10 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
 import com.github.wmarkow.klondiklon.ServiceRegistry;
 import com.github.wmarkow.klondiklon.map.coordinates.CoordinateCalculator;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxWorldOrthoCoordinates;
@@ -23,6 +26,8 @@ import com.github.wmarkow.klondiklon.map.coordinates.tmx.TmxOrthoCoordinates;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObject;
 import com.github.wmarkow.klondiklon.map.objects.KKMapObjectIf;
 import com.github.wmarkow.klondiklon.resources.graphics.ImageReaderIf;
+import com.github.wmarkow.klondiklon.tiled.Tile;
+import com.github.wmarkow.klondiklon.tiled.TileFrameInfo;
 import com.github.wmarkow.klondiklon.tiled.TileInfo;
 import com.github.wmarkow.klondiklon.tiled.TmxLayer;
 import com.github.wmarkow.klondiklon.tiled.TmxObject;
@@ -250,11 +255,12 @@ public class KKMap extends TiledMap implements KKMapIf
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                TileInfo tileInfo = tiledMapLayer.getTileInfoAt(x, y);
-                if (tileInfo == null)
+                Tile tile = tiledMapLayer.getTileAt(x, y);
+                if (tile == null)
                 {
                     continue;
                 }
+                TileInfo tileInfo = tile.getTileInfo();
                 final String imageFileAbsolutePath = tileInfo.getAbsoluteImagePath();
                 final int tileId = tileInfo.getGid();
 
@@ -278,41 +284,60 @@ public class KKMap extends TiledMap implements KKMapIf
     {
         for (TmxObject tiledMapObject : tiledMapLayer.getObjects())
         {
-            final TileInfo tileInfo = tiledMapObject.getTileInfo();
-            // derive object type from TMX tile
-            final String objectType = tileInfo.getProperties().get(KKMapObjectIf.PROPERTY_TYPE_KEY);
-
-            final String imageFileAbsolutePath = tileInfo.getAbsoluteImagePath();
-            final int tileId = tileInfo.getGid();
-            TextureKey textureKey = new TextureKey(imageFileAbsolutePath, tileId);
-            loadTextureIfNeeded(tileInfo, textureKey);
-
-            final int objectId = tiledMapObject.getId();
-            TextureRegion textureRegion = texturesCache.get(textureKey);
+            final Tile tile = tiledMapObject.getTile();
 
             KKMapObject libGdxMapObject = null;
-            if (tileInfo.getAnimation() == null)
+
+            if (tile.getTileInfo() != null)
             {
+                // this is a static tile
+                final TileInfo tileInfo = tiledMapObject.getTile().getTileInfo();
+                // derive object type from TMX tile
+                final String objectType = tileInfo.getProperties().get(KKMapObjectIf.PROPERTY_TYPE_KEY);
+
+                final String imageFileAbsolutePath = tileInfo.getAbsoluteImagePath();
+                final int tileGid = tileInfo.getGid();
+                TextureKey textureKey = new TextureKey(imageFileAbsolutePath, tileGid);
+                loadTextureIfNeeded(tileInfo, textureKey);
+
+                final int objectId = tiledMapObject.getId();
+                TextureRegion textureRegion = texturesCache.get(textureKey);
+
                 StaticTiledMapTile libGdxTile = new StaticTiledMapTile(textureRegion);
+                libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
+            } else if (tile.getTileFrameInfos() != null)
+            {
+                // this is an animated tile
+                // not supported yet
+                IntArray intervals = new IntArray();
+                Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
+                String objectType = null;
+                for (TileFrameInfo tileFrameInfo : tile.getTileFrameInfos())
+                {
+                    intervals.add(tileFrameInfo.getDurationInMillis());
+
+                    final String imageFileAbsolutePath = tileFrameInfo.getTileInfo().getAbsoluteImagePath();
+                    final int tileGid = tileFrameInfo.getTileInfo().getGid();
+                    TextureKey textureKey = new TextureKey(imageFileAbsolutePath, tileGid);
+                    loadTextureIfNeeded(tileFrameInfo.getTileInfo(), textureKey);
+
+                    TextureRegion textureRegion = texturesCache.get(textureKey);
+                    StaticTiledMapTile staticTiledMapTile = new StaticTiledMapTile(textureRegion);
+                    frameTiles.add(staticTiledMapTile);
+
+                    if (objectType == null)
+                    {
+                        objectType = tileFrameInfo.getTileInfo().getProperties().get(KKMapObjectIf.PROPERTY_TYPE_KEY);
+                    }
+                }
+
+                final int objectId = tiledMapObject.getId();
+
+                AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new IntArray(intervals), frameTiles);
                 libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
             } else
             {
-                // IntArray intervals = new IntArray();
-                // Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>();
-                // for (org.mapeditor.core.Frame frame : tileInfo.getAnimation().getFrame())
-                // {
-                // intervals.add(frame.getDuration());
-                // TextureKey frameTextureKey = new TextureKey(sourceFilePath,
-                // frame.getTileid());
-                // TextureRegion frameTextureRegion = texturesCache.get(frameTextureKey);
-                // StaticTiledMapTile frameStaticTiledMapTile = new
-                // StaticTiledMapTile(frameTextureRegion);
-                // frameTiles.add(frameStaticTiledMapTile);
-                // }
-                //
-                // AnimatedTiledMapTile libGdxTile = new AnimatedTiledMapTile(new
-                // IntArray(intervals), frameTiles);
-                // libGdxMapObject = objectsFactory.create(libGdxTile, objectId, objectType);
+                throw new IllegalArgumentException("Both TileInfo and TileFrameInfos are null for the specific Tile.");
             }
 
             CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
@@ -331,32 +356,6 @@ public class KKMap extends TiledMap implements KKMapIf
             objectsMapLayer.getObjects().add(libGdxMapObject);
         }
     }
-
-    // private void loadTexturesFromTileSet(org.mapeditor.core.TileSet tileSet)
-    // {
-    // if (tileSet == null)
-    // {
-    // throw new IllegalArgumentException("TileSet must not be null");
-    // }
-    // if (tileSet.getTilecount() == null)
-    // {
-    // throw new IllegalArgumentException("tilecount in TileSet must not be null");
-    // }
-    //
-    // final String sourceFilePath = tileSet.getTilebmpFile();
-    // for (int q = 0; q < tileSet.getTilecount(); q++)
-    // {
-    // final org.mapeditor.core.Tile tile = tileSet.getTile(q);
-    // final int tileId = tile.getId();
-    //
-    // TextureKey textureKey = new TextureKey(sourceFilePath, tileId);
-    // if (!texturesCache.containsKey(textureKey))
-    // {
-    // Pixmap pixmap = toPixmap(tile.getImage());
-    // texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
-    // }
-    // }
-    // }
 
     private void loadTextureIfNeeded(TileInfo tileInfo, TextureKey textureKey)
     {
