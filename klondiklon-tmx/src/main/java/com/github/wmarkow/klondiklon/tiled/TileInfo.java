@@ -3,9 +3,6 @@ package com.github.wmarkow.klondiklon.tiled;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.wmarkow.klondiklon.tiled.tsx.PropertyElement;
-import com.github.wmarkow.klondiklon.tiled.tsx.TileElement;
-
 /***
  * All necessary information related to the tile.
  *
@@ -93,10 +90,5 @@ public class TileInfo
     public void addProperty(String name, String value)
     {
         properties.put(name, value);
-    }
-
-    public Object getAnimation()
-    {
-        return null;
     }
 }
