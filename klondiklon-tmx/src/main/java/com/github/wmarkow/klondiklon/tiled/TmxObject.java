@@ -12,16 +12,16 @@ public class TmxObject
         this.parentMap = parentMap;
     }
 
-    public TileInfo getTileInfo()
+    public Tile getTile()
     {
         int tileGid = objectElement.getGid();
 
         for (Tileset tileset : parentMap.getTilests())
         {
-            TileInfo tileInfo = tileset.getTileInfo(tileGid);
-            if (tileInfo != null)
+            Tile tile = tileset.getTile(tileGid);
+            if (tile != null)
             {
-                return tileInfo;
+                return tile;
             }
         }
 
