@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -32,10 +34,10 @@ import com.github.wmarkow.klondiklon.event.events.TouchTapEvent;
 import com.github.wmarkow.klondiklon.event.events.TouchUpEvent;
 import com.github.wmarkow.klondiklon.map.coordinates.gdx.GdxTouchCoordinates;
 
-public class KKCameraController extends InputAdapter
+public class KKCameraController extends InputAdapter implements GestureListener
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKCameraController.class);
-    
+
     private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
 
     final OrthographicCamera camera;
@@ -61,13 +63,15 @@ public class KKCameraController extends InputAdapter
     public void setLockCameraWhileDragging(boolean lockCameraWhileDragging)
     {
         LOGGER.info(String.format("setLockCameraWhileDragging(%s)", lockCameraWhileDragging));
-        
+
         this.lockCameraWhileDragging = lockCameraWhileDragging;
     }
 
     @Override
     public boolean touchDragged(int touchX, int touchY, int pointer)
     {
+        LOGGER.info("touchDragged(int , int , int )");
+
         GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
 
         touchDraggedDetected = true;
@@ -90,6 +94,8 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean touchDown(int touchX, int touchY, int pointer, int button)
     {
+        LOGGER.info("touchDown(int , int , int , int )");
+
         GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
 
         touchDraggedDetected = false;
@@ -116,6 +122,8 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean touchUp(int touchX, int touchY, int pointer, int button)
     {
+        LOGGER.info("touchUp(int , int , int , int )");
+
         GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
 
         Long localTouchDownInMillis = touchDownMillis;
@@ -142,6 +150,8 @@ public class KKCameraController extends InputAdapter
     @Override
     public boolean scrolled(int amount)
     {
+        LOGGER.info("scrolled(int )");
+
         if (amount > 0)
         {
             // zoom out
@@ -164,4 +174,93 @@ public class KKCameraController extends InputAdapter
 
         return false;
     }
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button)
+    {
+        LOGGER.info("touchDown(float , float , int , int )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button)
+    {
+        LOGGER.info("tap(float , float , int , int )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean longPress(float x, float y)
+    {
+        LOGGER.info("longPress(float , float )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button)
+    {
+        LOGGER.info("fling(float , float , int )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY)
+    {
+        LOGGER.info("pan(float , float , float , float )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button)
+    {
+        LOGGER.info("panStop(float , float , int , int )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance)
+    {
+        LOGGER.info("zoom(float , float )");
+
+        if (distance > initialDistance)
+        {
+            scrolled(1);
+        } else
+        {
+            scrolled(-1);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
+    {
+        LOGGER.info("pinch(Vector2 , Vector2 , Vector2 , Vector2 )");
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void pinchStop()
+    {
+        LOGGER.info("pinchStop()");
+
+        // TODO Auto-generated method stub
+
+    }
+
 }

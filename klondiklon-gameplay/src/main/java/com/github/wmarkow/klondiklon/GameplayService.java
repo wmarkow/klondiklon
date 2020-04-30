@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.input.GestureDetector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wmarkow.klondiklon.event.EventBus;
 import com.github.wmarkow.klondiklon.jackson.KKObjectMapper;
@@ -67,6 +68,7 @@ public class GameplayService
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(ui.getStage());
         multiplexer.addProcessor(ServiceRegistry.getInstance().getCameraController());
+        multiplexer.addProcessor(new GestureDetector(ServiceRegistry.getInstance().getCameraController()));
         Gdx.input.setInputProcessor(multiplexer);
     }
 
