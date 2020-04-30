@@ -236,10 +236,10 @@ public class KKCameraController extends InputAdapter implements GestureListener
 
         if (distance > initialDistance)
         {
-            scrolled(1);
+            scrolled(-1);
         } else
         {
-            scrolled(-1);
+            scrolled(1);
         }
 
         return false;
