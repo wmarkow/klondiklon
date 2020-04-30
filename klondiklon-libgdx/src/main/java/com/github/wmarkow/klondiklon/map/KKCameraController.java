@@ -44,6 +44,7 @@ public class KKCameraController extends InputAdapter implements GestureListener
     final Vector3 curr = new Vector3();
     final Vector3 last = new Vector3(-1, -1, -1);
     final Vector3 delta = new Vector3();
+    float currentZoom = 0;
 
     private EventBus eventBus;
 
@@ -55,6 +56,8 @@ public class KKCameraController extends InputAdapter implements GestureListener
     public KKCameraController(OrthographicCamera camera, EventBus eventBus) {
         this.camera = camera;
         this.eventBus = eventBus;
+
+        currentZoom = camera.zoom;
 
         longTouchDownTimer = new Timer();
         longTouchDownTimer.start();
@@ -72,21 +75,22 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("touchDragged(int , int , int )");
 
-        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
-
-        touchDraggedDetected = true;
-        if (lockCameraWhileDragging == false)
-        {
-            camera.unproject(curr.set(touchX, touchY, 0));
-            if (!(last.x == -1 && last.y == -1 && last.z == -1))
-            {
-                camera.unproject(delta.set(last.x, last.y, 0));
-                delta.sub(curr);
-                camera.position.add(delta.x, delta.y, 0);
-            }
-            last.set(touchX, touchY, 0);
-        }
-        eventBus.publish(new TouchDraggedEvent(touchCoordinates));
+        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
+        // touchY);
+        //
+        // touchDraggedDetected = true;
+        // if (lockCameraWhileDragging == false)
+        // {
+        // camera.unproject(curr.set(touchX, touchY, 0));
+        // if (!(last.x == -1 && last.y == -1 && last.z == -1))
+        // {
+        // camera.unproject(delta.set(last.x, last.y, 0));
+        // delta.sub(curr);
+        // camera.position.add(delta.x, delta.y, 0);
+        // }
+        // last.set(touchX, touchY, 0);
+        // }
+        // eventBus.publish(new TouchDraggedEvent(touchCoordinates));
 
         return false;
     }
@@ -216,7 +220,10 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("pan(float , float , float , float )");
 
-        // TODO Auto-generated method stub
+        // camera.translate(-deltaX * currentZoom, deltaY * currentZoom);
+        camera.translate(-deltaX * 5, deltaY * 5);
+        camera.update();
+
         return false;
     }
 
@@ -225,7 +232,8 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("panStop(float , float , int , int )");
 
-        // TODO Auto-generated method stub
+        currentZoom = camera.zoom;
+        
         return false;
     }
 
@@ -234,13 +242,17 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("zoom(float , float )");
 
-        if (distance > initialDistance)
+        float newZoom = (initialDistance / distance) * currentZoom;
+        if (newZoom < 20)
         {
-            scrolled(-1);
-        } else
-        {
-            scrolled(1);
+            newZoom = 20;
         }
+        if (newZoom > 300)
+        {
+            newZoom = 300;
+        }
+        camera.zoom = newZoom;
+        camera.update();
 
         return false;
     }
@@ -260,7 +272,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
         LOGGER.info("pinchStop()");
 
         // TODO Auto-generated method stub
-
     }
 
 }
