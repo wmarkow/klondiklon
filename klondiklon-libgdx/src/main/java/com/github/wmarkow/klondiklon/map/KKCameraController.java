@@ -98,27 +98,28 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean touchDown(int touchX, int touchY, int pointer, int button)
     {
-        LOGGER.info("touchDown(int , int , int , int )");
-
-        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
-
-        touchDraggedDetected = false;
-        touchDownMillis = System.currentTimeMillis();
-
-        eventBus.publish(new TouchDownEvent(touchCoordinates));
-
-        longTouchDownTimer.scheduleTask(new Task()
-        {
-            @Override
-            public void run()
-            {
-                if (touchDownMillis != null)
-                {
-                    eventBus.publish(new TouchLongDownEvent(touchCoordinates));
-                }
-
-            }
-        }, LONG_TOUCH_DOWN_SECONDS);
+        // LOGGER.info("touchDown(int , int , int , int )");
+        //
+        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
+        // touchY);
+        //
+        // touchDraggedDetected = false;
+        // touchDownMillis = System.currentTimeMillis();
+        //
+        // eventBus.publish(new TouchDownEvent(touchCoordinates));
+        //
+        // longTouchDownTimer.scheduleTask(new Task()
+        // {
+        // @Override
+        // public void run()
+        // {
+        // if (touchDownMillis != null)
+        // {
+        // eventBus.publish(new TouchLongDownEvent(touchCoordinates));
+        // }
+        //
+        // }
+        // }, LONG_TOUCH_DOWN_SECONDS);
 
         return false;
     }
@@ -126,27 +127,29 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean touchUp(int touchX, int touchY, int pointer, int button)
     {
-        LOGGER.info("touchUp(int , int , int , int )");
-
-        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX, touchY);
-
-        Long localTouchDownInMillis = touchDownMillis;
-        touchDownMillis = null;
-        longTouchDownTimer.clear();
-
-        last.set(-1, -1, -1);
-        eventBus.publish(new TouchUpEvent(touchCoordinates));
-
-        if (touchDraggedDetected)
-        {
-            return false;
-        }
-
-        if (localTouchDownInMillis != null
-                && System.currentTimeMillis() - localTouchDownInMillis < 1000 * LONG_TOUCH_DOWN_SECONDS)
-        {
-            eventBus.publish(new TouchTapEvent(touchCoordinates));
-        }
+        // LOGGER.info("touchUp(int , int , int , int )");
+        //
+        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
+        // touchY);
+        //
+        // Long localTouchDownInMillis = touchDownMillis;
+        // touchDownMillis = null;
+        // longTouchDownTimer.clear();
+        //
+        // last.set(-1, -1, -1);
+        // eventBus.publish(new TouchUpEvent(touchCoordinates));
+        //
+        // if (touchDraggedDetected)
+        // {
+        // return false;
+        // }
+        //
+        // if (localTouchDownInMillis != null
+        // && System.currentTimeMillis() - localTouchDownInMillis < 1000 *
+        // LONG_TOUCH_DOWN_SECONDS)
+        // {
+        // eventBus.publish(new TouchTapEvent(touchCoordinates));
+        // }
 
         return false;
     }
@@ -159,21 +162,13 @@ public class KKCameraController extends InputAdapter implements GestureListener
         if (amount > 0)
         {
             // zoom out
-            camera.zoom += 20;
-
-            return false;
+            setZoom(getZoom() + 20);
         }
 
         if (amount < 0)
         {
             // zoom in
-            camera.zoom += -20;
-            if (camera.zoom < 20)
-            {
-                camera.zoom = 20f;
-            }
-
-            return false;
+            setZoom(getZoom() - 20);
         }
 
         return false;
@@ -184,7 +179,7 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("touchDown(float , float , int , int )");
 
-        // TODO Auto-generated method stub
+        currentZoom = camera.zoom;
         return false;
     }
 
@@ -193,7 +188,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("tap(float , float , int , int )");
 
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -202,7 +196,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("longPress(float , float )");
 
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -211,7 +204,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("fling(float , float , int )");
 
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -221,7 +213,7 @@ public class KKCameraController extends InputAdapter implements GestureListener
         LOGGER.info("pan(float , float , float , float )");
 
         // camera.translate(-deltaX * currentZoom, deltaY * currentZoom);
-        camera.translate(-deltaX * 5, deltaY * 5);
+        camera.translate(-deltaX * 3, deltaY * 3);
         camera.update();
 
         return false;
@@ -232,8 +224,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     {
         LOGGER.info("panStop(float , float , int , int )");
 
-        currentZoom = camera.zoom;
-        
         return false;
     }
 
@@ -243,16 +233,7 @@ public class KKCameraController extends InputAdapter implements GestureListener
         LOGGER.info("zoom(float , float )");
 
         float newZoom = (initialDistance / distance) * currentZoom;
-        if (newZoom < 20)
-        {
-            newZoom = 20;
-        }
-        if (newZoom > 300)
-        {
-            newZoom = 300;
-        }
-        camera.zoom = newZoom;
-        camera.update();
+        setZoom(newZoom);
 
         return false;
     }
@@ -260,18 +241,31 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
     {
-        LOGGER.info("pinch(Vector2 , Vector2 , Vector2 , Vector2 )");
-
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void pinchStop()
     {
-        LOGGER.info("pinchStop()");
-
-        // TODO Auto-generated method stub
     }
 
+    private float getZoom()
+    {
+        return camera.zoom;
+    }
+
+    private void setZoom(float zoom)
+    {
+        float newZoom = zoom;
+        if (newZoom < 70)
+        {
+            newZoom = 70;
+        } else if (newZoom > 300)
+        {
+            newZoom = 300;
+        }
+
+        camera.zoom = newZoom;
+        camera.update();
+    }
 }
