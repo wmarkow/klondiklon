@@ -42,4 +42,14 @@ public class TmxObject
     {
         return objectElement.getY();
     }
+    
+    public void setX(double x)
+    {
+        objectElement.setX(x);
+    }
+    
+    public void setY(double y)
+    {
+        objectElement.setY(y);
+    }
 }
