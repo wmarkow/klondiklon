@@ -34,4 +34,9 @@ public class TmxObjectGroupLayer extends TmxLayer
         return result.toArray(new TmxObject[]
         {});
     }
+
+    public void removeObject(TmxObject object)
+    {
+        objectGroupElement.removeObject(object.getId());
+    }
 }

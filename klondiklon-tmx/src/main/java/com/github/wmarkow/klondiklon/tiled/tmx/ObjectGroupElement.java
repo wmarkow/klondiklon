@@ -32,4 +32,17 @@ public class ObjectGroupElement
     {
         return objects;
     }
+
+    public void removeObject(int id)
+    {
+        for (ObjectElement objectElement : objects)
+        {
+            if (objectElement.getId() == id)
+            {
+                objects.remove(objectElement);
+
+                return;
+            }
+        }
+    }
 }
