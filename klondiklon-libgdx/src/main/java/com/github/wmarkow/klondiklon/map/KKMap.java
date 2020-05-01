@@ -1,6 +1,8 @@
 package com.github.wmarkow.klondiklon.map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -100,42 +102,38 @@ public class KKMap extends TiledMap implements KKMapIf
     @Override
     public void removeObject(KKMapObjectIf object)
     {
-        // TODO: for now not supported yet
+        KKObjectsLayer objectsLayer = getObjectsLayer();
 
-        // KKObjectsLayer objectsLayer = getObjectsLayer();
-        //
-        // if (objectsLayer == null)
-        // {
-        // return;
-        // }
-        //
-        // objectsLayer.removeObject(object);
-        //
-        // // delete the object also from TMX map
-        // final int id = object.getId();
-        // for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
-        // {
-        // if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
-        // {
-        // List<org.mapeditor.core.MapObject> objectsToRemove = new
-        // ArrayList<org.mapeditor.core.MapObject>();
-        //
-        // org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup)
-        // tiledLayer;
-        // for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
-        // {
-        // if (mapObject.getId().equals(id))
-        // {
-        // objectsToRemove.add(mapObject);
-        // }
-        // }
-        //
-        // for (org.mapeditor.core.MapObject objectToRemove : objectsToRemove)
-        // {
-        // objectGroup.removeObject(objectToRemove);
-        // }
-        // }
-        // }
+        if (objectsLayer == null)
+        {
+            return;
+        }
+
+        objectsLayer.removeObject(object);
+
+        // delete the object also from TMX map
+        final int id = object.getId();
+        for (TmxLayer tmxLayer : tiledMap.getLayers())
+        {
+            if (tmxLayer instanceof TmxObjectGroupLayer)
+            {
+                List<TmxObject> objectsToRemove = new ArrayList<TmxObject>();
+
+                TmxObjectGroupLayer objectGroupLayer = (TmxObjectGroupLayer) tmxLayer;
+                for (TmxObject tmxObject : objectGroupLayer.getObjects())
+                {
+                    if (tmxObject.getId() == id)
+                    {
+                        objectsToRemove.add(tmxObject);
+                    }
+                }
+
+                for (TmxObject objectToRemove : objectsToRemove)
+                {
+                    objectGroupLayer.removeObject(objectToRemove);
+                }
+            }
+        }
     }
 
     @Override
