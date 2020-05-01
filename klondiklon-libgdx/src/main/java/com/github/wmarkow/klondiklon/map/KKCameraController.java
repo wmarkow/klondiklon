@@ -41,9 +41,9 @@ public class KKCameraController extends InputAdapter implements GestureListener
     private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
 
     final OrthographicCamera camera;
-    final Vector3 curr = new Vector3();
-    final Vector3 last = new Vector3(-1, -1, -1);
-    final Vector3 delta = new Vector3();
+    // final Vector3 curr = new Vector3();
+    // final Vector3 last = new Vector3(-1, -1, -1);
+    // final Vector3 delta = new Vector3();
     float currentZoom = 0;
 
     private EventBus eventBus;
@@ -73,25 +73,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean touchDragged(int touchX, int touchY, int pointer)
     {
-        LOGGER.info("touchDragged(int , int , int )");
-
-        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
-        // touchY);
-        //
-        // touchDraggedDetected = true;
-        // if (lockCameraWhileDragging == false)
-        // {
-        // camera.unproject(curr.set(touchX, touchY, 0));
-        // if (!(last.x == -1 && last.y == -1 && last.z == -1))
-        // {
-        // camera.unproject(delta.set(last.x, last.y, 0));
-        // delta.sub(curr);
-        // camera.position.add(delta.x, delta.y, 0);
-        // }
-        // last.set(touchX, touchY, 0);
-        // }
-        // eventBus.publish(new TouchDraggedEvent(touchCoordinates));
-
         return false;
     }
 
@@ -207,14 +188,35 @@ public class KKCameraController extends InputAdapter implements GestureListener
         return false;
     }
 
+    /***
+     * Called when user makes a pan gesture. The parameters are in
+     * {@link GdxTouchCoordinates}
+     * 
+     * @param x
+     * @param y
+     * @param deltaX
+     * @param deltaY
+     */
     @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY)
+    public boolean pan(float touchX, float touchY, float deltaX, float deltaY)
     {
-        LOGGER.info("pan(float , float , float , float )");
+        LOGGER.info(String.format("pan(%s , %s , %s , %s )", touchX, touchY, deltaX, deltaY));
 
-        // camera.translate(-deltaX * currentZoom, deltaY * currentZoom);
-        camera.translate(-deltaX * 3, deltaY * 3);
-        camera.update();
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates((int) touchX, (int) touchY);
+
+        touchDraggedDetected = true;
+        if (lockCameraWhileDragging == false)
+        {
+            final Vector3 currWorld = new Vector3();
+            final Vector3 lastTouch = new Vector3(touchX - deltaX, touchY - deltaY, 0);
+            final Vector3 delta = new Vector3();
+
+            camera.unproject(currWorld.set(touchX, touchY, 0));
+            camera.unproject(delta.set(lastTouch.x, lastTouch.y, 0));
+            delta.sub(currWorld);
+            camera.position.add(delta.x, delta.y, 0);
+        }
+        eventBus.publish(new TouchDraggedEvent(touchCoordinates));
 
         return false;
     }
