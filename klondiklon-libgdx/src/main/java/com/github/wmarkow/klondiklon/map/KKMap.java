@@ -141,28 +141,24 @@ public class KKMap extends TiledMap implements KKMapIf
     @Override
     public void setObjectCoordinates(KKMapObjectIf object, GdxWorldOrthoCoordinates newCoordinates)
     {
-        // TODO: for now not supported yet
+        KKMapObject gdxMapObject = (KKMapObject) object;
+        gdxMapObject.setX(newCoordinates.x);
+        gdxMapObject.setY(newCoordinates.y);
 
-        // KKMapObject gdxMapObject = (KKMapObject) object;
-        // gdxMapObject.setX(newCoordinates.x);
-        // gdxMapObject.setY(newCoordinates.y);
-        //
-        // // save the new coordinates also in TMX map
-        // final int id = object.getId();
-        //
-        // org.mapeditor.core.MapObject tiledMapObject = getTiledObjectById(tiledMap,
-        // id);
-        // // in TMX objects coordinates are in TMX Isometric, need to convert
-        // CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
-        // final int tileMapHeightInTiles = tiledMap.getHeight();
-        // final int tileHeightInPixels = tiledMap.getTileHeight();
-        //
-        // TmxIsoCoordinates tmxIsoCoordinates =
-        // coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
-        // tileHeightInPixels, newCoordinates);
-        //
-        // tiledMapObject.setX(tmxIsoCoordinates.x);
-        // tiledMapObject.setY(tmxIsoCoordinates.y);
+        // save the new coordinates also in TMX map
+        final int id = object.getId();
+
+        TmxObject tmxObject = getTiledObjectById(tiledMap, id);
+        // in TMX objects coordinates are in TMX Isometric, need to convert
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculator();
+        final int tileMapHeightInTiles = tiledMap.getHeight();
+        final int tileHeightInPixels = tiledMap.getTileHeight();
+
+        TmxIsoCoordinates tmxIsoCoordinates = coordinateCalculator.world2TmxIso(tileMapHeightInTiles,
+                tileHeightInPixels, newCoordinates);
+
+        tmxObject.setX(tmxIsoCoordinates.x);
+        tmxObject.setY(tmxIsoCoordinates.y);
     }
 
     @Override
@@ -375,18 +371,18 @@ public class KKMap extends TiledMap implements KKMapIf
         texturesCache.put(textureKey, new TextureRegion(new Texture(pixmap)));
     }
 
-    private org.mapeditor.core.MapObject getTiledObjectById(org.mapeditor.core.Map tiledMap, int id)
+    private TmxObject getTiledObjectById(TmxTiledMap tmxTiledMap, int id)
     {
-        for (org.mapeditor.core.MapLayer tiledLayer : tiledMap.getLayers())
+        for (TmxLayer tmxLayerLayer : tmxTiledMap.getLayers())
         {
-            if (tiledLayer instanceof org.mapeditor.core.ObjectGroup)
+            if (tmxLayerLayer instanceof TmxObjectGroupLayer)
             {
-                org.mapeditor.core.ObjectGroup objectGroup = (org.mapeditor.core.ObjectGroup) tiledLayer;
-                for (org.mapeditor.core.MapObject mapObject : objectGroup.getObjects())
+                TmxObjectGroupLayer tmxObjectGroupLayer = (TmxObjectGroupLayer) tmxLayerLayer;
+                for (TmxObject tmxObject : tmxObjectGroupLayer.getObjects())
                 {
-                    if (mapObject.getId().equals(id))
+                    if (tmxObject.getId() == id)
                     {
-                        return mapObject;
+                        return tmxObject;
                     }
                 }
             }
