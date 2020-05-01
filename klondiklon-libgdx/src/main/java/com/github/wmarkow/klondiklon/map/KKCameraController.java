@@ -41,15 +41,11 @@ public class KKCameraController extends InputAdapter implements GestureListener
     private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
 
     final OrthographicCamera camera;
-    // final Vector3 curr = new Vector3();
-    // final Vector3 last = new Vector3(-1, -1, -1);
-    // final Vector3 delta = new Vector3();
     float currentZoom = 0;
 
     private EventBus eventBus;
 
     private boolean touchDraggedDetected = false;
-    private Long touchDownMillis = null;
     private Timer longTouchDownTimer;
     private boolean lockCameraWhileDragging = false;
 
@@ -79,58 +75,14 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean touchDown(int touchX, int touchY, int pointer, int button)
     {
-        // LOGGER.info("touchDown(int , int , int , int )");
-        //
-        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
-        // touchY);
-        //
-        // touchDraggedDetected = false;
-        // touchDownMillis = System.currentTimeMillis();
-        //
-        // eventBus.publish(new TouchDownEvent(touchCoordinates));
-        //
-        // longTouchDownTimer.scheduleTask(new Task()
-        // {
-        // @Override
-        // public void run()
-        // {
-        // if (touchDownMillis != null)
-        // {
-        // eventBus.publish(new TouchLongDownEvent(touchCoordinates));
-        // }
-        //
-        // }
-        // }, LONG_TOUCH_DOWN_SECONDS);
-
         return false;
     }
 
     @Override
     public boolean touchUp(int touchX, int touchY, int pointer, int button)
     {
-        // LOGGER.info("touchUp(int , int , int , int )");
-        //
-        // GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates(touchX,
-        // touchY);
-        //
-        // Long localTouchDownInMillis = touchDownMillis;
-        // touchDownMillis = null;
-        // longTouchDownTimer.clear();
-        //
-        // last.set(-1, -1, -1);
-        // eventBus.publish(new TouchUpEvent(touchCoordinates));
-        //
-        // if (touchDraggedDetected)
-        // {
-        // return false;
-        // }
-        //
-        // if (localTouchDownInMillis != null
-        // && System.currentTimeMillis() - localTouchDownInMillis < 1000 *
-        // LONG_TOUCH_DOWN_SECONDS)
-        // {
-        // eventBus.publish(new TouchTapEvent(touchCoordinates));
-        // }
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates((int) touchX, (int) touchY);
+        eventBus.publish(new TouchUpEvent(touchCoordinates));
 
         return false;
     }
@@ -138,8 +90,6 @@ public class KKCameraController extends InputAdapter implements GestureListener
     @Override
     public boolean scrolled(int amount)
     {
-        LOGGER.info("scrolled(int )");
-
         if (amount > 0)
         {
             // zoom out
@@ -156,26 +106,33 @@ public class KKCameraController extends InputAdapter implements GestureListener
     }
 
     @Override
-    public boolean touchDown(float x, float y, int pointer, int button)
+    public boolean touchDown(float touchX, float touchY, int pointer, int button)
     {
-        LOGGER.info("touchDown(float , float , int , int )");
-
         currentZoom = camera.zoom;
+        touchDraggedDetected = false;
+
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates((int) touchX, (int) touchY);
+        eventBus.publish(new TouchDownEvent(touchCoordinates));
+
         return false;
     }
 
     @Override
-    public boolean tap(float x, float y, int count, int button)
+    public boolean tap(float touchX, float touchY, int count, int button)
     {
         LOGGER.info("tap(float , float , int , int )");
 
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates((int) touchX, (int) touchY);
+        eventBus.publish(new TouchTapEvent(touchCoordinates));
+
         return false;
     }
 
     @Override
-    public boolean longPress(float x, float y)
+    public boolean longPress(float touchX, float touchY)
     {
-        LOGGER.info("longPress(float , float )");
+        GdxTouchCoordinates touchCoordinates = new GdxTouchCoordinates((int) touchX, (int) touchY);
+        eventBus.publish(new TouchLongDownEvent(touchCoordinates));
 
         return false;
     }
