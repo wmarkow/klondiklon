@@ -8,6 +8,7 @@ import com.github.wmarkow.klondiklon.tiled.tmx.LayerElement;
 import com.github.wmarkow.klondiklon.tiled.tmx.MapElement;
 import com.github.wmarkow.klondiklon.tiled.tmx.ObjectGroupElement;
 import com.github.wmarkow.klondiklon.tiled.tmx.TmxFileReader;
+import com.github.wmarkow.klondiklon.tiled.tmx.TmxFileWriter;
 import com.github.wmarkow.klondiklon.tiled.tsx.TilesetElement;
 import com.github.wmarkow.klondiklon.tiled.tsx.TsxFileReader;
 
@@ -15,6 +16,7 @@ public class TmxTiledMap
 {
     private MapElement tmxMapElement;
     private List<Tileset> tsxTilesets = new ArrayList<Tileset>();
+    private String tmxPath;
 
     private TmxTiledMap() {
 
@@ -70,9 +72,22 @@ public class TmxTiledMap
         return tsxTilesets;
     }
 
+    /***
+     * Writes back only TMX part of the map to the file where the map has been read
+     * from.
+     * 
+     * @throws Exception
+     */
+    public void writeBackTmxOnly() throws Exception
+    {
+        TmxFileWriter tmxWriter = new TmxFileWriter();
+        tmxWriter.writeTmx(tmxMapElement, tmxPath);
+    }
+
     public static TmxTiledMap readFromTmx(String tmxPath) throws Exception
     {
         TmxTiledMap result = new TmxTiledMap();
+        result.tmxPath = tmxPath;
 
         // read TMX
         TmxFileReader tmxFileReader = new TmxFileReader();
