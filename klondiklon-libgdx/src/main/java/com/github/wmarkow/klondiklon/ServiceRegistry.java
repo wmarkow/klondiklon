@@ -100,8 +100,6 @@ public class ServiceRegistry
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, (w / h) * 10, 10);
-        camera.zoom = 2;
-        camera.update();
 
         /* create camera controller */
         cameraController = new KKCameraController(camera, eventBus);

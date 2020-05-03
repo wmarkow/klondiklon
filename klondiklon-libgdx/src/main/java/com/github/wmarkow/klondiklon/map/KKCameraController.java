@@ -38,7 +38,8 @@ public class KKCameraController extends InputAdapter implements GestureListener
 {
     private static Logger LOGGER = LoggerFactory.getLogger(KKCameraController.class);
 
-    private final static float LONG_TOUCH_DOWN_SECONDS = 0.5f;
+    private final static float CAMERA_MIN_ZOOM_VALUE = 70;
+    private final static float CAMERA_MAX_ZOOM_VALUE = 300;
 
     final OrthographicCamera camera;
     float currentZoom = 0;
@@ -53,6 +54,8 @@ public class KKCameraController extends InputAdapter implements GestureListener
         this.camera = camera;
         this.eventBus = eventBus;
 
+        camera.zoom = 200;
+        camera.update();
         currentZoom = camera.zoom;
 
         longTouchDownTimer = new Timer();
@@ -216,12 +219,12 @@ public class KKCameraController extends InputAdapter implements GestureListener
     private void setZoom(float zoom)
     {
         float newZoom = zoom;
-        if (newZoom < 70)
+        if (newZoom < CAMERA_MIN_ZOOM_VALUE)
         {
-            newZoom = 70;
-        } else if (newZoom > 300)
+            newZoom = CAMERA_MIN_ZOOM_VALUE;
+        } else if (newZoom > CAMERA_MAX_ZOOM_VALUE)
         {
-            newZoom = 300;
+            newZoom = CAMERA_MAX_ZOOM_VALUE;
         }
 
         camera.zoom = newZoom;
