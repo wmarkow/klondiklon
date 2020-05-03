@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 
-import org.mapeditor.io.TMXMapWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -34,6 +35,8 @@ import com.github.wmarkow.klondiklon.worlds.WorldsManager;
 
 public class GameplayService
 {
+    private static Logger LOGGER = LoggerFactory.getLogger(GameplayService.class);
+
     private static GameplayService instance = new GameplayService();
 
     private WorldsManager worldsManager;
@@ -121,21 +124,14 @@ public class GameplayService
 
     public void saveGameContext()
     {
-        // save world
-        TMXMapWriter tmxMapWriter = new TMXMapWriter();
-        tmxMapWriter.settings.compressLayerData = false;
-        tmxMapWriter.settings.layerEncodingMethod = TMXMapWriter.Settings.LAYER_ENCODING_METHOD_CSV;
-
-        String tmxFilePath = Gdx.files.getLocalStoragePath() + "/worlds/home/home.tmx";
-        // TODO: for now not supported yet
-
-        // try
-        // {
-        // tmxMapWriter.writeMap(currentWorldMap.getTmxMap(), tmxFilePath);
-        // } catch (IOException e)
-        // {
-        // e.printStackTrace();
-        // }
+        // save current world
+        try
+        {
+            currentWorldMap.getTmxTiledMap().writeBackTmxOnly();
+        } catch (Exception e)
+        {
+            LOGGER.error(e.getMessage(), e);
+        }
 
         savePlayer(player);
         saveWarehouse(warehouse);
